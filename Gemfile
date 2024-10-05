@@ -6,7 +6,7 @@ gem 'apipie-rails'
 gem 'barby'
 gem 'bootsnap', require: false
 
-gem "rails-settings-cached"
+gem 'rails-settings-cached'
 gem 'bootstrap', '~> 4.5.3'
 gem 'bootstrap4-datetime-picker-rails'
 gem 'bootstrap-select-rails'

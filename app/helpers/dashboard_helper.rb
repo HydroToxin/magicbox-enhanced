@@ -88,6 +88,6 @@ module DashboardHelper
   def total_kwh_month
     Room.all.inject(0) { |sum, room| sum + room.kwh_month }.round(2)
   end
-	
-	
+
+
 end
