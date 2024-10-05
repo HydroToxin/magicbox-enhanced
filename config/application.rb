@@ -29,7 +29,6 @@ module Magicbox
     config.load_defaults 7.0
     config.action_view.preload_links_header = false
 
-
     KWH_COST  = 0.17
   end
 end

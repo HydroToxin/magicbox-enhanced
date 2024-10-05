@@ -1,5 +1,3 @@
-require 'mb_logger'
-
 class Scenario < ApplicationRecord
 	attr_accessor :json_file
 
