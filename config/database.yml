@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  port: 5432
+  host: <%= ENV['DATABASE_HOST'] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+production:
+  <<: *default
+  database: <%= ENV['DATABASE_NAME'] %>
+
+development:
+  <<: *default
+  database: magicbox_enhanced_development
+
+test:
+  <<: *default
+  database: magicbox_enhanced_test

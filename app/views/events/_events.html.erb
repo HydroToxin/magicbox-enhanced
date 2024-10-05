@@ -1,0 +1,13 @@
+<div class="card">
+    <% if events.count > 0 %>
+        <ul class="list-group list-group-flush">
+            <% events.limit(8).each do |event| %>
+            	<%= render partial: "events/event", locals: {event: event} %>
+            <% end %>
+        </ul>
+    <% else %>
+        <div class="card-body text-center">
+            <p>No event yet.</p>
+        </div>
+    <% end %>
+</div>
