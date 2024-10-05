@@ -74,7 +74,7 @@ module DashboardHelper
 
 
   def kwh_cost_estimation(kWh)
-    return (Magicbox::Application::KWH_COST * kWh).round(2)
+    return (MagicboxEnhanced::Application::KWH_COST * kWh).round(2)
   end
 
   def total_watts
@@ -88,6 +88,6 @@ module DashboardHelper
   def total_kwh_month
     Room.all.inject(0) { |sum, room| sum + room.kwh_month }.round(2)
   end
-	
-	
+
+
 end
