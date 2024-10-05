@@ -1,5 +1,3 @@
-require 'mb_logger'
-
 class Operation < ApplicationRecord
   include DeviceTypeEnum
 
