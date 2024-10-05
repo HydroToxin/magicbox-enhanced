@@ -1,4 +1,3 @@
-require 'mb_logger'
 require 'dotiw'
 
 class Condition < ApplicationRecord
@@ -110,11 +109,11 @@ class Condition < ApplicationRecord
 		elsif predicate == 1
 			return true if sample.value.to_f <= target_value.to_f
 		end
-				
+
 		return false
 	end
 
-	
+
 	def is_yesterday(now)
 
     if start_time.hour < end_time.hour
@@ -145,7 +144,7 @@ class Condition < ApplicationRecord
       return false
     end
 
-    if start_time.min > end_time.min 
+    if start_time.min > end_time.min
       return true
     end
 
@@ -194,7 +193,7 @@ class Condition < ApplicationRecord
 
     return true
   end
-  
+
   def has_valid_period(now)
     #return true if !last_exec_time
 
