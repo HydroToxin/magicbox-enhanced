@@ -11,3 +11,5 @@
 # folder are already added.
 #Rails.application.config.assets.paths << Rails.root.join('node_modules')
 #Rails.application.config.assets.paths = ["app/assets/builds","app/assets/config","app/assets/scss","app/assets/js"]
+
+Rails.application.config.assets.paths << Rails.root.join('public', 'fonts', 'font-awesome')

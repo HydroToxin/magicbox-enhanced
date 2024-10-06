@@ -2,7 +2,7 @@
 // Entry point for the build script in your package.json
 
 // Import Turbo
-//import "@hotwired/turbo-rails"
+import "@hotwired/turbo-rails"
 
 // Import Stimulus
 import { Application } from "@hotwired/stimulus"
@@ -11,6 +11,9 @@ const application = Application.start()
 
 import { createPopper } from '@popperjs/core';
 import 'bootstrap';
+import { config } from '@fortawesome/fontawesome-svg-core'
+console.log(config.autoA11y) // true
+
 //import moment from 'moment';
 //import 'moment/locale/en-gb';
 //import 'tempusdominus-bootstrap-4';
@@ -79,6 +82,7 @@ document.addEventListener('turbo:load', () => {
 
 document.addEventListener('DOMContentLoaded', function () {
   console.log('DOMContentLoaded');
+  alert(window.FontAwesome.config)
   /*moment.locale('de');
   Highcharts.wrap(Highcharts.Tooltip.prototype, 'refresh', function (proceed) {
     this.options.formatter = function () {
