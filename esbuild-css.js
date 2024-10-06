@@ -16,7 +16,7 @@ async function processSCSS(inputFile, outputFile) {
   try {
     // Compile SCSS to CSS
     const result = sass.compile(inputFile, {
-      loadPaths: ['node_modules'], // Include node_modules for imports
+      loadPaths: ['node_modules', 'node_modules/@fortawesome/fontawesome-free'], // Include node_modules for imports
       style: 'expanded', // Optional: Choose 'compressed' for minified CSS
     });
 
