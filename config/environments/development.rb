@@ -19,7 +19,7 @@ Rails.application.configure do
 
   # Assets
   config.assets.debug = false
-  config.assets.compile = false
+  config.assets.digest = false
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
