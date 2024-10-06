@@ -1,5 +1,3 @@
-require 'mb_logger'
-
 namespace :process do
 	desc "Process all"
   task :run => :environment do

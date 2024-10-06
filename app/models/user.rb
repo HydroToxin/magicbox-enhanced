@@ -19,29 +19,13 @@ class User < ApplicationRecord
     todos.where(todo_status: :todo).count
   end
 
-
   def unread_notifications_count
   	notifications.where(read: false).count
   end
 
-
   def mark_notifications_as_read
     notifications.where(read: false).update_all(read: true)
   end
-
-
-  def deliver_onesignal_notification(title, body)
-    device_ids = self.push_devices.map { |e| e.device_id }
-
-    unless device_ids.empty?
-      headings = OneSignal::Notification::Headings.new(en: title)
-      contents = OneSignal::Notification::Contents.new(en: body)
-      included_targets = OneSignal::IncludedTargets.new(include_player_ids: device_ids)
-      notification = OneSignal::Notification.new(headings: headings, contents: contents, included_targets: included_targets)
-      response = OneSignal.send_notification(notification)
-    end
-  end
-
 
   def generate_auth_qr(current_user, size)
     require 'barby'
