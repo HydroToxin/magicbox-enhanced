@@ -1,35 +1,34 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 // Entry point for the build script in your package.json
 // Import UJS
-import { Turbo } from "@hotwired/turbo-rails"
+import { Application } from "@hotwired/stimulus"
+
+// Initialisiere das Stimulus-Anwendungsobjekt ohne zusätzliche Controller
+
+import $ from "jquery"; // einziger jQuery Import
+window.$ = window.jQuery = $;
+
 import Rails from '@rails/ujs';
-import $ from 'jquery';
+//if (!Rails.started) Rails.start();
 import Popper from 'popper.js';
 import 'bootstrap';
 import moment from 'moment';
 import 'moment/locale/en-gb';
 import 'tempusdominus-bootstrap-4';
+
 import Chart from 'chart.js/auto';
-import highcharts from 'highcharts';
+import Highcharts from 'highcharts';
 import highchartsMore from 'highcharts/highcharts-more';
+highchartsMore(Highcharts);
+
 import chartkick from 'chartkick';
-import 'jquery-ujs';
 import '@kanety/jquery-nested-form';
 import 'bootstrap-select';
 
-Rails.start();
-window.$ = window.jQuery = $;
 window.Popper = Popper;
-chartkick.use(highcharts);
-const requireContext = require.context('.', true, /\.js$/);
-requireContext.keys().forEach(requireContext);
+chartkick.use(Highcharts);
 
-const channels = require.context('channels', true, /\.(js|coffee)$/)
-channels.keys().forEach(channels)
-
-const context = require.context('.', true, /\.js$/);
-context.keys().forEach(context);
-
+const application = Application.start()
 
 function init_views() {
   console.log("init_views");
@@ -66,7 +65,7 @@ $(document).ready(function () {
 });
 
 $(document).on('turbo:load', function () {
-  console.log('Turbo ist geladen');
+  console.log('Turbo ist geladen über jquery');
   $(window).trigger('load.bs.select.data-api');
   init_views();
 });
@@ -76,9 +75,9 @@ $(document).on('nested:fieldAdded', function (event) {
 })
 
 document.addEventListener('turbo:load', () => {
-  console.log('Turbo ist geladen');
+  console.log('Turbo ist geladen über addEventListener');
+  // Weitere Logik hier
 });
-
 
 document.addEventListener('DOMContentLoaded', function () {
   moment.locale('de');

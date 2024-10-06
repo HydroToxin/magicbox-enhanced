@@ -168,8 +168,6 @@ GEM
     epoll (0.3.0)
     error_highlight (0.6.0)
     erubi (1.13.0)
-    ethon (0.16.0)
-      ffi (>= 1.15.0)
     execjs (2.9.1)
     ffi (1.17.0-aarch64-linux-gnu)
     ffi (1.17.0-arm64-darwin)
@@ -254,8 +252,6 @@ GEM
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     observer (0.1.2)
-    onesignal (1.0.1)
-      typhoeus (~> 1.0, >= 1.0.1)
     openweather2 (0.1.8)
       json
     orm_adapter (0.5.0)
@@ -347,6 +343,8 @@ GEM
       chunky_png (~> 1.0)
       rqrcode_core (~> 1.0)
     rqrcode_core (1.2.0)
+    ruby-graphviz (1.2.5)
+      rexml
     rubyserial (0.6.0)
       ffi (~> 1.9, >= 1.9.3)
     rubyzip (2.3.2)
@@ -403,8 +401,6 @@ GEM
     turbo-rails (2.0.10)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
-    typhoeus (1.4.1)
-      ethon (>= 0.9.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uglifier (4.2.1)
@@ -473,7 +469,6 @@ DEPENDENCIES
   mini_magick
   momentjs-rails
   nested_form
-  onesignal
   openweather2
   os
   pg
@@ -487,6 +482,7 @@ DEPENDENCIES
   rmagick
   rpi-dht
   rqrcode
+  ruby-graphviz
   rubyserial
   seed_dump
   selenium-webdriver
