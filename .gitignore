@@ -32,6 +32,7 @@
 /apns
 /public/packs
 /public/packs-test
+/public/fonts/*
 /node_modules
 /yarn-error.log
 yarn-debug.log*
