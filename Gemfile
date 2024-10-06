@@ -49,13 +49,12 @@ gem 'simple_token_authentication', '~> 1.0'
 gem 'sprockets-rails'
 gem 'sqlite3', '~> 1.4'
 gem 'stimulus-rails'
-gem 'turbo-rails'
+#gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'uglifier'
 gem 'whenever', require: false
 gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap4'
-gem 'importmap-rails'
 
 # gem "kredis"
 # gem "bcrypt", "~> 3.1.7"
