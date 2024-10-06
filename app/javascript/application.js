@@ -2,28 +2,28 @@
 // Entry point for the build script in your package.json
 
 // Import Turbo
-import "@hotwired/turbo-rails"
+//import "@hotwired/turbo-rails"
 
 // Import Stimulus
 import { Application } from "@hotwired/stimulus"
 const application = Application.start()
-import $ from "jquery"; // einziger jQuery Import
+//import $ from "jquery"; // einziger jQuery Import
 
 import { createPopper } from '@popperjs/core';
 import 'bootstrap';
-import moment from 'moment';
-import 'moment/locale/en-gb';
-import 'tempusdominus-bootstrap-4';
-import Chart from 'chart.js/auto';
-import Highcharts from 'highcharts';
-import highchartsMore from 'highcharts/highcharts-more';
-import chartkick from 'chartkick';
-import '@kanety/jquery-nested-form';
+//import moment from 'moment';
+//import 'moment/locale/en-gb';
+//import 'tempusdominus-bootstrap-4';
+//import Chart from 'chart.js/auto';
+//import Highcharts from 'highcharts';
+//import highchartsMore from 'highcharts/highcharts-more';
+//import chartkick from 'chartkick';
+//import '@kanety/jquery-nested-form';
 
-window.$ = window.jQuery = $;
-highchartsMore(Highcharts);
+//window.$ = window.jQuery = $;
+//highchartsMore(Highcharts);
 window.createPopper = createPopper;
-chartkick.use(Highcharts);
+//chartkick.use(Highcharts);
 
 
 function init_views() {
@@ -79,7 +79,7 @@ document.addEventListener('turbo:load', () => {
 
 document.addEventListener('DOMContentLoaded', function () {
   console.log('DOMContentLoaded');
-  moment.locale('de');
+  /*moment.locale('de');
   Highcharts.wrap(Highcharts.Tooltip.prototype, 'refresh', function (proceed) {
     this.options.formatter = function () {
       moment.locale('de');
@@ -88,5 +88,5 @@ document.addEventListener('DOMContentLoaded', function () {
       return `<b>${this.series.name}</b><br/>Datum: ${date}<br/>Wert: ${value}`;
     };
     proceed.apply(this, Array.prototype.slice.call(arguments, 1));
-  });
+  });*/
 });
