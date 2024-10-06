@@ -1,48 +1,45 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 // Entry point for the build script in your package.json
-// Import UJS
+
+// Import Turbo
+import "@hotwired/turbo-rails"
+
+// Import Stimulus
 import { Application } from "@hotwired/stimulus"
-
-// Initialisiere das Stimulus-Anwendungsobjekt ohne zusätzliche Controller
-
+const application = Application.start()
 import $ from "jquery"; // einziger jQuery Import
-window.$ = window.jQuery = $;
 
-import Rails from '@rails/ujs';
-//if (!Rails.started) Rails.start();
-import Popper from 'popper.js';
+import { createPopper } from '@popperjs/core';
 import 'bootstrap';
 import moment from 'moment';
 import 'moment/locale/en-gb';
 import 'tempusdominus-bootstrap-4';
-
 import Chart from 'chart.js/auto';
 import Highcharts from 'highcharts';
 import highchartsMore from 'highcharts/highcharts-more';
-highchartsMore(Highcharts);
-
 import chartkick from 'chartkick';
 import '@kanety/jquery-nested-form';
-import 'bootstrap-select';
 
-window.Popper = Popper;
+window.$ = window.jQuery = $;
+highchartsMore(Highcharts);
+window.createPopper = createPopper;
 chartkick.use(Highcharts);
 
-const application = Application.start()
 
 function init_views() {
   console.log("init_views");
 
-  $("#sidebar").mCustomScrollbar({
-    theme: "minimal"
-  });
+  //$("#sidebar").mCustomScrollbar({
+  //  theme: "minimal"
+  //});
 
-  $('#sidebarCollapse').on('click', function () {
+  /*$('#sidebarCollapse').on('click', function () {
     $('#sidebar, #content').toggleClass('active');
     $('.collapse.in').toggleClass('in');
     $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-  });
+  });*/
 
+  /*
   $('#roomsSubmenu').collapse('show');
 
   $('.timepicker').datetimepicker({ format: 'HH:mm', stepping: "5", useCurrent: false });
@@ -58,9 +55,10 @@ function init_views() {
       $('#todo_notify').bootstrapToggle()
     });
   })
+    */
 }
 
-$(document).ready(function () {
+/*$(document).ready(function () {
   //init_views();
 });
 
@@ -72,14 +70,15 @@ $(document).on('turbo:load', function () {
 
 $(document).on('nested:fieldAdded', function (event) {
   init_views();
-})
+})*/
 
 document.addEventListener('turbo:load', () => {
   console.log('Turbo ist geladen über addEventListener');
-  // Weitere Logik hier
+  init_views();
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+  console.log('DOMContentLoaded');
   moment.locale('de');
   Highcharts.wrap(Highcharts.Tooltip.prototype, 'refresh', function (proceed) {
     this.options.formatter = function () {
