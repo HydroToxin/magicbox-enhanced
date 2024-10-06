@@ -7,64 +7,15 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempus-dominus/5.39.0/js/tempusdominus-bootstrap-4.min.js"></script>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <%= javascript_include_tag "application", type: "module", "data-turbo-track": "reload", defer: true %>
 
 
     <% if current_user %>
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-    <script>
-      window.OneSignal = window.OneSignal || [];
-      OneSignal.push(function() {
-        OneSignal.init({
-          appId: "<%= ENV['ONESIGNAL_APP_ID'] %>",
-          safari_web_id: "<%= ENV['ONESIGNAL_SAFARI_WEB_ID'] %>",
-          notifyButton: {
-            enable: true,
-          },
-          autoRegister: false,
-          allowLocalhostAsSecureOrigin: true,
-          notifyButton: {
-            enable: true
-          },
-          webhooks: {
-            cors: true
-          }
-        });
-        OneSignal.on('subscriptionChange', function (isSubscribed) {
-          if (isSubscribed) {
-            OneSignal.getUserId(function(userId) {
-              console.log("userId : " + userId);
-              $.ajax({
-                url:'/api/v1/users/<%= current_user.id %>/push_devices',
-                type:'POST',
-                dataType:'json',
-                data: { push_device: { device_id: userId }},
-                success:function(data){
-                  console.log(data);
-                },
-                error:function(data){
-                  console.err(data);
-                }
-            });
-              // return userService.updateUser(user_params)
-              //   .then(onSuccess);
-
-              // function onSuccess (response) {
-              //   console.log("response.data : ");
-              //   console.log(response.data);
-
-              //   var user = response.data.user;
-              //   OneSignal.push(["sendTag", "user_id", user.id]);
-              //   OneSignal.push(["sendTag", "user_name", user.name]);
-              //   OneSignal.push(["sendTag", "user_email", user.email]);
-              // }
-            });
-          }
-        });
-      });
-    </script>
     <% end %>
   </head>
 

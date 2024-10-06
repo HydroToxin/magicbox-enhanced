@@ -1,5 +1,3 @@
-require 'mb_logger'
-
 class Alert < ApplicationRecord
   include ActionView::Helpers::TextHelper
 
@@ -69,9 +67,9 @@ class Alert < ApplicationRecord
     trigger
     # self.users.each do |u|
     #   Notification.create!(
-    #     user: u, 
-    #     notify_email: true, 
-    #     notify_push: push_enabled, 
+    #     user: u,
+    #     notify_email: true,
+    #     notify_push: push_enabled,
     #     notifiable: self).notify()
     # end
   end
@@ -96,46 +94,46 @@ class Alert < ApplicationRecord
       context_object = last_sample.device
 
       case operator.to_sym
-      when :equal       
-        triggered = last_sample.value.to_f == value  
-        info = "#{last_sample.value.to_f} equal #{value}" 
-      when :not_equal      
-        triggered = last_sample.value.to_f != value  
-        info = "#{last_sample.value.to_f} not_equal #{value}"  
-      when :lesser   
-        triggered = last_sample.value.to_f < value  
-        info = "#{last_sample.value.to_f} lesser #{value}"     
-      when :greater   
-        triggered = last_sample.value.to_f > value  
-        info = "#{last_sample.value.to_f} greater #{value}"      
-      when :lesser_or_equal 
+      when :equal
+        triggered = last_sample.value.to_f == value
+        info = "#{last_sample.value.to_f} equal #{value}"
+      when :not_equal
+        triggered = last_sample.value.to_f != value
+        info = "#{last_sample.value.to_f} not_equal #{value}"
+      when :lesser
+        triggered = last_sample.value.to_f < value
+        info = "#{last_sample.value.to_f} lesser #{value}"
+      when :greater
+        triggered = last_sample.value.to_f > value
+        info = "#{last_sample.value.to_f} greater #{value}"
+      when :lesser_or_equal
         triggered = last_sample.value.to_f <= value
         info = "#{last_sample.value.to_f} lesser_or_equal #{value}"
       when :greater_or_equal
         triggered = last_sample.value.to_f >= value
         info = "#{last_sample.value.to_f} greater_or_equal #{value}"
-      # when :like   
-      #   triggered = false      
-      #   info = "false"  
-      # when :not_like   
-      #   triggered = false      
-      #   info = "false"  
-      # when :contain   
-      #   triggered = false      
-      #   info = "false"  
-      # when :not_contain
-      #   triggered = false     
-      #   info = "false"  
-      # when :start_with   
-      #   triggered = false   
-      #   info = "false"
-      # when :not_start_with  
+      # when :like
       #   triggered = false
       #   info = "false"
-      # when :end_with    
-      #   triggered = false   
-      #   info = "false" 
-      # when :not_end_with 
+      # when :not_like
+      #   triggered = false
+      #   info = "false"
+      # when :contain
+      #   triggered = false
+      #   info = "false"
+      # when :not_contain
+      #   triggered = false
+      #   info = "false"
+      # when :start_with
+      #   triggered = false
+      #   info = "false"
+      # when :not_start_with
+      #   triggered = false
+      #   info = "false"
+      # when :end_with
+      #   triggered = false
+      #   info = "false"
+      # when :not_end_with
       #   triggered = false
       #   info = "false"
       end
@@ -158,9 +156,9 @@ class Alert < ApplicationRecord
         MB_LOGGER.info("  -> Before notify : #{u.inspect}")
 
         n = Notification.create!(
-          user: u, 
-          notify_email: true, 
-          notify_push: push_enabled, 
+          user: u,
+          notify_email: true,
+          notify_push: push_enabled,
           notifiable: self,
           notified: context_object)
 

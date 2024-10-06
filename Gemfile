@@ -7,6 +7,7 @@ gem 'barby'
 gem 'bootsnap', require: false
 
 gem 'rails-settings-cached'
+gem 'ruby-graphviz'
 gem 'bootstrap', '~> 4.5.3'
 gem 'bootstrap4-datetime-picker-rails'
 gem 'bootstrap-select-rails'
@@ -30,7 +31,6 @@ gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dab
 gem 'mini_magick'
 gem 'momentjs-rails'
 gem 'nested_form'
-gem 'onesignal'
 gem 'openweather2'
 gem 'os'
 gem 'pg'
