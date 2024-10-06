@@ -8,7 +8,7 @@ const watch = process.argv.includes("--watch");
 // Configuration object for the build
 const buildOptions = {
   // Filter out files in the 'legacy' directory
-  entryPoints: globSync("app/javascript/**/*.js"),
+  entryPoints: globSync("app/javascript/**/*.js").filter(file => !file.includes("legacy")),
   outdir: "app/assets/builds",
   publicPath: "assets",
   bundle: true,
