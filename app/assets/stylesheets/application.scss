@@ -13,6 +13,17 @@
  *= require_tree .
  *= require_self
  */
+
+ @import 'bootstrap/scss/bootstrap';
+ @import 'bootstrap-icons/font/bootstrap-icons';
+ //@import "dhtmlxscheduler";
+ //@import "simple_calendar";
+
+ //@import "bootstrap4-toggle";
+ //@import "tempusdominus-bootstrap-4.css";
+ //@import "jquery.mCustomScrollbar.min.css";
+ @import "sidebar";
+
 $grid-breakpoints: (
   xs: 0,
   sm: 720px,
@@ -25,23 +36,6 @@ $container-max-widths: (
   md: 720px,
   lg: 960px
 );
-
-
-$fa-font-path: "./assets/webfonts";
-@import "bootstrap/scss/bootstrap";
-
-@import '@fortawesome/fontawesome-free/scss/fontawesome';
-@import '@fortawesome/fontawesome-free/scss/solid';
-@import '@fortawesome/fontawesome-free/scss/brands';
-//@import '@fortawesome/fontawesome-free/scss/variables';
-
-//@import "dhtmlxscheduler";
-//@import "simple_calendar";
-
-//@import "bootstrap4-toggle";
-//@import "tempusdominus-bootstrap-4.css";
-//@import "jquery.mCustomScrollbar.min.css";
-@import "sidebar";
 
 .timeline-dot {
   width: 10px;
