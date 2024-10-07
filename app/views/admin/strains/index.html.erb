@@ -2,25 +2,25 @@
 
 <h1>
   Strains
-  <div class="float-right">
+  <div class="float-end">
     <%= link_to 'New Strain', new_admin_strain_path, class: "btn btn-success" %>
   </div>
 </h1>
 
-<%= form_tag admin_strains_path, method: :get, class: "form-inline mb-2" do %>
-  <%= text_field_tag :search, params[:search], placeholder: "Search...", class: "form-control mr-2"%>
+<%= form_tag admin_strains_path, method: :get, class: "d-flex align-items-start mb-2 flex-wrap" do %>
+  <%= text_field_tag :search, params[:search], placeholder: "Search...", class: "form-control me-2" %>
 
-  <%= select_tag :strain_type, options_for_select([''] + Strain.strain_types.keys, params[:strain_type]), class: "form-control selectpicker mr-2", data: { style: "btn-white", live_search: true, size: 10, title: "Type", width: '150px' } %>
+  <%= select_tag :strain_type, options_for_select([''] + Strain.strain_types.keys, params[:strain_type]), class: "form-control selectpicker me-2", data: { style: "btn-white", live_search: true, size: 10, title: "Type", width: '150px' } %>
 
-  <%= select_tag :breeder, options_for_select([''] + @breeders, params[:breeder]), class: "form-control selectpicker mr-2", data: { style: "btn-white", live_search: true, size: 10, title: "Breeder…", width: '150px' } %>
+  <%= select_tag :breeder, options_for_select([''] + @breeders, params[:breeder]), class: "form-control selectpicker me-2", data: { style: "btn-white", live_search: true, size: 10, title: "Breeder…", width: '150px' } %>
 
-  <%= select_tag :effect, options_for_select([''] + @effects, params[:effect]), class: "form-control selectpicker mr-2", data: { style: "btn-white", live_search: true, size: 10, title: "Effect…", width: '150px' } %>
+  <%= select_tag :effect, options_for_select([''] + @effects, params[:effect]), class: "form-control selectpicker me-2", data: { style: "btn-white", live_search: true, size: 10, title: "Effect…", width: '150px' } %>
 
-  <%= select_tag :ailment, options_for_select([''] + @ailments, params[:ailment]), class: "form-control selectpicker mr-2", data: { style: "btn-white", live_search: true, size: 10, title: "Ailment…", width: '150px' } %>
+  <%= select_tag :ailment, options_for_select([''] + @ailments, params[:ailment]), class: "form-control selectpicker me-2", data: { style: "btn-white", live_search: true, size: 10, title: "Ailment…", width: '150px' } %>
 
-  <%= select_tag :flavor, options_for_select([''] + @flavors, params[:flavor]), class: "form-control selectpicker mr-2", data: { style: "btn-white", live_search: true, size: 10, title: "Flavor…", width: '150px' } %>
+  <%= select_tag :flavor, options_for_select([''] + @flavors, params[:flavor]), class: "form-control selectpicker me-2", data: { style: "btn-white", live_search: true, size: 10, title: "Flavor…", width: '150px' } %>
 
-  <%= select_tag :location, options_for_select([''] + @locations, params[:location]), class: "form-control selectpicker mr-2", data: { style: "btn-white", live_search: true, size: 10, title: "Location…", width: '150px' } %>
+  <%= select_tag :location, options_for_select([''] + @locations, params[:location]), class: "form-control selectpicker me-2", data: { style: "btn-white", live_search: true, size: 10, title: "Location…", width: '150px' } %>
 
   <%= submit_tag "Filter", class: "btn btn-info" %>
 <% end %>
@@ -62,7 +62,7 @@
           <% if strain.effects %>
             <% strain.effects.each do |effect| %>
               <%= link_to admin_strains_path(effect: effect) do %>
-                <span class="badge badge-secondary"><%= effect %></span>
+                <span class="badge bg-secondary"><%= effect %></span>
               <% end %>
             <% end %>
           <% end %>
@@ -71,7 +71,7 @@
           <% if strain.ailments %>
             <% strain.ailments.each do |ailment| %>
               <%= link_to admin_strains_path(ailment: ailment) do %>
-                <span class="badge badge-primary"><%= ailment %></span>
+                <span class="badge bg-primary"><%= ailment %></span>
               <% end %>
             <% end %>
           <% end %>
@@ -80,12 +80,12 @@
           <% if strain.flavors %>
             <% strain.flavors.each do |flavor| %>
               <%= link_to admin_strains_path(flavor: flavor) do %>
-                <span class="badge badge-success"><%= flavor %></span>
+                <span class="badge bg-success"><%= flavor %></span>
               <% end %>
             <% end %>
           <% end %>
         </td>
-        
+
         <td><%= link_to 'Edit', edit_admin_strain_path(strain) %></td>
       </tr>
     <% end %>

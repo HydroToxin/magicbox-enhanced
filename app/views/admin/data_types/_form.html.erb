@@ -1,8 +1,8 @@
 <%= form_with(model: [:admin, @data_type], local: true, class: "col-md-12 col-lg-8 mx-auto") do |form| %>
   <h1>
     <%= @data_type.new_record? ? "New DataType" : "Editing DataType" %>
-    <div class="float-right">
-      <% if !@data_type.new_record?  %>
+    <div class="float-end">
+      <% unless @data_type.new_record? %>
         <%= link_to "Delete", [:admin, @data_type], method: :delete, class: "btn btn-outline-danger", data: { confirm: 'Are you sure?' } %>
       <% end %>
       <%= form.submit "Save", class: "btn btn-primary" %>
@@ -14,7 +14,6 @@
   <% if @data_type.errors.any? %>
     <div class="alert alert-danger" id="error_explanation">
       <h4><%= pluralize(@data_type.errors.count, "error") %> prohibited this data_type from being saved:</h4>
-
       <ul>
       <% @data_type.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -23,8 +22,8 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "form-control col-3" %>
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: "form-control" %>
   </div>
 <% end %>

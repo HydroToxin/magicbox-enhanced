@@ -2,8 +2,8 @@
 	<div class="col-lg-12">
 		<h1>
 			Notifications
-			<div class="float-right">
-				<%= link_to icon("fas", "trash")+' Clear All Notifications', clear_all_notifications_path, method: :delete, class: "btn btn-sm btn-danger" %>
+			<div class="float-end">
+				<%= link_to "<i class='fas fa-trash'></i> Clear All Notifications".html_safe, clear_all_notifications_path, method: :delete, class: "btn btn-sm btn-danger" %>
 			</div>
 		</h1>
 		<table class="table">
@@ -17,19 +17,25 @@
 			<tbody>
 				<% @notifications.each do |notification| %>
 					<tr>
-						<td><span class="badge badge-<%= notification.notifiable.notifiable_color %>"><%= icon "fas", notification.notifiable.notifiable_icon %> <%= notification.notifiable.class.to_s %></span></td>
+						<td>
+							<span class="badge bg-<%= notification.notifiable.notifiable_color %>">
+								<i class="fas fa-<%= notification.notifiable.notifiable_icon %>"></i> <%= notification.notifiable.class.to_s %>
+							</span>
+						</td>
 						<td><%= notification.notifiable.message %></td>
 						<td>
 							<% if notification.notifiable.class.to_s == "Alert" %>
 								<% if notification.notified and notification.notified.try(:room) %>
 									<%= link_to notification.notified.room do %>
-										<span class="badge badge-info"><%= notification.notified.room.name %></span>
+										<span class="badge bg-info"><%= notification.notified.room.name %></span>
 									<% end %>
 								<% end %>
 							<% end %>
 						</td>
 						<td><small><%= fdatetime notification.created_at %></small></td>
-						<td><%= link_to icon("fas", "trash"), notification, method: :delete, class: "btn btn-sm btn-danger" %></td>
+						<td>
+							<%= link_to "<i class='fas fa-trash'></i>".html_safe, notification, method: :delete, class: "btn btn-sm btn-danger" %>
+						</td>
 					</tr>
 				<% end %>
 			</tbody>

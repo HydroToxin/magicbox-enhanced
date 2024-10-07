@@ -19,6 +19,11 @@
   transition: all 0.3s;
 }
 
+#sidebar .sidebar-body {
+  overflow-y: auto;
+  max-height: calc(100vh - 70px);
+}
+
 #sidebar.active {
   margin-left: -200px;
 }

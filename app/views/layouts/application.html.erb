@@ -9,20 +9,16 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", type: "module", "data-turbo-track": "reload", defer: true %>
-
-
-    <% if current_user %>
-    <% end %>
   </head>
 
   <body>
     <% if user_signed_in? %>
-      <div class="wrapper">
+      <div class="d-flex" id="wrapper">
         <!-- Sidebar  -->
         <%= render 'layouts/sidebar' %>
 
         <!-- Page Content  -->
-        <div id="content">
+        <div id="content" class="flex-grow-1">
             <%= render 'layouts/nav' %>
 
             <div class="container-fluid">
@@ -35,10 +31,10 @@
       <!-- Dark Overlay element -->
       <div class="overlay"></div>
     <% else %>
-      <h1 class="text-center mt-5 " style="font-size: 5rem;">
+      <h1 class="text-center mt-5" style="font-size: 5rem;">
         <%= icon "fas", "seedling", class: "text-success" %>
       </h1>
-      <h1 class="text-center mt-1 ">
+      <h1 class="text-center mt-1">
         MagicBox Enhanced
       </h1>
       <%= yield %>
