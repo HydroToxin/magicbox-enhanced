@@ -60,12 +60,12 @@ a[data-toggle="collapse"] {
 }
 
 .dropdown-toggle::after {
-  display: block;
-  position: absolute;
+  position: relative;
   top: 50%;
   right: 20px;
   transform: translateY(-50%);
   margin-top: 1em;
+  display:inline-block;
 }
 
 ul ul a {
