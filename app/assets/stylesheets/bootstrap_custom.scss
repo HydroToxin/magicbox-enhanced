@@ -1,0 +1,12 @@
+// Override deprecated Sass color functions
+$enable-deprecation-messages: false;
+@use "sass:color";
+
+$color: #c71585;
+@debug color.channel($color, "red", $space: rgb);
+@debug color.channel($color, "red", $space: display-p3);
+@debug color.channel($color, "hue", $space: oklch);
+
+// Import Bootstrap
+ @import 'bootstrap/scss/bootstrap';
+ @import 'bootstrap-icons/font/bootstrap-icons';
