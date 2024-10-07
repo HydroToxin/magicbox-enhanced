@@ -2,12 +2,12 @@
   <%= @room.name %> <span class="text-muted" style="font-size: 14px">
     [<%= @room.room_type.titleize %>] (<%= @room.length %> x <%= @room.width %> x <%= @room.height %>)
   </span>
-  <div class="float-right">
+  <div class="float-end">
     <%= link_to new_admin_room_device_path(@room), class: "btn btn-info" do %>
-      <%= icon "fas", "plus" %> Device
+      <i class="fas fa-plus"></i> Device
     <% end %>
     <%= link_to edit_admin_room_path(@room), class: "btn btn-success" do %>
-      <%= icon "fas", "edit" %> Edit
+      <i class="fas fa-edit"></i> Edit
     <% end %>
   </div>
 </h1>
@@ -53,12 +53,12 @@
 
 <h4>
   Devices
-  <div class="float-right">
-    <%= link_to admin_room_devices_path(@room), class: "text-muted mr-2", style: "font-size: 11px;" do %>
-      <%= icon "fas", "eye" %> All devices
+  <div class="float-end">
+    <%= link_to admin_room_devices_path(@room), class: "text-muted me-2", style: "font-size: 11px;" do %>
+      <i class="fas fa-eye"></i> All devices
     <% end %>
     <%= link_to events_path(room_id: @room.id), class: "text-muted", style: "font-size: 11px;" do %>
-      <%= icon "fas", "eye" %> All events
+      <i class="fas fa-eye"></i> All events
     <% end %>
   </div>
 </h4>
@@ -77,7 +77,7 @@
   </div> -->
 </div>
 
-<br> 
+<br>
 
 <h4>
   Subjects
@@ -90,8 +90,8 @@
 </div>
 
 <% unless @room.scenarios.empty? %>
-  <br> 
-  
+  <br>
+
   <% @room.scenarios.each do |scenario| %>
     <h4><%= scenario.name %></h4>
 
@@ -100,4 +100,3 @@
     <br>
   <% end %>
 <% end %>
-

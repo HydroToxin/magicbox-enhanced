@@ -1,8 +1,7 @@
 <%= form_with(model: operation, local: true) do |form| %>
   <% if operation.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(operation.errors.count, "error") %> prohibited this operation from being saved:</h2>
-
       <ul>
       <% operation.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -11,37 +10,37 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :command %>
-    <%= form.text_field :command %>
+  <div class="mb-3">
+    <%= form.label :command, class: 'form-label' %>
+    <%= form.text_field :command, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :delay %>
-    <%= form.number_field :delay %>
+  <div class="mb-3">
+    <%= form.label :delay, class: 'form-label' %>
+    <%= form.number_field :delay, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :retries %>
-    <%= form.number_field :retries %>
+  <div class="mb-3">
+    <%= form.label :retries, class: 'form-label' %>
+    <%= form.number_field :retries, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :device_id %>
-    <%= form.number_field :device_id %>
+  <div class="mb-3">
+    <%= form.label :device_id, class: 'form-label' %>
+    <%= form.number_field :device_id, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_field :description %>
+  <div class="mb-3">
+    <%= form.label :description, class: 'form-label' %>
+    <%= form.text_field :description, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :condition_id %>
-    <%= form.number_field :condition_id %>
+  <div class="mb-3">
+    <%= form.label :condition_id, class: 'form-label' %>
+    <%= form.number_field :condition_id, class: 'form-control' %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-primary' %>
   </div>
 <% end %>

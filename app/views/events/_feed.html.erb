@@ -2,16 +2,16 @@
 
 <% events.each do |event| %>
   <div class="row">
-    <div class="col-2 border-right border-info">
+    <div class="col-2 border-end border-info">
       <% if last_date and last_date.to_date != event.created_at.to_date %>
         <br>
-        <p class="text-right text-info">
+        <p class="text-end text-info">
           <%= fdate event.created_at %>
           <div class="bg-info timeline-dot"></div>
         </p>
       <% elsif event == events.first %>
         <br>
-        <p class="text-right text-info">
+        <p class="text-end text-info">
           TODAY
           <div class="bg-info timeline-dot"></div>
         </p>
@@ -34,5 +34,5 @@
     </div>
   </div>
 
-  <% last_date = event.created_at %>    
-<% end %>  
+  <% last_date = event.created_at %>
+<% end %>

@@ -1,47 +1,46 @@
 <%= form_with(model: condition, local: true) do |form| %>
   <% if condition.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(condition.errors.count, "error") %> prohibited this condition from being saved:</h2>
-
       <ul>
-      <% condition.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% condition.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :data_type_id %>
-    <%= form.number_field :data_type_id %>
+  <div class="mb-3">
+    <%= form.label :data_type_id, class: 'form-label' %>
+    <%= form.number_field :data_type_id, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :predicate %>
-    <%= form.number_field :predicate %>
+  <div class="mb-3">
+    <%= form.label :predicate, class: 'form-label' %>
+    <%= form.number_field :predicate, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :target_value %>
-    <%= form.number_field :target_value %>
+  <div class="mb-3">
+    <%= form.label :target_value, class: 'form-label' %>
+    <%= form.number_field :target_value, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :start_time %>
-    <%= form.time_select :start_time %>
+  <div class="mb-3">
+    <%= form.label :start_time, class: 'form-label' %>
+    <%= form.time_select :start_time, {}, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :end_time %>
-    <%= form.time_select :end_time %>
+  <div class="mb-3">
+    <%= form.label :end_time, class: 'form-label' %>
+    <%= form.time_select :end_time, {}, class: 'form-control' %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-primary' %>
   </div>
 <% end %>
