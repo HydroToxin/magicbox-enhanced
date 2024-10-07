@@ -1,14 +1,14 @@
 <h1>
 	<%= @subject.name %>
 
-	<div class="float-right">
+	<div class="float-end">
 		<%= link_to 'Back', room_path(@subject.room), class: "btn btn-light border" %>
 		<%= link_to 'Edit', edit_admin_grow_subject_path(@subject.grow, @subject), class: "btn btn-success" %>
-		<%= link_to icon( "fas", "plus")+" "+icon( "fas", "comment-dots"), new_grow_subject_observation_path(@subject.grow, @subject, subject_ids: [@subject.id]), class: "btn btn-outline-primary" %>
+		<%= link_to "<i class='fas fa-plus'></i> <i class='fas fa-comment-dots'></i>".html_safe, new_grow_subject_observation_path(@subject.grow, @subject, subject_ids: [@subject.id]), class: "btn btn-outline-primary" %>
 	</div>
 </h1>
 
-<%#= render partial: "subjects/subjects_charts", locals: { subjects: [@subject] } %>
+<%= render partial: "subjects/subjects_charts", locals: { subjects: [@subject] } %>
 
 <hr>
 
@@ -17,19 +17,19 @@
 		<h4>Infos</h4>
 		<div class="card">
 			<ul class="list-group list-group-flush">
-		    <li class="list-group-item"><b>Strain</b>: <span class="float-right"><%= link_to @subject.strain_name, [:admin, :strains, search: @subject.strain_name] %></span></li>
-		    <li class="list-group-item"><b>Birth Type</b>: <span class="float-right"><%= @subject.birth_type.titleize %></span></li>
-		    <li class="list-group-item"><b>Mother</b>: <span class="float-right"><%= link_to @subject.mother.name, [@subject.grow, @subject.mother] if @subject.mother %></span></li>
+		    <li class="list-group-item"><b>Strain</b>: <span class="float-end"><%= link_to @subject.strain_name, [:admin, :strains, search: @subject.strain_name] %></span></li>
+		    <li class="list-group-item"><b>Birth Type</b>: <span class="float-end"><%= @subject.birth_type.titleize %></span></li>
+		    <li class="list-group-item"><b>Mother</b>: <span class="float-end"><%= link_to @subject.mother.name, [@subject.grow, @subject.mother] if @subject.mother %></span></li>
 		  </ul>
 		</div>
 		<hr>
 		<h4>In room
-			<div class="float-right">
+			<div class="float-end">
 				<div class="dropdown d-inline">
-		      <button class="btn btn-sm dropdown-toggle text-muted" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		        <%= icon "fas", "share" %> Move To&nbsp;&nbsp;&nbsp;&nbsp;
+		      <button class="btn btn-sm dropdown-toggle text-muted" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+		        <i class="fas fa-share"></i> Move To&nbsp;&nbsp;&nbsp;&nbsp;
 		      </button>
-		      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+		      <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
 		        <% Room.all.each do |room| %>
 		          <%= link_to move_to_admin_grow_subject_path(@subject.grow, @subject, room_id: room.id), method: :post, class: "dropdown-item" do %>
 		              <%= room.name %>
@@ -41,7 +41,7 @@
 		</h4>
 		<div class="list-group">
 			<%= link_to @subject.room, class: "list-group-item" do %>
-				<%= icon "fas", "home" %> &nbsp;
+				<i class="fas fa-home"></i> &nbsp;
 				<%= @subject.room.name %>
 			<% end %>
 		</div>
@@ -49,12 +49,12 @@
 		<hr>
 
 		<h4>
-			<div class="float-right">
+			<div class="float-end">
 				<div class="dropdown d-inline">
-		      <button class="btn btn-sm dropdown-toggle text-muted" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		        <%= icon "fas", "share" %> Move To&nbsp;&nbsp;&nbsp;&nbsp;
+		      <button class="btn btn-sm dropdown-toggle text-muted" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+		        <i class="fas fa-share"></i> Move To&nbsp;&nbsp;&nbsp;&nbsp;
 		      </button>
-		      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+		      <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
 		        <% Grow.all.each do |grow| %>
 		          <%= link_to move_to_admin_grow_subject_path(@subject.grow, @subject, grow_id: grow.id), method: :post, class: "dropdown-item" do %>
 		              <%= grow.name %>
@@ -67,7 +67,7 @@
 		</h4>
 		<div class="list-group">
 			<%= link_to @subject.grow, class: "list-group-item" do %>
-				<%= icon "fas", "seedling" %> &nbsp;
+				<i class="fas fa-seedling"></i> &nbsp;
 				<%= @subject.grow.name %>
 			<% end %>
 		</div>
@@ -77,8 +77,8 @@
 		<%= image_tag @subject.generate_qr(5), class: "img-fluid" %>
 
 		<hr>
-		<h4>Barecode</h4>
-		<%= image_tag @subject.generate_barecode, class: "img-fluid" %>
+		<h4>Barcode</h4>
+		<%= image_tag @subject.generate_barcode, class: "img-fluid" %>
 	</div>
 
 	<div class="col-12 col-lg-9 mb-4">

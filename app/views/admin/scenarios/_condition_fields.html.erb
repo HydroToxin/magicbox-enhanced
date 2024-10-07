@@ -1,19 +1,19 @@
 <div class="card p-4 mb-3">
-	<div class="form-inline pb-2" style="position: relative">
-		<%= f.select :logic, options_for_select(Condition.logics.keys.map { |e| [Condition.logic_text(e.to_sym), e] }, f.object.logic), {}, class: "form-control mr-2" %>
+	<div class="d-inline-flex pb-2 w-100" style="position: relative">
+		<%= f.select :logic, options_for_select(Condition.logics.keys.map { |e| [Condition.logic_text(e.to_sym), e] }, f.object.logic), {}, class: "form-control me-2" %>
 
-		<%= f.select :condition_type, options_for_select(Condition.condition_types.keys.map { |e| [Condition.condition_type_text(e.to_sym), e] }, f.object.condition_type), {}, class: "form-control mr-2 condition_type" %>
+		<%= f.select :condition_type, options_for_select(Condition.condition_types.keys.map { |e| [Condition.condition_type_text(e.to_sym), e] }, f.object.condition_type), {}, class: "form-control me-2 condition_type" %>
 
 		<div class="condition_form condition_type_date">
 			<span>Between:&nbsp;</span>
-		  <%= f.text_field :start_time, value: ftime(f.object.start_time), class: "form-control mr-2 timepicker datetimepicker-input", id: "timepicker-#{f.object.id}-start_time", data: { toggle: "datetimepicker", target: "#timepicker-#{f.object.id}-start_time", format: "YYYY-MM-DD" } %>
+		  <%= f.text_field :start_time, value: ftime(f.object.start_time), class: "form-control me-2 timepicker datetimepicker-input", id: "timepicker-#{f.object.id}-start_time", data: { toggle: "datetimepicker", target: "#timepicker-#{f.object.id}-start_time", format: "YYYY-MM-DD" } %>
 
 		  <script type="text/javascript">
           $(function () { document.getElementById("<%= "timepicker-#{f.object.id}-start_time" %>").value = "<%= ftime(f.object.start_time) %>" });
       </script>
 
 		  <span>And:&nbsp;</span>
-		  <%= f.text_field :end_time, value: ftime(f.object.end_time), class: "form-control mr-2 timepicker datetimepicker-input", id: "timepicker-#{f.object.id}-end_time", data: { toggle: "datetimepicker", target: "#timepicker-#{f.object.id}-end_time" } %>
+		  <%= f.text_field :end_time, value: ftime(f.object.end_time), class: "form-control me-2 timepicker datetimepicker-input", id: "timepicker-#{f.object.id}-end_time", data: { toggle: "datetimepicker", target: "#timepicker-#{f.object.id}-end_time" } %>
 
 		  <script type="text/javascript">
           $(function () { document.getElementById("<%= "timepicker-#{f.object.id}-end_time" %>").value = "<%= ftime(f.object.end_time) %>" });
@@ -22,8 +22,8 @@
 
 		<div class="condition_form condition_type_time_duration">
 			<span>Every:&nbsp;</span>
-			<%= f.number_field :time_duration_hours, value: f.object.time_duration_hours, placeholder: "Hours", class: "form-control mr-2" %> hour(s) and
-			<%= f.number_field :time_duration_minutes, value: f.object.time_duration_minutes, placeholder: "Minutes", class: "form-control mr-2", max: 59, step: 5 %> minutes
+			<%= f.number_field :time_duration_hours, value: f.object.time_duration_hours, placeholder: "Hours", class: "form-control me-2" %> hour(s) and
+			<%= f.number_field :time_duration_minutes, value: f.object.time_duration_minutes, placeholder: "Minutes", class: "form-control me-2", max: 59, step: 5 %> minutes
 
 			<div class="d-inline-block mx-4">
 				<small class="text-muted">
@@ -33,19 +33,17 @@
 			</div>
 		</div>
 
-		<div class="form-inline condition_form condition_type_data_type">
-			<%= f.select :data_type_id, options_from_collection_for_select(DataType.all, "id", "name", f.object.data_type_id), {}, class: "form-control mr-2" %>
-			<%= f.select :predicate, options_for_select([[">=", 0], ["<=", 1]], f.object.predicate), {}, class: "form-control mr-2" %>
-			<%= f.number_field :target_value, placeholder: "Target value", class: "form-control mr-2" %>
+		<div class="d-inline-flex condition_form condition_type_data_type">
+			<%= f.select :data_type_id, options_from_collection_for_select(DataType.all, "id", "name", f.object.data_type_id), {}, class: "form-control me-2" %>
+			<%= f.select :predicate, options_for_select([[">=", 0], ["<=", 1]], f.object.predicate), {}, class: "form-control me-2" %>
+			<%= f.number_field :target_value, placeholder: "Target value", class: "form-control me-2" %>
 		</div>
 
 		<%= f.link_to_remove "Remove", class: "btn btn-sm btn-danger" %><br>
 	</div>
 </div>
 
-
 <script type="text/javascript">
-
 function toggle_condition_types() {
 	$(".condition_type").change(function() {
 		console.log("toggle_condition_types");

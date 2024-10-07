@@ -2,11 +2,10 @@
   <h1>
     <% if strain.new_record? %>
       New Strain
-
     <% else %>
       Editing Strain
 
-      <div class="float-right">
+      <div class="float-end">
         <%= link_to 'Destroy', [:admin, strain], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
       </div>
     <% end %>
@@ -15,7 +14,7 @@
   <hr>
 
   <% if strain.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(strain.errors.count, "error") %> prohibited this strain from being saved:</h2>
 
       <ul>
@@ -26,57 +25,27 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "form-control" %>
-  </div>
+  <% fields = [
+    { label: :name },
+    { label: :description, type: :text_area },
+    { label: :strain_type, type: :select, options: options_for_select(Strain.strain_types.keys) },
+    { label: :crosses, type: :number_field },
+    { label: :breeder },
+    { label: :effects },
+    { label: :ailments },
+    { label: :flavors },
+    { label: :location },
+    { label: :terpenes }
+  ] %>
 
-  <div class="form-group">
-    <%= form.label :description %>
-    <%= form.text_area :description, class: "form-control" %>
-  </div>
+  <% fields.each do |field| %>
+    <div class="mb-3">
+      <%= form.label field[:label], class: 'form-label' %>
+      <%= form.send(field[:type] || :text_field, field[:label], field[:options] || {}, class: "form-control") %>
+    </div>
+  <% end %>
 
-  <div class="form-group">
-    <%= form.label :strain_type %>
-    <%= form.select :strain_type, options_for_select(Strain.strain_types.keys), {}, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :crosses %>
-    <%= form.number_field :crosses, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :breeder %>
-    <%= form.text_field :breeder, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :effects %>
-    <%= form.text_field :effects, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :ailments %>
-    <%= form.text_field :ailments, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :flavors %>
-    <%= form.text_field :flavors, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :location %>
-    <%= form.text_field :location, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :terpenes %>
-    <%= form.text_field :terpenes, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.submit %>
+  <div class="mb-3">
+    <%= form.submit class: 'btn btn-primary' %>
   </div>
 <% end %>

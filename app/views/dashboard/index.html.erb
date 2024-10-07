@@ -12,11 +12,11 @@
 			<% end %>
 			<% else %>
 				<div class="col-12 mb-3">
-					<div class="card ">
+					<div class="card">
 						<div class="card-body text-center">
 							<p>No grow yet, let's create a new one!</p>
 							<%= link_to new_admin_grow_path, class: "btn btn-outline-primary" do %>
-								<%= icon "fas", "seedling" %> New Grow
+								<i class="fas fa-seedling"></i> New Grow
 							<% end %>
 						</div>
 					</div>
@@ -30,11 +30,11 @@
     <% if @todos.count > 0 %>
     	<%= render partial: "todos/todos", locals: { todos: @todos, status: :todo } %>
     <% else %>
-    	<div class="card ">
+    	<div class="card">
 				<div class="card-body text-center">
 					<p>Nothing to do yet.</p>
 					<%= link_to new_todo_path, class: "btn btn-outline-primary" do %>
-						<%= icon "fas", "clock" %> New Todo
+						<i class="fas fa-clock"></i> New Todo
 					<% end %>
 				</div>
 			</div>
@@ -55,7 +55,7 @@
 		</div>
 
 <!-- 		<div class="col-sm-12 col-lg-3">
-	    <#%= render partial: "rooms/camshot", locals: {room: room}  %>
+	    <#%= render partial: "rooms/camshot", locals: {room: room} %>
 	  </div> -->
 	</div>
 <% end %>
@@ -100,24 +100,24 @@
 		<div class="card">
 		  <div class="card-header">
 		    Weather
-	  		<div class="float-right">
+	  		<div class="float-end">
 	  			<small class="text-muted">City: <%= Setting.openweather_city %></small>
 	  		</div>
 		  </div>
 		  <ul class="list-group list-group-flush">
 		    <li class="list-group-item">
-		    	<%= icon "fas", "sun", class: "fa-2x text-warning" %>
-		    	<div class="float-right">
-		    		<h3 class="font-weight-light text-warning">
+		    	<i class="fas fa-sun fa-2x text-warning"></i>
+		    	<div class="float-end">
+		    		<h3 class="fw-light text-warning">
 		    			<%= weather_temp %>
 		    		</h3>
 		    	</div>
 		    </li>
 
 		    <li class="list-group-item">
-		    	<%= icon "fas", "cloud-rain", class: "fa-2x text-info" %>
-		    	<div class="float-right">
-		    		<h3 class="font-weight-light text-info ">
+		    	<i class="fas fa-cloud-rain fa-2x text-info"></i>
+		    	<div class="float-end">
+		    		<h3 class="fw-light text-info">
 		    			<%= weather_humidity %>
 		    		</h3>
 		    	</div>
@@ -136,8 +136,8 @@
 		    <li class="list-group-item">
 		    	<h5 class="card-title align-middle m-0">
 			    	Usage
-			    	<div class="float-right">
-			    		<h5 class="font-weight-light text-info m-0 cpu-usage">
+			    	<div class="float-end">
+			    		<h5 class="fw-light text-info m-0 cpu-usage">
 			    			<%= cpu_usage %>
 			    		</h5>
 			    	</div>
@@ -146,8 +146,8 @@
 		    <li class="list-group-item">
 		    	<h5 class="card-title align-middle m-0">
 			    	Temp
-			    	<div class="float-right">
-			    		<h5 class="font-weight-light text-info m-0 cpu-temp">
+			    	<div class="float-end">
+			    		<h5 class="fw-light text-info m-0 cpu-temp">
 			    			<%= cpu_temp %>
 			    		</h5>
 			    	</div>
@@ -156,8 +156,8 @@
 		    <li class="list-group-item">
 		    	<h5 class="card-title align-middle m-0">
 			    	Voltage
-			    	<div class="float-right">
-			    		<h5 class="font-weight-light text-info m-0 voltage">
+			    	<div class="float-end">
+			    		<h5 class="fw-light text-info m-0 voltage">
 			    			<%= voltage %>
 			    		</h5>
 			    	</div>
@@ -178,8 +178,8 @@
 		    <li class="list-group-item">
 		    	<h5 class="card-title align-middle m-0">
 			    	Used
-			    	<div class="float-right">
-			    		<h5 class="font-weight-light text-info m-0 used-memory">
+			    	<div class="float-end">
+			    		<h5 class="fw-light text-info m-0 used-memory">
 			    			<%= used_memory %>
 			    		</h5>
 			    	</div>
@@ -189,8 +189,8 @@
 		    <li class="list-group-item">
 		    	<h5 class="card-title align-middle m-0">
 			    	Free
-			    	<div class="float-right">
-			    		<h5 class="font-weight-light text-info m-0 free-memory">
+			    	<div class="float-end">
+			    		<h5 class="fw-light text-info m-0 free-memory">
 			    			<%= free_memory %>
 			    		</h5>
 			    	</div>
@@ -210,8 +210,8 @@
 		  	<li class="list-group-item">
 		    	<h5 class="card-title align-middle m-0">
 			    	Hardware
-			    	<div class="float-right">
-			    		<h5 class="font-weight-light text-info m-0">
+			    	<div class="float-end">
+			    		<h5 class="fw-light text-info m-0">
 			    			<small><small><%= hard_info %></small></small>
 			    		</h5>
 			    	</div>
@@ -221,8 +221,8 @@
 		    <li class="list-group-item">
 		    	<h5 class="card-title align-middle m-0">
 			    	Version
-			    	<div class="float-right">
-			    		<h5 class="font-weight-light text-info m-0">
+			    	<div class="float-end">
+			    		<h5 class="fw-light text-info m-0">
 			    			<small><small><%= system_info %></small></small>
 			    		</h5>
 			    	</div>
@@ -232,8 +232,8 @@
 		    <li class="list-group-item">
 		    	<h5 class="card-title align-middle m-0">
 			    	Uptime
-			    	<div class="float-right">
-			    		<h5 class="font-weight-light text-info m-0">
+			    	<div class="float-end">
+			    		<h5 class="fw-light text-info m-0">
 			    			<small><small><%= uptime_info %></small></small>
 			    		</h5>
 			    	</div>

@@ -15,7 +15,7 @@
 		<tr>
 			<td colspan="10">
 				<b class="text-muted">
-					<%= icon "fas", "cog" %>
+					<i class="fas fa-cog"></i>
 					<%= device_type.humanize.pluralize.upcase %>
 				</b>
 			</td>
@@ -27,12 +27,12 @@
 				<td><%= d.device_type.titleize %></td>
 				<td><small><%= d.data_types_string %></small></td>
 				<td>
-					<% if !d.idle? %>
-						<span class="badge badge-pill badge-<%= d.state_color %>"><%= d.device_state.titleize %></span>
+					<% unless d.idle? %>
+						<span class="badge bg-<%= d.state_color %>"><%= d.device_state.titleize %></span>
 					<% end %>
 				</td>
 				<td><i><%= d.product_reference %></i></td>
-				<td class="text-center"><span class="badge badge-pill badge-<%= d.pin_color %>"><%= d.pin_type.titleize %></span></td>
+				<td class="text-center"><span class="badge bg-<%= d.pin_color %>"><%= d.pin_type.titleize %></span></td>
 				<td class="text-center"><%= d.pin_number %></td>
 				<td><%= link_to d.room.name, admin_room_path(d.room) %></td>
 				<td>
