@@ -3,7 +3,8 @@ class DevicesController < ApplicationController
   before_action :set_room, only: [:index, :new, :show, :edit, :update, :destroy, :start, :stop, :samples, :query]
   before_action :set_device, only: [:show, :edit, :update, :destroy, :start, :stop, :query]
 
-
+  def index
+  end
 
   def show
     @samples = @device.samples.limit(100)
