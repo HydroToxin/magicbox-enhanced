@@ -26,13 +26,14 @@ $container-max-widths: (
   lg: 960px
 );
 
-@import '@fortawesome/fontawesome-free/scss/variables';
 
 $fa-font-path: "./assets/webfonts";
+@import "bootstrap/scss/bootstrap";
 
 @import '@fortawesome/fontawesome-free/scss/fontawesome';
 @import '@fortawesome/fontawesome-free/scss/solid';
 @import '@fortawesome/fontawesome-free/scss/brands';
+//@import '@fortawesome/fontawesome-free/scss/variables';
 
 //@import "dhtmlxscheduler";
 //@import "simple_calendar";

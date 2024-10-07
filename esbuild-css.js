@@ -9,7 +9,7 @@ const outputFile = 'app/assets/builds/application.css';
 
 // Define target directory for font-awesome fonts
 const fontAwesomeSource = 'node_modules/@fortawesome/fontawesome-free/webfonts';
-const fontAwesomeDestination = 'public/fonts/font-awesome';
+const fontAwesomeDestination = 'public/assets/webfonts';
 
 // Function to process SCSS
 async function processSCSS(inputFile, outputFile) {
@@ -36,7 +36,15 @@ async function processSCSS(inputFile, outputFile) {
 // Function to copy webfonts
 async function copyFonts() {
   try {
-    await fs.mkdir(fontAwesomeDestination, { recursive: true });
+    // Check if the directory exists and create it if it doesn't
+    try {
+      await fs.access(fontAwesomeDestination);
+      console.log('Destination directory exists.');
+    } catch (error) {
+      console.log('Destination directory does not exist, creating...');
+      await fs.mkdir(fontAwesomeDestination, { recursive: true });
+    }
+
     const files = await fs.readdir(fontAwesomeSource);
     for (const file of files) {
       const sourceFile = path.join(fontAwesomeSource, file);
@@ -48,7 +56,6 @@ async function copyFonts() {
     console.error('Error copying webfonts:', error);
   }
 }
-
 // Watch for changes if running in watch mode
 const watch = process.argv.includes('--watch');
 if (watch) {
