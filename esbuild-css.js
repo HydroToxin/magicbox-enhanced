@@ -3,6 +3,8 @@ import fs from 'fs/promises';
 import chokidar from 'chokidar';
 import path from 'path';
 
+console.log('esbuild-css.js startet for NODE_ENV:', process.env.NODE_ENV);
+
 // Define entry and output paths for SCSS
 const entryFile = 'app/assets/stylesheets/application.scss'; // Passe diesen Pfad je nach deinem Projekt an
 const outputFile = 'app/assets/builds/application.css';
@@ -51,7 +53,7 @@ async function copyFonts() {
       const destFile = path.join(fontAwesomeDestination, file);
       await fs.copyFile(sourceFile, destFile);
     }
-    console.log('✔ Webfonts copied successfully to public/assets/font-awesome!');
+    console.log('✔ Webfonts copied successfully to public/assets/webfonts');
   } catch (error) {
     console.error('Error copying webfonts:', error);
   }
