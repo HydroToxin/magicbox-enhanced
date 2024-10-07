@@ -9,7 +9,7 @@ fi
 export PORT="${PORT:-3000}"
 
 node esbuild.js
-#node esbuild-css.js
+node esbuild-css.js
 
 if [ "$RAILS_ENV" = "production" ]; then
   rails assets:clobber assets:precompile

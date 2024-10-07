@@ -3,7 +3,7 @@ import { sync as globSync } from "glob";
 import fs from "fs";
 
 // Check environment variable
-console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('esbuild.js startet for NODE_ENV:', process.env.NODE_ENV);
 
 // Determine if the environment is production
 const isProduction = process.env.NODE_ENV === 'production';
