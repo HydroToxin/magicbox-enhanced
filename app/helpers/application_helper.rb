@@ -64,6 +64,8 @@ module ApplicationHelper
     end
   end
 
+  def icon(i, c, d=nil)
+  end
 
   def issue_icon(issue)
     arrow = ""

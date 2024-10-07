@@ -3,6 +3,7 @@
 
 // Import Turbo
 import "@hotwired/turbo-rails"
+import * as bootstrap from "bootstrap"
 
 // Import Stimulus
 import { Application } from "@hotwired/stimulus"
