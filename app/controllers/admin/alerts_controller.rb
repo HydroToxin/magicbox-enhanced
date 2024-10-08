@@ -31,10 +31,10 @@ class Admin::AlertsController < Admin::AdminController
 
     respond_to do |format|
       if @alert.save
-        format.html { redirect_to admin_alerts_url, notice: 'Alert was successfully created.' }
+        format.html { redirect_to admin_alerts_url, notice: 'Alert was successfully created.'}
         format.json { render :show, status: :created, location: @alert }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @alert.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +63,6 @@ class Admin::AlertsController < Admin::AdminController
       format.json { head :no_content }
     end
   end
-
 
   def test
     @alert.test_alert
