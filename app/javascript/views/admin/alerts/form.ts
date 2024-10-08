@@ -16,13 +16,11 @@ function toggleAlertTypes() {
 
 function init() {
   console.log("Initializing alert types");
-  if (document.querySelector('.admin-alert-form')) { // Match your specific element/classname
     toggleAlertTypes();
     document.querySelectorAll<HTMLSelectElement>(".alert_types").forEach(element => {
       console.log(`Dispatching change event for element with value: ${element.value}`);
       element.dispatchEvent(new Event('change'));
     });
-  }
 }
 
 document.addEventListener("DOMContentLoaded", function() {

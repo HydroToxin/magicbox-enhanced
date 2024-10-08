@@ -47,7 +47,8 @@ gem 'simple_token_authentication', '~> 1.0'
 gem 'sprockets-rails'
 gem 'sqlite3', '~> 1.4'
 gem 'stimulus-rails'
-#gem 'turbo-rails'
+gem 'turbo-rails'
+gem 'hotwire-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'uglifier'
 gem 'whenever', require: false
