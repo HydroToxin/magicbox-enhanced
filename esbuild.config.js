@@ -10,7 +10,7 @@ async function buildAndWatch() {
     const ctx = await esbuild.context({
       entryPoints: entryPoints,
       bundle: true,
-      sourcemap: true,
+      sourcemap: false,
       format: 'esm',
       outdir: 'app/assets/builds',
       publicPath: 'public/assets',
