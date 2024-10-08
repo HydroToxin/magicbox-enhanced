@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node esbuild.config.js",
     "build:watch": "node esbuild.config.js --watch",
-    "build:css:compile": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "build:css:compile": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --quiet-deps",
     "build:css:prefix": "postcss ./app/assets/builds/application.css --use=autoprefixer --output=./app/assets/builds/application.css",
     "build:css": "yarn build:css:compile && yarn build:css:prefix",
     "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\""
@@ -25,7 +25,6 @@
     "chartkick": "^5.0.1",
     "chokidar": "^4.0.1",
     "esbuild-plugin-postcss": "^0.2.1",
-    "esbuild-sass-plugin": "^3.3.1",
     "glob": "^11.0.0",
     "highcharts": "^11.4.8",
     "moment": "^2.30.1",
