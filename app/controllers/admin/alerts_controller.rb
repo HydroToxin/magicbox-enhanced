@@ -7,6 +7,9 @@ class Admin::AlertsController < Admin::AdminController
     @alerts = Alert.all.order(:created_at)
   end
 
+  def clear
+  end
+
   # GET /alerts/1
   # GET /alerts/1.json
   def show
@@ -84,14 +87,14 @@ class Admin::AlertsController < Admin::AdminController
     # Never trust parameters from the scary internet, only allow the white list through.
     def alert_params
       params.require(:alert).permit(
-        :alert_type, 
-        :data_type_id, 
-        :resource_id, 
-        :operator, 
-        :value, 
+        :alert_type,
+        :data_type_id,
+        :resource_id,
+        :operator,
+        :value,
         :message,
         :enabled,
-        :push_enabled, 
+        :push_enabled,
         user_ids: [],
         push_user_ids: [])
     end

@@ -86,30 +86,3 @@
     </table>
   </div>
 <% end %>
-
-<script type="text/javascript">
-
-function toggle_alert_types() {
-  $(".alert_types").change(function() {
-    $(".alert_type_from_group").hide();
-    $("#" + $(this).val()).toggle();
-  });
-}
-
-function init() {
-  toggle_alert_types();
-  $(".alert_types").change();
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-  init();
-});
-
-document.addEventListener('turbo:load', function () {
-  init();
-});
-
-document.addEventListener('nested:fieldAdded', function(event){
-  init();
-});
-</script>

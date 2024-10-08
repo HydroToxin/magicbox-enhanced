@@ -2,6 +2,7 @@ require_relative "boot"
 
 require "rails/all"
 require 'devise'
+require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -27,8 +28,8 @@ module Magicbox
     config.time_zone = 'Europe/Berlin'
     config.active_record.default_timezone = :local
     config.load_defaults 7.0
-    config.action_view.preload_links_header = false
-
+    #config.action_view.preload_links_header = false
+    #config.assets.enabled = true
     KWH_COST  = 0.17
   end
 end

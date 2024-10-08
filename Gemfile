@@ -11,6 +11,7 @@ gem 'ruby-graphviz'
 gem 'breadcrumbs_on_rails'
 gem "cssbundling-rails", "~> 1.4"
 gem 'jsbundling-rails'
+gem 'sassc-rails'
 gem 'chartkick'
 gem 'coffee-rails'
 gem 'devise'

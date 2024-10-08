@@ -3,7 +3,6 @@
 
 // Import Turbo
 import "@hotwired/turbo-rails"
-import * as bootstrap from "bootstrap"
 
 // Import Stimulus
 import { Application } from "@hotwired/stimulus"
@@ -11,7 +10,10 @@ const application = Application.start()
 //import $ from "jquery"; // einziger jQuery Import
 
 import { createPopper } from '@popperjs/core';
-import 'bootstrap';
+import * as bootstrap from "bootstrap"
+
+import './admin';
+
 //import { config } from '@fortawesome/fontawesome-svg-core'
 //console.log(config.autoA11y) // true
 
