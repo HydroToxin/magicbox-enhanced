@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-export SASS_SUPPRESS_DEPRECATION_WARNINGS=1
-
 if gem list --no-installed --exact --silent foreman; then
   echo "Installing foreman..."
   gem install foreman
