@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es5", // oder ein neueres ES Ziel
+    "module": "esnext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./app/assets/builds"
+  },
+  "include": ["app/javascript/**/*"]
+}
