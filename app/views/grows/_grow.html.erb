@@ -2,7 +2,7 @@
 	<div class="card">
 	  <h5 class="card-header">
 			<%= link_to user_path(grow) do %>
-  			<i class="bi-flower1"></i>
+  			<i class="bi-flower1 h4"></i>
 				<%= grow.description %>
 			<% end %>
 	  	<div class="float-end d-none d-md-block">
@@ -25,7 +25,7 @@
 
 	    <div class="float-end">
 	    	<%= link_to new_grow_observation_path(grow), class: "btn btn-sm btn-outline-primary" do %>
-		      <i class="fas fa-plus"></i> <i class="fas fa-comment-dots"></i>
+		      <i class="bi-plus h4"></i> <i class="bi-chat-right-dots h4"></i>
 		    <% end %>
 	    </div>
 	  </div>

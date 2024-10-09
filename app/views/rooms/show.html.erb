@@ -4,10 +4,10 @@
   </span>
   <div class="float-end">
     <%= link_to new_admin_room_device_path(@room), class: "btn btn-info" do %>
-      <i class="fas fa-plus"></i> Device
+      <i class="bi-plus h4"></i> Device
     <% end %>
     <%= link_to edit_admin_room_path(@room), class: "btn btn-success" do %>
-      <i class="fas fa-edit"></i> Edit
+      <i class="bi-pencil h4"></i> Edit
     <% end %>
   </div>
 </h1>
@@ -55,10 +55,10 @@
   Devices
   <div class="float-end">
     <%= link_to admin_room_devices_path(@room), class: "text-muted me-2", style: "font-size: 11px;" do %>
-      <i class="fas fa-eye"></i> All devices
+      <i class="bi-eye h4"></i> All devices
     <% end %>
     <%= link_to events_path(room_id: @room.id), class: "text-muted", style: "font-size: 11px;" do %>
-      <i class="fas fa-eye"></i> All events
+      <i class="bi-eye h4"></i> All events
     <% end %>
   </div>
 </h4>
