@@ -1,7 +1,7 @@
 <div class="col-12 mb-3">
 	<div class="card">
 	  <h5 class="card-header">
-      <%= link_to "<i class='fas fa-seedling'></i> #{grow.description}".html_safe, grow %>
+      <%= link_to "<i class='bi-flower1 h4'></i> #{grow.description}".html_safe, grow %>
 	  	<div class="float-end">
 	  		<span class="badge <%= grow.status_badge_class %> ms-2"><%= grow.grow_status %></span>
 		    <span class="badge bg-info"><%= grow.substrate %></span>
@@ -22,7 +22,7 @@
 
 	    <div class="float-end">
 	    	<%= link_to new_grow_observation_path(grow), class: "btn btn-outline-primary" do %>
-		      <i class="fas fa-plus"></i> <i class="fas fa-comment-dots"></i>
+		      <i class="bi-plus h4"></i> <i class="bi-chat-quote h4"></i>
 		    <% end %>
 	    </div>
 	  </div>

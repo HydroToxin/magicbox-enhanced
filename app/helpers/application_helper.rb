@@ -64,7 +64,8 @@ module ApplicationHelper
     end
   end
 
-  def icon(i, c, d=nil)
+  def icon(i, c=nil, style=nil)
+    "<i class='bi-#{i} #{style}'>#{c}</i>".html_safe
   end
 
   def issue_icon(issue)
@@ -77,11 +78,11 @@ module ApplicationHelper
     end
 
     if issue.level1?
-      icon("fas", "arrow#{arrow}")
+      icon("bi", "arrow#{arrow}")
     elsif issue.level2?
-      icon("fas", "arrow#{arrow}") + " " + icon("fas", "arrow#{arrow}")
+      icon("bi", "arrow#{arrow}") + " " + icon("bi", "arrow#{arrow}")
     elsif issue.level3?
-      icon("fas", "arrow#{arrow}") + " " + icon("fas", "arrow#{arrow}") + " " + icon("fas", "arrow#{arrow}")
+      icon("bi", "arrow#{arrow}") + " " + icon("bi", "arrow#{arrow}") + " " + icon("bi", "arrow#{arrow}")
     end
   end
 

@@ -8,7 +8,7 @@
             <i>No device registered yet</i>
             <br>
             <%= link_to new_admin_room_device_path(room), class: "btn btn-outline-info mt-4" do %>
-              <i class="fas fa-plus"></i> Device
+              <i class="bi-plus h4"></i> Device
             <% end %>
           </p>
         </div>
@@ -24,19 +24,19 @@
               <div class="float-end">
                 <div class="dropdown">
                   <button class="btn btn-sm dropdown-toggle bg-transparent text-muted" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-cog me-4"></i>
+                    <i class="bi-pci-card h4 me-4"></i>
                   </button>
                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                     <%= link_to start_admin_room_device_path(device.room, device), method: :post, class: "dropdown-item text-success" do %>
-                      <i class="fas fa-play"></i> Start
+                      <i class="bi-play h4"></i> Start
                     <% end %>
                     <%= link_to stop_admin_room_device_path(device.room, device), method: :post, class: "dropdown-item text-danger" do %>
-                      <i class="fas fa-stop"></i> Stop
+                      <i class="b-stop h4"></i> Stop
                     <% end %>
 
                     <div class="dropdown-divider"></div>
                     <%= link_to edit_admin_room_device_path(device.room, device), class: "dropdown-item" do %>
-                      <i class="fas fa-edit"></i> Edit
+                      <i class="bi-pencil h4"></i> Edit
                     <% end %>
                   </div>
                 </div>
@@ -57,7 +57,7 @@
             <i>No sensor data yet</i>
             <br>
             <%= link_to new_admin_room_device_path(room), class: "btn btn-outline-info mt-4" do %>
-              <i class="fas fa-plus"></i> Device
+              <i class="bi-plush h4"></i> Device
             <% end %>
           </p>
         </div>
@@ -72,17 +72,17 @@
                 <div class="float-end">
                   <div class="dropdown">
                     <button class="btn btn-sm dropdown-toggle bg-transparent text-muted" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-cog me-4"></i>
+                      <i class="bi-pci-card h4 me-4"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                       <%= link_to query_room_device_path(device.room, device), method: :post, class: "dropdown-item text-info" do %>
-                        <i class="fas fa-question"></i> Query
+                        <i class="bi-question-lg h4"></i> Query
                       <% end %>
 
                       <div class="dropdown-divider"></div>
 
                       <%= link_to edit_admin_room_device_path(device.room, device), class: "dropdown-item text-success" do %>
-                        <i class="fas fa-edit"></i> Edit
+                        <i class="bi-pencil h4"></i> Edit
                       <% end %>
                     </div>
                   </div>

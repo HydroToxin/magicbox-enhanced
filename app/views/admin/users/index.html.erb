@@ -3,7 +3,7 @@
 
 	<div class="float-end">
 		<%= link_to new_admin_user_path, class: "btn btn-success" do %>
-			<i class="fas fa-plus"></i> New
+			<i class="bi-plus-lg h4"></i> New
 		<% end %>
 	</div>
 </h1>
@@ -25,10 +25,10 @@
 				<td><%= user.authentication_token %></td>
 				<td>
 					<%= link_to update_password_admin_user_path(user), class: "btn btn-sm btn-outline-black border-dark" do %>
-						<i class="fas fa-lock"></i>
+						<i class="bi-person-lock h4"></i>
 					<% end %>
 					<%= link_to edit_admin_user_path(user), class: "btn btn-sm btn-outline-success" do %>
-						<i class="fas fa-edit"></i>
+						<i class="bi-pencil h4"></i>
 					<% end %>
 				</td>
 			</tr>

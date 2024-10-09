@@ -2,7 +2,7 @@
   Data types
   <div class="float-end">
     <%= link_to new_admin_data_type_path, class: "btn btn-info" do %>
-      <i class="fas fa-plus"></i>
+      <i class="bi-plus h4"></i>
       New
     <% end %>
   </div>
@@ -22,7 +22,7 @@
   <tbody>
     <% @data_types.each do |data_type| %>
       <tr>
-        <td><b><i class="fas fa-database me-2"></i> <%= data_type.name %></b></td>
+        <td><b><i class="bi-database h4 me-2"></i> <%= data_type.name %></b></td>
         <td class="text-center"><%= data_type.samples.count %></td>
         <td>
         	<%= link_to 'Edit', edit_admin_data_type_path(data_type), class: "btn btn-sm btn-outline-success" %>

@@ -2,7 +2,7 @@
   Resources
   <div class="float-end">
     <%= link_to new_admin_resource_path, class: "btn btn-info" do %>
-      <i class="fas fa-plus"></i>
+      <i class="bi-plus h4"></i>
       New
     <% end %>
   </div>
@@ -26,7 +26,7 @@
   <tbody>
     <% @resources.each do |resource| %>
       <tr>
-        <td><b><i class="fas fa-tint me-2"></i> <%= resource.name %></b></td>
+        <td><b><i class="bi-wallet-fill h4"></i> <%= resource.name %></b></td>
         <td class="text-center"><%= resource.shortname %></td>
         <td><%= resource.category.name %></td>
         <td><%= resource.choices.join(", ") %></td>

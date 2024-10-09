@@ -3,18 +3,18 @@
     <li class="list-group-item">
       <div class="d-flex justify-content-between">
         <span class="mb-1">
-          <i class="<%= 'fas fa-bell' %> <%= status != :done ? 'text-success' : 'text-muted' %> me-2"></i>
+          <i class="<%= 'bi-bell h4' %> <%= status != :done ? 'text-success' : 'text-muted' %> me-2"></i>
           <%= todo.body %>
         </span>
 
         <div class="d-flex">
           <% if status == :todo %>
             <%= link_to done_todo_path(todo), method: :post, class: "btn btn-sm py-0 text-success ms-3" do %>
-              <i class="fas fa-check"></i>
+              <i class="bi-check h4"></i>
             <% end %>
           <% else %>
             <%= link_to undone_todo_path(todo), method: :post, class: "btn btn-sm py-0 text-danger ms-3" do %>
-              <i class="fas fa-undo"></i>
+              <i class="bi-arrow-counterclockwise h4"></i>
             <% end %>
           <% end %>
         </div>
@@ -23,7 +23,7 @@
         Scheduled to <b><%= fdatetime todo.date %></b>
         <div class="float-end">
           <%= link_to edit_todo_path(todo), class: "btn btn-sm py-0 text-success ms-3" do %>
-            <i class="fas fa-edit"></i>
+            <i class="bi-pencil h4"></i>
           <% end %>
         </div>
       </small>

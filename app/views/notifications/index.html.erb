@@ -3,7 +3,7 @@
 		<h1>
 			Notifications
 			<div class="float-end">
-				<%= link_to "<i class='fas fa-trash'></i> Clear All Notifications".html_safe, clear_all_notifications_path, method: :delete, class: "btn btn-sm btn-danger" %>
+				<%= link_to "<i class='bi-trash h4'></i> Clear All Notifications".html_safe, clear_all_notifications_path, method: :delete, class: "btn btn-sm btn-danger" %>
 			</div>
 		</h1>
 		<table class="table">
@@ -19,7 +19,7 @@
 					<tr>
 						<td>
 							<span class="badge bg-<%= notification.notifiable.notifiable_color %>">
-								<i class="fas fa-<%= notification.notifiable.notifiable_icon %>"></i> <%= notification.notifiable.class.to_s %>
+								<i class="bi-<%= notification.notifiable.notifiable_icon %> h4"></i> <%= notification.notifiable.class.to_s %>
 							</span>
 						</td>
 						<td><%= notification.notifiable.message %></td>
@@ -34,7 +34,7 @@
 						</td>
 						<td><small><%= fdatetime notification.created_at %></small></td>
 						<td>
-							<%= link_to "<i class='fas fa-trash'></i>".html_safe, notification, method: :delete, class: "btn btn-sm btn-danger" %>
+							<%= link_to "<i class='bi-trash h4'></i>".html_safe, notification, method: :delete, class: "btn btn-sm btn-danger" %>
 						</td>
 					</tr>
 				<% end %>

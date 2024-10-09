@@ -6,78 +6,27 @@ import "@hotwired/turbo-rails"
 
 // Import Stimulus
 import { Application } from "@hotwired/stimulus"
-const application = Application.start()
-//import $ from "jquery"; // einziger jQuery Import
-
 import { createPopper } from '@popperjs/core';
-import * as bootstrap from "bootstrap"
+import Bootstrap from "bootstrap"
+import Highcharts from "highcharts"
+import moment from 'moment';
+import 'moment/locale/en-gb';
+import Chartkick from 'chartkick';
+import Chart from 'chart.js/auto';
+import highchartsMore from 'highcharts/highcharts-more';
 
+highchartsMore(Highcharts);
+Chartkick.use(Highcharts);
+window.createPopper = createPopper;
 import './admin';
 
-//import { config } from '@fortawesome/fontawesome-svg-core'
-//console.log(config.autoA11y) // true
-
-//import moment from 'moment';
-//import 'moment/locale/en-gb';
-//import 'tempusdominus-bootstrap-4';
-//import Chart from 'chart.js/auto';
-//import Highcharts from 'highcharts';
-//import highchartsMore from 'highcharts/highcharts-more';
-//import chartkick from 'chartkick';
-//import '@kanety/jquery-nested-form';
-
-//window.$ = window.jQuery = $;
-//highchartsMore(Highcharts);
-window.createPopper = createPopper;
-//chartkick.use(Highcharts);
+const application = Application.start()
 
 
 function init_views() {
   console.log("init_views");
 
-  //$("#sidebar").mCustomScrollbar({
-  //  theme: "minimal"
-  //});
-
-  /*$('#sidebarCollapse').on('click', function () {
-    $('#sidebar, #content').toggleClass('active');
-    $('.collapse.in').toggleClass('in');
-    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-  });*/
-
-  /*
-  $('#roomsSubmenu').collapse('show');
-
-  $('.timepicker').datetimepicker({ format: 'HH:mm', stepping: "5", useCurrent: false });
-  $('.weekpicker').datetimepicker({ format: 'YYYY-MM-DD', inline: true, sideBySide: true });
-  $('#datetimepicker-todo-date').datetimepicker({ format: 'YYYY-MM-DD HH:mm', inline: true, sideBySide: true });
-
-  $('input[type=checkbox][data-toggle^=toggle]').bootstrapToggle();
-
-  $(function () {
-    $('[data-toggle="popover"]').popover({ container: 'body' })
-
-    $("[data-toggle='popover']").on('shown.bs.popover', function () {
-      $('#todo_notify').bootstrapToggle()
-    });
-  })
-    */
 }
-
-/*$(document).ready(function () {
-  //init_views();
-});
-
-$(document).on('turbo:load', function () {
-  console.log('Turbo ist geladen über jquery');
-  $(window).trigger('load.bs.select.data-api');
-  init_views();
-});
-
-$(document).on('nested:fieldAdded', function (event) {
-  init_views();
-})*/
-
 document.addEventListener('turbo:load', () => {
   console.log('Turbo ist geladen über addEventListener');
   init_views();

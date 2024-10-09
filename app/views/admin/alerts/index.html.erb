@@ -2,7 +2,7 @@
   Alerts
   <div class="float-end">
     <%= link_to new_admin_alert_path, class: "btn btn-info" do %>
-      <i class="fas fa-plus"></i>
+      <i class="bi-plus h4"></i>
       New
     <% end %>
   </div>
@@ -42,12 +42,11 @@
         <td><%= alert.operator %></td>
         <td class="text-center"><%= alert.value %></td>
         <td class="font-monospace"><%= alert.message %></td>
-        <td><%= alert.enabled ? "<i class='fas fa-check text-success'></i>".html_safe : "<i class='fas fa-times'></i>".html_safe %></td>
-        <td><%= alert.push_enabled ? "<i class='fas fa-check text-success'></i>".html_safe : "<i class='fas fa-times'></i>".html_safe %></td>
+        <td><%= alert.enabled ? "<i class='bi-check h4 text-success'></i>".html_safe : "<i class='bi-clock h4'></i>".html_safe %></td>
+        <td><%= alert.push_enabled ? "<i class='bi-check h4 text-success'></i>".html_safe : "<i class='bi-clock h4'></i>".html_safe %></td>
         <td>
           <%= link_to 'Edit', edit_admin_alert_path(alert), class: "btn btn-sm btn-outline-success" %>
           <%= link_to 'Test', test_admin_alert_path(alert), method: :post, class: "btn btn-sm btn-outline-warning" %>
-          <%= link_to 'Destroy', [:admin, alert], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-outline-danger" %>
           <%= form_with(url: [:admin, alert], method: :post, data: { turbo_confirm: 'Are you sure?' }, class: "d-inline") do %>
             <%= hidden_field_tag '_method', 'delete' %>
             <%= submit_tag 'Destroy', class: "btn btn-sm btn-outline-danger" %>

@@ -27,11 +27,9 @@
         <td><span class="badge bg-secondary"><%= grow.flowering %></span></td>
         <td><%= grow.subjects.count %></td>
         <td>
-          <%= link_to icon("fas", "eye"), grow, class: "btn btn-sm btn-outline-secondary" %>
-          <%= link_to 'Edit', edit_admin_grow_path(grow), class: "btn btn-sm btn-outline-success" %>
-          <%= link_to new_grow_observation_path(grow), class: "btn btn-sm btn-outline-primary" do %>
-            <%= icon("fas", "plus") %> <%= icon("fas", "comment-dots") %>
-          <% end %>
+          <%= link_to "View", grow, class: "btn btn-sm btn-outline-secondary" %>
+          <%= link_to "Edit", edit_admin_grow_path(grow), class: "btn btn-sm btn-outline-success" %>
+          <%= link_to "New", new_grow_observation_path(grow), class: "btn btn-sm btn-outline-primary" %>
         </td>
       </tr>
     <% end %>

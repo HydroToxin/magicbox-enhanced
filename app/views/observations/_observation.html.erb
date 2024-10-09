@@ -5,11 +5,11 @@
     <div class="float-end">
       <% if observation.user.id == current_user.id %>
         <%= link_to edit_grow_observation_path(observation.grow, observation), class: "btn text-success" do %>
-          <i class="fas fa-edit"></i>
+          <i class="bi-pencil h4"></i>
         <% end %>
 
         <%= link_to grow_observation_path(observation.grow, observation), method: :delete, class: "btn text-danger" do %>
-          <i class="fas fa-trash"></i>
+          <i class="bi-trash h4"></i>
         <% end %>
       <% end %>
 
@@ -35,7 +35,7 @@
       <% observation.subjects.each do |subject| %>
         <%= link_to grow_subject_path(subject.grow, subject) do %>
           <span class="badge bg-primary">
-            <i class="fas fa-seedling"></i> <%= subject.name %>
+            <i class="-flower1"></i> <%= subject.name %>
           </span>
         <% end %>
       <% end %>
@@ -45,7 +45,7 @@
   <ul class="list-group list-group-flush">
     <% if observation.room %>
       <li class="list-group-item text-success">
-        <i class="fas fa-box"></i> <%= link_to observation.room.name, admin_room_path(observation.room) %>
+        <i class="bi-box h4"></i> <%= link_to observation.room.name, admin_room_path(observation.room) %>
       </li>
     <% end %>
 
