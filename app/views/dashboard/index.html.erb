@@ -16,7 +16,7 @@
 						<div class="card-body text-center">
 							<p>No grow yet, let's create a new one!</p>
 							<%= link_to new_admin_grow_path, class: "btn btn-outline-primary" do %>
-								<i class="fas fa-seedling"></i> New Grow
+								<i class="bi-flower1 h4"></i> New Grow
 							<% end %>
 						</div>
 					</div>
@@ -34,7 +34,7 @@
 				<div class="card-body text-center">
 					<p>Nothing to do yet.</p>
 					<%= link_to new_todo_path, class: "btn btn-outline-primary" do %>
-						<i class="fas fa-clock"></i> New Todo
+						<i class="bi-clock h4"></i> New Todo
 					<% end %>
 				</div>
 			</div>
@@ -106,7 +106,7 @@
 		  </div>
 		  <ul class="list-group list-group-flush">
 		    <li class="list-group-item">
-		    	<i class="fas fa-sun fa-2x text-warning"></i>
+		    	<i class="bi-sun text-warning h4"></i>
 		    	<div class="float-end">
 		    		<h3 class="fw-light text-warning">
 		    			<%= weather_temp %>
@@ -115,7 +115,7 @@
 		    </li>
 
 		    <li class="list-group-item">
-		    	<i class="fas fa-cloud-rain fa-2x text-info"></i>
+		    	<i class="bi-cloud-drizzle h4 text-info"></i>
 		    	<div class="float-end">
 		    		<h3 class="fw-light text-info">
 		    			<%= weather_humidity %>

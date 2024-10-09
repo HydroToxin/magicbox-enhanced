@@ -60,7 +60,6 @@ class SamplesController < ApplicationController
 		Room.all.each do |room|
 			data = DataType.all.map { |data_type|
 				samples = room.samples.where(data_type_id: data_type.id)
-
 				now = Time.zone.now
 
 				if @date_filter.to_s == "today"
@@ -79,14 +78,12 @@ class SamplesController < ApplicationController
 				end
 
 				samples = samples.order(created_at: :desc)
-
 				{
 					name: data_type.name,
 			    data: samples.map { |e| [ e.created_at, e.value] },
 			    color: samples.first.html_color
-				} if samples.first
+				} if samples.present?
 			}.compact
-
 			@data_types_samples[room.name] = data
 		end
 	end
