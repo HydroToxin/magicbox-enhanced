@@ -7,24 +7,24 @@
     <% if @grow.harvestable?  %>
       <% if @grow.harvest.nil? %>
         <%= link_to new_admin_grow_harvest_path(@grow), class: "btn btn-success" do %>
-          <i class="fas fa-seedling"></i>
+          <i class="bi-flower1 h4"></i>
           Harvest
         <% end %>
       <% else %>
         <%= link_to [@grow, @grow.harvest], class: "btn btn-success" do %>
-          <i class="fas fa-seedling"></i>
+          <i class="bi-flower1 h4"></i>
           Harvest
         <% end %>
       <% end %>
     <% end %>
 
     <%= link_to new_admin_grow_subject_path(@grow), class: "btn btn-info" do %>
-      <i class="fas fa-plus"></i>
+      <i class="bi-plus h4"></i>
       Subject
     <% end %>
     <%= link_to 'Edit', edit_admin_grow_path(@grow), class: "btn btn-success" %>
     <%= link_to new_grow_observation_path(@grow), class: "btn btn-outline-primary" do %>
-      <i class="fas fa-plus"></i> <i class="fas fa-comment-dots"></i>
+      <i class="bi-plus h4"></i> <i class="bi-comment-dots h4"></i>
     <% end %>
   </div>
 </h1>
@@ -54,7 +54,7 @@
   Weeks
   <div class="float-end">
     <div class="col-sm-4 col-md-3 col-lg-2 mb-3">
-      <%= link_to icon("fas", "plus") + ' Week', new_grow_week_path(@grow), class: "btn btn-sm btn-outline-secondary" %>
+      <%= link_to icon("bi-plus h4") + ' Week', new_grow_week_path(@grow), class: "btn btn-sm btn-outline-secondary" %>
     </div>
   </div>
 </h4>
@@ -71,7 +71,7 @@
   Subjects
   <div class="float-end">
     <%= link_to print_qr_grow_path(@grow), class: "text-muted", style: "font-size: 11px;" do %>
-      <i class="fas fa-print"></i> Print QR
+      <i class="bi-print h4"></i> Print QR
     <% end %> -
   </div>
 </h4>

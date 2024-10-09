@@ -2,7 +2,7 @@
   <div class="col-sm-12 col-md-6 col-lg-4">
     <div class="card border-success mb-4">
       <h4 class="card-header text-success">
-        <i class="fas fa-seedling"></i>
+        <i class="bi-flower1 h4"></i>
         <%= link_to grow_subject_path(subject.grow, subject) do %>
           <%= subject.name %>
           <small class="text-secondary" style="font-size: 0.8rem">(<%= subject.strain_name %>)</small>
@@ -11,12 +11,12 @@
         <div class="float-end">
           <div class="dropdown">
             <button class="btn btn-sm dropdown-toggle bg-transparent text-muted" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-cog me-4"></i>
+              <i class="bi-flower2 h4"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
 
               <%= link_to new_grow_subject_observation_path(subject.grow, subject, subject_ids: [subject.id]), class: "dropdown-item" do %>
-                <i class="fas fa-plus"></i> <i class="fas fa-comment-dots"></i> Observation
+                <i class="bi-plus2 h4"></i> <i class="bi-chat-right-dots h4"></i> Observation
               <% end %>
 
               <div class="dropdown-divider"></div>
