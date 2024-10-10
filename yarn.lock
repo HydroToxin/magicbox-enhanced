@@ -519,6 +519,11 @@ dependency-graph@^0.11.0:
   resolved "https://registry.yarnpkg.com/dependency-graph/-/dependency-graph-0.11.0.tgz#ac0ce7ed68a54da22165a85e97a01d53f5eb2e27"
   integrity sha512-JeMq7fEshyepOWDfcfHK06N3MhyPhz++vtqWhMT5O9A3K42rdsEDpfdVqjaqaAhsw6a+ZqeDvQVtD0hFHQWrzg==
 
+dhtmlx-scheduler@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/dhtmlx-scheduler/-/dhtmlx-scheduler-7.1.1.tgz#c3386313c2c1c89da8ad8205d9b2ff261f4dc068"
+  integrity sha512-35wG+kRMKB73D76GgmumryBRXVcw29YY7jEip8sM2a6cFp4ebQsVU5kuYGJnUY1/ykALp4fcVf2TYRXuyaS28Q==
+
 eastasianwidth@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/eastasianwidth/-/eastasianwidth-0.2.0.tgz#696ce2ec0aa0e6ea93a397ffcf24aa7840c827cb"

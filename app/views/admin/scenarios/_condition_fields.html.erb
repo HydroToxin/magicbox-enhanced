@@ -1,4 +1,4 @@
-<div class="card p-4 mb-3">
+<div class="card p-4 mb-3" id="admin-scenarios-condition-fields">
 	<div class="d-inline-flex pb-2 w-100" style="position: relative">
 		<%= f.select :logic, options_for_select(Condition.logics.keys.map { |e| [Condition.logic_text(e.to_sym), e] }, f.object.logic), {}, class: "form-control me-2" %>
 
