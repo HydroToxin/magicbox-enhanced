@@ -7,7 +7,7 @@ import "@hotwired/turbo-rails"
 // Import Stimulus
 import { Application } from "@hotwired/stimulus"
 import { createPopper } from '@popperjs/core';
-import Bootstrap from "bootstrap"
+import * as bootstrap from "bootstrap";
 import Highcharts from "highcharts"
 import moment from 'moment';
 import 'moment/locale/en-gb';
@@ -19,7 +19,8 @@ highchartsMore(Highcharts);
 Chartkick.use(Highcharts);
 window.createPopper = createPopper;
 import './admin';
-
+import './views/calendar/calendar'
+import './views/grows/weeks'
 const application = Application.start()
 
 

@@ -3,6 +3,9 @@ class Admin::BatchesController < Admin::AdminController
   before_action :set_harvest, only: [:create, :edit, :update, :destroy]
   before_action :set_batch, only: [:show, :edit, :update, :destroy]
 
+  def show
+  end
+
   # GET /batches/new
   def new
     add_breadcrumb "New Batch"

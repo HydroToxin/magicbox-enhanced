@@ -1,3 +1,17 @@
+function initAdminAlertForm() {
+  const adminAlertForm = document.getElementById("admin-alert-form") as HTMLFormElement | null;
+
+  if (!adminAlertForm) {
+    return; // Exit the function if the form is not present
+  }
+
+  toggleAlertTypes();
+  document.querySelectorAll<HTMLSelectElement>(".alert_types").forEach(element => {
+    console.log(`Dispatching change event for element with value: ${element.value}`);
+    element.dispatchEvent(new Event('change'));
+  });
+}
+
 function toggleAlertTypes() {
   const alertTypeElements = document.querySelectorAll<HTMLSelectElement>(".alert_types");
   alertTypeElements.forEach((element) => {
@@ -14,29 +28,14 @@ function toggleAlertTypes() {
   });
 }
 
-function init() {
-  console.log("Initializing alert types");
-    toggleAlertTypes();
-    document.querySelectorAll<HTMLSelectElement>(".alert_types").forEach(element => {
-      console.log(`Dispatching change event for element with value: ${element.value}`);
-      element.dispatchEvent(new Event('change'));
-    });
-}
-
 document.addEventListener("DOMContentLoaded", function() {
-  console.log("DOM fully loaded and parsed");
-  init();  // Call your original init function
-
+  initAdminAlertForm();
 });
 
 document.addEventListener("turbo:load", function() {
-  console.log("DOM fully loaded and parsed");
-  init();  // Call your original init function
-
+  initAdminAlertForm();
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-  console.log("nested:fieldAdded fully loaded and parsed");
-  init();  // Call your original init function
-
+  initAdminAlertForm();
 });
