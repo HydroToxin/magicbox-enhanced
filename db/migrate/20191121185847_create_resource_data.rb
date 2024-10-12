@@ -1,11 +1,13 @@
 class CreateResourceData < ActiveRecord::Migration[5.2]
+  disable_ddl_transaction!
   def change
     create_table :resource_datas do |t|
-      t.integer :resource_id
-      t.integer :observation_id
-      t.integer :subject_id
       t.string :value
       t.string :unit
+
+      t.references :resource, foreign_key: true
+      t.references :observation, foreign_key: true
+      t.references :subject, foreign_key: true
 
       t.timestamps
     end
