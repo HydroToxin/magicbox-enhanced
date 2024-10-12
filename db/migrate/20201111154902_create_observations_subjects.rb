@@ -1,8 +1,9 @@
 class CreateObservationsSubjects < ActiveRecord::Migration[5.2]
+  disable_ddl_transaction!
   def change
     create_table :observations_subjects do |t|
-      t.integer :observation_id
-      t.integer :subject_id
+      t.references :observation, foreign_key: true
+      t.references :subject, foreign_key: true
 
       t.timestamps
     end

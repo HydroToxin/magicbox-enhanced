@@ -78,6 +78,7 @@ class SamplesController < ApplicationController
 				end
 
 				samples = samples.order(created_at: :desc)
+				puts "DataType = #{data_type.name}"
 				{
 					name: data_type.name,
 			    data: samples.map { |e| [ e.created_at, e.value] },

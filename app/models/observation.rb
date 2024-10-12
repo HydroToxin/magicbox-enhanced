@@ -8,7 +8,7 @@ class Observation < ApplicationRecord
 	has_many :observations_subjects
 	has_many :subjects, through: :observations_subjects
 
-	has_many :resource_datas
+	has_many :resource_datas, class_name: 'ResourceData'
 	accepts_nested_attributes_for :resource_datas, allow_destroy: true, :reject_if => proc { |attributes| attributes['value'].blank? }
 
 	has_many :issues

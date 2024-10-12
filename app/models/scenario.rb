@@ -6,7 +6,7 @@ class Scenario < ApplicationRecord
 
 	validates :name, presence: true
 
-	has_many :condition_groups, dependent: :destroy#, key: "condition_groups_attributes"
+	has_many :condition_groups, dependent: :destroy
 	has_many :conditions, through: :condition_groups
 	has_many :operations, through: :condition_groups
 

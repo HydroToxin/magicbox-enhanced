@@ -1,8 +1,9 @@
 class CreateSettings < ActiveRecord::Migration[5.2]
   def self.up
     create_table :settings do |t|
-      t.string  :var,        null: false
-      t.text    :value,      null: true
+      t.string :var, null: false
+      t.text :value, null: true
+
       t.timestamps
     end
 

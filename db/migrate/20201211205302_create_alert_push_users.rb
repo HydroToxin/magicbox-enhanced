@@ -1,8 +1,8 @@
 class CreateAlertPushUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :alert_push_users do |t|
-      t.integer :user_id
-      t.integer :alert_id
+      t.references :user, null: false, foreign_key: true
+      t.references :alert, null: false, foreign_key: { to_table: :alerts }
 
       t.timestamps
     end

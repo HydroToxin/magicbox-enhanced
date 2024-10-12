@@ -1,13 +1,15 @@
 class CreateObservations < ActiveRecord::Migration[5.2]
+  disable_ddl_transaction!
   def change
     create_table :observations do |t|
-      t.integer :user_id
-      t.integer :grow_id
-      t.integer :room_id
-      t.integer :subject_id
       t.text :body
       t.float :water, default: 0.0
       t.float :nutrients, default: 0.0
+      t.integer :duration, default: 0
+
+      t.references :user, foreign_key: true
+      t.references :grow, foreign_key: true
+      t.references :room, foreign_key: true
 
       t.timestamps
     end
