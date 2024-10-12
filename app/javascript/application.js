@@ -14,8 +14,11 @@ import 'moment/locale/en-gb';
 import Chartkick from 'chartkick';
 import Chart from 'chart.js/auto';
 import highchartsMore from 'highcharts/highcharts-more';
+import highchartsAccessibility from 'highcharts/modules/accessibility';
 
 highchartsMore(Highcharts);
+highchartsAccessibility(Highcharts);
+
 Chartkick.use(Highcharts);
 window.createPopper = createPopper;
 import './admin';
