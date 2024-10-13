@@ -26,7 +26,7 @@ class GrowsController < ApplicationController
 
 
   def print_qr
-    
+
   end
 
   private
@@ -40,16 +40,16 @@ class GrowsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def grow_params
       params.require(:grow).permit(
-        :grow_status, 
-        :description, 
-        :start_date, 
+        :grow_status,
+        :description,
+        :start_date,
         :seedling_weeks,
-        :vegging_weeks, 
+        :vegging_weeks,
         :flowering_weeks,
         :flushing_weeks,
         :drying_weeks,
         :curing_weeks,
-        :substrate, 
+        :substrate,
         :flowering,
         :number_of_subjects)
     end

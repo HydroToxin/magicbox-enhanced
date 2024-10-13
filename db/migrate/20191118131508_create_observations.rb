@@ -2,6 +2,7 @@ class CreateObservations < ActiveRecord::Migration[5.2]
   disable_ddl_transaction!
   def change
     create_table :observations do |t|
+      t.string :name
       t.text :body
       t.float :water, default: 0.0
       t.float :nutrients, default: 0.0

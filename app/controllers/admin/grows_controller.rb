@@ -5,7 +5,7 @@ class Admin::GrowsController < Admin::AdminController
 
   # GET /grows/new
   def new
-    @grow = Grow.new
+    @grow = Grow.new(birth_type: 'from_seed')
 
     add_breadcrumb "Grows", grows_path
     add_breadcrumb "New"
@@ -24,23 +24,24 @@ class Admin::GrowsController < Admin::AdminController
     respond_to do |format|
       if @grow.save
         # create subjects
-        @grow.number_of_subjects.times do |i|
-          room = Room.find(params[:room])
-          Subject.create!(
-            name: "Subject #{i+1}", 
-            grow_id: @grow.id, 
-            room_id: room.id,
-            birth_type: @grow.birth_type,
-            strain_id: params[:strain_id],
-            mother_id: @grow.mother_id) if room
+        if @grow.birth_type == 'from_clone'
+          @grow.number_of_subjects.times do |i|
+            room = Room.find(params[:room])
+            Subject.create!(
+              name: "Subject #{i+1}",
+              grow_id: @grow.id,
+              room_id: room.id,
+              birth_type: @grow.birth_type,
+              strain_id: params[:strain_id],
+              mother_id: @grow.mother_id) if room
+          end
         end
-
         @grow.generate_weeks
 
-        format.html { redirect_to @grow, notice: 'Grow was successfully created.' }
+        format.html { redirect_to @grow, notice: "Grow was successfully created." }
         format.json { render :show, status: :created, location: @grow }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @grow.errors, status: :unprocessable_entity }
       end
     end
@@ -56,7 +57,7 @@ class Admin::GrowsController < Admin::AdminController
         format.html { redirect_to @grow, notice: 'Grow was successfully updated.' }
         format.json { render :show, status: :ok, location: @grow }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @grow.errors, status: :unprocessable_entity }
       end
     end
@@ -84,20 +85,20 @@ class Admin::GrowsController < Admin::AdminController
     # Never trust parameters from the scary internet, only allow the white list through.
     def grow_params
       params.require(:grow).permit(
-        :grow_status, 
+        :grow_status,
         :auto_update_status,
         :birth_type,
         :mother_id,
         :strain_id,
-        :description, 
-        :start_date, 
+        :description,
+        :start_date,
         :seedling_weeks,
-        :vegging_weeks, 
+        :vegging_weeks,
         :flowering_weeks,
         :flushing_weeks,
         :drying_weeks,
         :curing_weeks,
-        :substrate, 
+        :substrate,
         :flowering,
         :estimated_weight_by_square_meter,
         :number_of_subjects)

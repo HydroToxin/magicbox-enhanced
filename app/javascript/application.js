@@ -7,7 +7,9 @@ import "@hotwired/turbo-rails"
 // Import Stimulus
 import { Application } from "@hotwired/stimulus"
 import { createPopper } from '@popperjs/core';
+
 import * as bootstrap from "bootstrap";
+
 import Highcharts from "highcharts"
 import moment from 'moment';
 import 'moment/locale/en-gb';

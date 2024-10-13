@@ -18,11 +18,8 @@ class Device < ApplicationRecord
 
   has_many :samples
   has_many :events, :as => :eventable
-
   has_many :devices_data_types
   has_many :data_types, through: :devices_data_types, source: :data_type
-  # has_many :operations # replaced by device_type in operations
-
   has_many :notifications, as: :notified
 
   validates :name, presence: true

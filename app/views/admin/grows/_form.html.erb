@@ -29,7 +29,7 @@
 
   <div class="mb-3">
     <%= form.label :grow_status, class: 'form-label' %>
-    <%= form.select :grow_status, options_for_select(Grow.grow_statuses.keys.to_a.map{ |t| [t(t), t] }, form.object.grow_status), {}, class: "form-control" %>
+    <%= form.select :grow_status, options_for_select(Grow.grow_statuses.keys.to_a.map{ |t| [t.capitalize, t] }, form.object.grow_status), {}, class: "form-select" %>
     <br>
     <%= form.check_box :auto_update_status %> Auto-update status
   </div>
@@ -40,11 +40,11 @@
     <div class="row">
       <div class="col-md-4">
         <%= form.label :substrate, class: 'form-label' %>
-        <%= form.select :substrate, options_for_select(Grow.substrates.keys.to_a.map{ |t| [t(t), t] }, form.object.substrate), {}, class: "form-control" %>
+        <%= form.select :substrate, options_for_select(Grow.substrates.keys.to_a.map{ |t| [t.capitalize, t] }, form.object.substrate), {}, class: "form-select" %>
       </div>
       <div class="col-md-4">
         <%= form.label :flowering, class: 'form-label' %>
-        <%= form.select :flowering, options_for_select(Grow.flowerings.keys.to_a.map{ |t| [t(t), t] }, form.object.flowering), {}, class: "form-control" %>
+        <%= form.select :flowering, options_for_select(Grow.flowerings.keys.to_a.map{ |t| [t.capitalize, t] }, form.object.flowering), {}, class: "form-select" %>
       </div>
     </div>
   </div>
@@ -55,11 +55,11 @@
     <div class="row">
       <div class="col-md-4 mt-2">
         <%= form.label :birth_type, class: 'form-label' %>
-        <%= form.select :birth_type, options_for_select(Grow.birth_types.keys.to_a.map{ |t| [t(t), t] }, form.object.birth_type), {}, class: "form-control" %>
+        <%= form.select :birth_type, options_for_select(Grow.birth_types.keys.to_a.map{ |t| [t.capitalize, t] }, form.object.birth_type || 'from_seed'), {}, class: "form-select", id: "birth_type_select" %>
       </div>
       <div class="col-md-4 mt-2">
         <%= form.label :mother_id, class: 'form-label' %>
-        <%= form.select :mother_id, options_from_collection_for_select(Subject.all, "id", "name_with_grow", form.object.mother_id), {}, class: "form-control selectpicker", data: { style: "btn-white", live_search: true, size: 10, title: "None" } %>
+        <%= form.select :mother_id, options_from_collection_for_select(Subject.all, "id", "name_with_grow", form.object.mother_id), { include_blank: 'None' }, class: "form-select selectpicker", data: { style: "btn-white", live_search: true, size: 10, title: "None" }, id: "mother_select" %>
       </div>
       <div class="col-md-4 mt-2">
         <%= form.label 'Estimated g/m2', class: 'form-label' %>
@@ -73,17 +73,17 @@
       <div class="row">
         <div class="col-md-4">
           <%= form.label "Create subjects", class: 'form-label' %>
-          <%= form.number_field :number_of_subjects, class: "form-control", disabled: !grow.new_record? %>
+          <%= form.number_field :number_of_subjects, min: 0, class: "form-control" %>
         </div>
 
         <div class="col-md-4">
           <%= form.label "Strain", class: 'form-label' %>
-          <%= select_tag :strain_id, options_from_collection_for_select(Strain.all, "id", "name"), class: "form-control selectpicker", data: { style: "btn-white", live_search: true, size: 10, title: "Unknown" }, disabled: !grow.new_record? %>
+          <%= select_tag :strain_id, options_from_collection_for_select(Strain.all, "id", "name"), class: "form-select selectpicker", data: { style: "btn-white", live_search: true, size: 10, title: "Unknown" } %>
         </div>
 
         <div class="col-md-4">
           <%= form.label "Put them in room", class: 'form-label' %>
-          <%= select_tag :room, options_from_collection_for_select(Room.all, "id", "name"), class: "form-control", disabled: !grow.new_record? %>
+          <%= select_tag :room, options_from_collection_for_select(Room.all, "id", "name"), class: "form-select" %>
         </div>
       </div>
     <% end %>
@@ -96,35 +96,34 @@
     <div class="row">
       <div class="col-md-6">
         <%= form.label "Start Date", class: 'form-label' %>
-        <%= form.hidden_field :start_date, value: fdate(form.object.start_date), class: "form-control weekpicker", id: "weekpicker-#{form.object.id}-start_date", data: { toggle: "datetimepicker", target: "#weekpicker-#{form.object.id}-start_date" } %>
+        <%= form.text_field :start_date, value: fdate(form.object.start_date), class: "form-control", id: "start_date_input", placeholder: "TT.MM.JJJJ" %>
       </div>
       <div class="col-md-6">
         <div class="mb-3">
           <%= form.label :seedling_weeks, class: 'form-label' %>
-          <%= form.number_field :seedling_weeks, value: form.object.seedling_weeks, min: 0, max: 52, class: "form-control" %>
+          <%= form.number_field :seedling_weeks, value: form.object.seedling_weeks, min: 0, max: 52, value: (form.object.seedling_weeks || 0), class: "form-control" %>
         </div>
 
         <div class="mb-3">
           <%= form.label :vegging_weeks, class: 'form-label' %>
-          <%= form.number_field :vegging_weeks, value: form.object.vegging_weeks, min: 0, max: 52, class: "form-control" %>
+          <%= form.number_field :vegging_weeks, value: form.object.vegging_weeks, min: 0, max: 52, value: (form.object.vegging_weeks || 0), class: "form-control" %>
         </div>
         <div class="mb-3">
           <%= form.label :flowering_weeks, class: 'form-label' %>
-          <%= form.number_field :flowering_weeks, value: form.object.flowering_weeks, min: 0, max: 52, class: "form-control" %>
+          <%= form.number_field :flowering_weeks, value: form.object.flowering_weeks, min: 0, max: 52, value: (form.object.flowering_weeks || 0), class: "form-control" %>
         </div>
         <div class="mb-3">
           <%= form.label :flushing_weeks, class: 'form-label' %>
-          <%= form.number_field :flushing_weeks, value: form.object.flushing_weeks, min: 0, max: 52, class: "form-control" %>
+          <%= form.number_field :flushing_weeks, value: form.object.flushing_weeks, min: 0, max: 52, value: (form.object.flushing_weeks || 0), class: "form-control" %>
         </div>
         <div class="mb-3">
           <%= form.label :drying_weeks, class: 'form-label' %>
-          <%= form.number_field :drying_weeks, value: form.object.drying_weeks, min: 0, max: 52, class: "form-control" %>
+          <%= form.number_field :drying_weeks, value: form.object.drying_weeks, min: 0, max: 52, value: (form.object.drying_weeks || 0), class: "form-control" %>
         </div>
         <div class="mb-3">
           <%= form.label :curing_weeks, class: 'form-label' %>
-          <%= form.number_field :curing_weeks, value: form.object.curing_weeks, min: 0, max: 52, class: "form-control" %>
+          <%= form.number_field :curing_weeks, value: form.object.curing_weeks, min: 0, max: 52, value: (form.object.curing_weeks || 0), class: "form-control" %>
         </div>
-
       </div>
     </div>
   </div>

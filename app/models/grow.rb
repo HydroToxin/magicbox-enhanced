@@ -36,6 +36,22 @@ class Grow < ApplicationRecord
   has_one :harvest
 
   validates :description, presence: true
+  validate :validate_number_of_subjects
+  validate :validate_birth_type_and_mother
+
+  def validate_number_of_subjects
+    if birth_type == 'from_clone' && mother_id.present?
+      if number_of_subjects.blank?
+        errors.add(:number_of_subjects, "can't be blank when birth type is 'from clone' and mother is selected.")
+      end
+    end
+  end
+
+  def validate_birth_type_and_mother
+    if birth_type == 'from_clone' && mother_id.blank?
+      errors.add(:mother_id, "must be selected when birth type is 'from clone'.")
+    end
+  end
 
   def name
     "##{id} - #{description}"
@@ -71,6 +87,8 @@ class Grow < ApplicationRecord
 
   def generate_weeks
     weeks.destroy_all
+
+    return if start_date.nil?
 
     # create weeks
     sdate = self.start_date

@@ -149,19 +149,10 @@ climat_scenario = Scenario.import("db/samples/Climat.json", "Climat")
 watering_scenario = Scenario.import("db/samples/Watering.json", "Watering")
 
 r.scenarios << [growing_scenario, climat_scenario, watering_scenario]
+r.save!
 
 Grow.create! description: 'Test', start_date: Time.now, flowering: 1
 Observation.create! user: User.first, grow: Grow.first, body: 'Observation Test', water: true, nutrients: 10, room: r
-
-Observation.all.each do |o|
-  Event.create!(
-    event_type: :action,
-    message: "New observation has been created by <b>#{o.user.username}</b>",
-    eventable: o,
-    created_at: o.created_at,
-    updated_at: o.updated_at
-    )
-end
 
 s = Sample.create(
   product_reference: "System",
