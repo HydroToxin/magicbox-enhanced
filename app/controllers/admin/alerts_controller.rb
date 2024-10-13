@@ -48,7 +48,7 @@ class Admin::AlertsController < Admin::AdminController
         format.html { redirect_to admin_alerts_url, notice: 'Alert was successfully updated.' }
         format.json { render :show, status: :ok, location: @alert }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @alert.errors, status: :unprocessable_entity }
       end
     end
