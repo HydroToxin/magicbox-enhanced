@@ -9,8 +9,5 @@ class Notification < ApplicationRecord
 		if notify_email
 			UserMailer.with(notification: self, user: user).notification_email.deliver_now
 		end
-
-		if notify_push
-		end
 	end
 end
