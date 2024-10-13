@@ -18,8 +18,6 @@ class CreateGrows < ActiveRecord::Migration[5.2]
       t.boolean :auto_update_status, default: true
       t.float :estimated_weight_by_square_meter, default: 0
 
-      t.references :mother, foreign_key: { to_table: :grows }
-
       t.timestamps
     end
   end

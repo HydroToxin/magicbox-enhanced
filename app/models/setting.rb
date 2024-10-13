@@ -7,8 +7,8 @@ class Setting < RailsSettings::Base
   field :openweather_city, 							type: :string, default: "Narbonne"
   field :openweather_endpoint, 					type: :string, default: "http://api.openweathermap.org/data/2.5/weather"
   field :time_zone, 										type: :string, default: "Europe/Paris"
-  field :tempodominus_date_format, 			default: "DD.MM.YYYY", type: :string
-  field :tempodominus_time_format, 			default: "hh:mm", type: :string
+  field :date_format, 			            default: "DD.MM.YYYY", type: :string
+  field :time_format, 			            default: "hh:mm", type: :string
   field :rails_date_format, 						default: "%d.%m.%Y", type: :string
   field :rails_time_format, 						default: "%H:%M", type: :string
   field :calendar_default_view, 				type: :string, default: "month"
