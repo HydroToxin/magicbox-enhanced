@@ -4,7 +4,6 @@ class CreateNotifications < ActiveRecord::Migration[5.2]
     create_table :notifications do |t|
       t.boolean :read, default: false
       t.boolean :notify_email
-      t.boolean :notify_push
       t.string :notifiable_type
       t.uuid :notifiable_uuid, null: true
 

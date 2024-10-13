@@ -14,7 +14,7 @@ class CreateGrows < ActiveRecord::Migration[5.2]
       t.integer :flushing_weeks
       t.integer :drying_weeks
       t.integer :curing_weeks
-      t.integer :birth_type, default: 0
+      t.integer :birth_type, default: 'from_seed'
       t.boolean :auto_update_status, default: true
       t.float :estimated_weight_by_square_meter, default: 0
 
