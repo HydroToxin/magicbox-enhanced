@@ -1,4 +1,4 @@
-<%= form_with(model: [:admin, grow], local: true, class: "col-md-12 col-lg-8 mx-auto") do |form| %>
+<%= form_with(model: [:admin, grow], local: true,  data: { turbo: false }, class: "col-md-12 col-lg-8 mx-auto") do |form| %>
   <h1>
     <%= grow.new_record? ? "New Grow" : "Editing Grow" %>
     <div class="float-end">
@@ -55,11 +55,11 @@
     <div class="row">
       <div class="col-md-4 mt-2">
         <%= form.label :birth_type, class: 'form-label' %>
-        <%= form.select :birth_type, options_for_select(Grow.birth_types.keys.to_a.map{ |t| [t.capitalize, t] }, form.object.birth_type || 'from_seed'), {}, class: "form-select", id: "birth_type_select" %>
+        <%= form.select :birth_type, options_for_select(Grow.birth_types.keys.to_a.map{ |t| [t.capitalize, t] }, form.object.birth_type || 'from_seed'), {}, class: "form-select", id: "birth-type-select" %>
       </div>
       <div class="col-md-4 mt-2">
         <%= form.label :mother_id, class: 'form-label' %>
-        <%= form.select :mother_id, options_from_collection_for_select(Subject.all, "id", "name_with_grow", form.object.mother_id), { include_blank: 'None' }, class: "form-select selectpicker", data: { style: "btn-white", live_search: true, size: 10, title: "None" }, id: "mother_select" %>
+        <%= form.select :mother_id, options_from_collection_for_select(Subject.all, "id", "name_with_grow", form.object.mother_id), { include_blank: 'None' }, class: "form-select selectpicker", data: { style: "btn-white", live_search: true, size: 10, title: "None" }, id: "mother-select" %>
       </div>
       <div class="col-md-4 mt-2">
         <%= form.label 'Estimated g/m2', class: 'form-label' %>
@@ -96,7 +96,7 @@
     <div class="row">
       <div class="col-md-6">
         <%= form.label "Start Date", class: 'form-label' %>
-        <%= form.text_field :start_date, value: fdate(form.object.start_date), class: "form-control", id: "start_date_input", placeholder: "TT.MM.JJJJ" %>
+        <%= form.text_field :start_date, value: fdate(form.object.start_date), class: "form-control", id: "grows-form-date-input", placeholder: "TT.MM.JJJJ" %>
       </div>
       <div class="col-md-6">
         <div class="mb-3">

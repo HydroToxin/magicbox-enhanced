@@ -1,6 +1,6 @@
 function initAdminBatchForm() {
   // Check if the form with the specific ID is present in the DOM
-  const adminBatchForm = document.getElementById("admin-batch-form") as HTMLFormElement | null;
+  const adminBatchForm = document.getElementById("admin-batches-form") as HTMLFormElement | null;
 
   if (!adminBatchForm) {
     return; // Exit the function if the form is not present

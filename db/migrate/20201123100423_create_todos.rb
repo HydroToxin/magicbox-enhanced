@@ -6,8 +6,9 @@ class CreateTodos < ActiveRecord::Migration[5.2]
       t.integer :renotify_every_minute
       t.datetime :date
       t.datetime :notified_date
+      t.boolean :notify_email, default: true
       t.text :body
-      t.boolean :notify_push, default: true
+      t.boolean :notify, default: true
       t.uuid :uuid, null: false, default: -> { "gen_random_uuid()" }
 
       t.references :user, foreign_key: true

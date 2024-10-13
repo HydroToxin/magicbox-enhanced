@@ -1,3 +1,6 @@
+import flatpickr from 'flatpickr';
+import { German } from 'flatpickr/dist/l10n/de.js'
+
 function initAdminScenariosConditionfields() {
   // Check if the conditions container is present in the DOM
   const container = document.getElementById("admin-scenario-condition-fields");
@@ -5,6 +8,16 @@ function initAdminScenariosConditionfields() {
   if (!container) {
     return; // Exit the function if the container is not present
   }
+
+  const dateInput = document.getElementById('scenarios-form-start-time-input') as HTMLInputElement;
+  if (dateInput) {
+    flatpickr(dateInput, {
+      allowInput: false,
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i",
+    });
+  };
 
   toggleConditionTypes(container);
 

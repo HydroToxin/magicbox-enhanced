@@ -3,8 +3,11 @@ class Todo < ApplicationRecord
   include ApplicationHelper
 
   belongs_to :user
-  
-	default_scope { order('date ASC') }
+
+  validates :date, presence: true
+  validates :body, presence: true
+
+  default_scope { order('date ASC') }
 
 	enum todo_status: {
   	:todo		=> 0,
@@ -13,7 +16,6 @@ class Todo < ApplicationRecord
 
   has_many :notifications, as: :notifiable, dependent: :delete_all
 
-  validates :body, presence: true
 
   def url
     Rails.application.routes.url_helpers.todos_path
@@ -47,27 +49,24 @@ class Todo < ApplicationRecord
     body
   end
 
-
   def color
     return "orange" if self.todo?
     return "lightgray" if self.done?
   end
 
-
   def start_date
     date
   end
-
 
   def end_date
     date + 1.hour
   end
 
-
   def is_late?
+    return if date.nil?
+
     date < DateTime.now
   end
-
 
   def self.notify
     now   = DateTime.now
@@ -78,17 +77,15 @@ class Todo < ApplicationRecord
     todos.each do |todo|
       logger.info "todo.notified_date : #{todo.notified_date}"
       logger.info "now - todo.renotify_every_minute : #{now - todo.renotify_every_minute.minutes}"
-      if todo.notified_date == nil or 
+      if todo.notified_date == nil or
          todo.notified_date < (now - todo.renotify_every_minute.minutes)
-        
-        if todo.notify_email? or 
-           todo.notify_push?
+
+        if todo.notify_email?
           Notification.create(
-              user: todo.user, 
-              notify_email: todo.notify_email?, 
-              notify_push: todo.notify_push?, 
+              user: todo.user,
+              notify_email: todo.notify_email?,
               notifiable: todo).notify()
-        
+
           todo.notified_date = now
           todo.save
         end

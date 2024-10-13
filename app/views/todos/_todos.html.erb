@@ -9,11 +9,11 @@
 
         <div class="d-flex">
           <% if status == :todo %>
-            <%= link_to done_todo_path(todo), method: :post, class: "btn btn-sm py-0 text-success ms-3" do %>
+            <%= link_to done_todo_path(todo), data: { turbo_method: :post }, class: "btn btn-sm py-0 text-success ms-3" do %>
               <i class="bi-check h4"></i>
             <% end %>
           <% else %>
-            <%= link_to undone_todo_path(todo), method: :post, class: "btn btn-sm py-0 text-danger ms-3" do %>
+            <%= link_to undone_todo_path(todo), data: { turbo_method: :post }, class: "btn btn-sm py-0 text-danger ms-3" do %>
               <i class="bi-arrow-counterclockwise h4"></i>
             <% end %>
           <% end %>

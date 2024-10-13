@@ -30,7 +30,7 @@ class TodosController < ApplicationController
 
     respond_to do |format|
       if @todo.save
-        format.html { redirect_back fallback_location: todos_url, notice: 'Todo was successfully created.' }
+        format.html { redirect_to todos_url, notice: "Todo was successfully created." }
         format.json { render :show, status: :created, location: @todo }
       else
         format.html { render :new }
@@ -44,7 +44,7 @@ class TodosController < ApplicationController
   def update
     respond_to do |format|
       if @todo.update(todo_params)
-        format.html { redirect_back fallback_location: todos_url, notice: 'Todo was successfully updated.' }
+        format.html { redirect_to todos_url, notice: "Todo was successfully updated." }
         format.json { render :show, status: :ok, location: @todo }
       else
         format.html { render :edit }
@@ -63,21 +63,19 @@ class TodosController < ApplicationController
     end
   end
 
-
   def done
     @todo.todo_status = :done
+    @todo.date = Time.now if @todo.date.nil?
     @todo.save
-    redirect_back fallback_location: todos_url
+    redirect_to todos_url, notice: "Todo #{@todo.body} marked as done."
   end
-
 
   def undone
     @todo.todo_status = :todo
-    @todo.save
-    redirect_back fallback_location: todos_url
+    @todo.date = Time.now if @todo.date.nil?
+    @todo.save!
+    redirect_to todos_url, notice: "Todo #{@todo.body} marked as undone."
   end
-
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -87,6 +85,6 @@ class TodosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def todo_params
-      params.require(:todo).permit(:todo_status, :user_id, :date, :body, :notify_email, :notify_push, :renotify_every_minute)
+      params.require(:todo).permit(:todo_status, :user_id, :date, :body, :notify_email, :renotify_every_minute)
     end
 end

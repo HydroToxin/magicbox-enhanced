@@ -6,18 +6,10 @@
 
 		<div class="condition_form condition_type_date">
 			<span>Between:&nbsp;</span>
-		  <%= f.text_field :start_time, value: ftime(f.object.start_time), class: "form-control me-2 timepicker datetimepicker-input", id: "timepicker-#{f.object.id}-start_time", data: { toggle: "datetimepicker", target: "#timepicker-#{f.object.id}-start_time", format: "YYYY-MM-DD" } %>
-
-		  <script type="text/javascript">
-          $(function () { document.getElementById("<%= "timepicker-#{f.object.id}-start_time" %>").value = "<%= ftime(f.object.start_time) %>" });
-      </script>
+			<%= f.text_field :start_time, value: ftime(f.object.start_time), class: "form-control me-2", id: "scenarios-form-start-time-input", placeholder: "TT.MM.JJJJ" %>
 
 		  <span>And:&nbsp;</span>
-		  <%= f.text_field :end_time, value: ftime(f.object.end_time), class: "form-control me-2 timepicker datetimepicker-input", id: "timepicker-#{f.object.id}-end_time", data: { toggle: "datetimepicker", target: "#timepicker-#{f.object.id}-end_time" } %>
-
-		  <script type="text/javascript">
-          $(function () { document.getElementById("<%= "timepicker-#{f.object.id}-end_time" %>").value = "<%= ftime(f.object.end_time) %>" });
-      </script>
+			<%= f.text_field :end_time, value: ftime(f.object.end_time), class: "form-control me-2", id: "scenarios-form-end-time-input", placeholder: "HH:MM" %>
 		</div>
 
 		<div class="condition_form condition_type_time_duration">
@@ -42,36 +34,3 @@
 		<%= f.link_to_remove "Remove", class: "btn btn-sm btn-danger" %><br>
 	</div>
 </div>
-
-<script type="text/javascript">
-function toggle_condition_types() {
-	$(".condition_type").change(function() {
-		console.log("toggle_condition_types");
-
-		$(this).parent().parent().find(".condition_form").hide()
-
-	  var el = $(this).parent().parent().find(".condition_type_" + $(this).val());
-	  console.log(el)
-
-	  el.show();
-	});
-}
-
-function init() {
-	toggle_condition_types();
-
-  $(".condition_type").change()
-}
-
-$(document).on("ready", function() {
-  init()
-});
-
-$(document).on('turbo:load', function () {
-  init()
-});
-
-$(document).on('nested:fieldAdded', function(event){
-  init()
-});
-</script>

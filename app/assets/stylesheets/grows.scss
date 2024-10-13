@@ -4,7 +4,7 @@
 /* Entfernen von Styles, die das Standard-Spinner-Aussehen beeinträchtigen könnten */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: inner-spin-button;
+  -webkit-appearance: none;
   appearance: auto;
   opacity: 1;
   /* Sicherstellen, dass die Pfeile nicht ausgeblendet werden */

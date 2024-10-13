@@ -69,7 +69,6 @@ class Alert < ApplicationRecord
     #   Notification.create!(
     #     user: u,
     #     notify_email: true,
-    #     notify_push: push_enabled,
     #     notifiable: self).notify()
     # end
   end
@@ -158,7 +157,6 @@ class Alert < ApplicationRecord
         n = Notification.create!(
           user: u,
           notify_email: true,
-          notify_push: push_enabled,
           notifiable: self,
           notified: context_object)
 

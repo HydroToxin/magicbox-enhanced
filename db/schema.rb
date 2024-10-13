@@ -199,7 +199,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.integer "flushing_weeks"
     t.integer "drying_weeks"
     t.integer "curing_weeks"
-    t.integer "birth_type", default: 0
+    t.integer "birth_type"
     t.boolean "auto_update_status", default: true
     t.float "estimated_weight_by_square_meter", default: 0.0
     t.datetime "created_at", precision: nil, null: false
@@ -237,7 +237,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
   create_table "notifications", force: :cascade do |t|
     t.boolean "read", default: false
     t.boolean "notify_email"
-    t.boolean "notify_push"
     t.string "notifiable_type"
     t.uuid "notifiable_uuid"
     t.string "notifications_type"
@@ -412,8 +411,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.integer "renotify_every_minute"
     t.datetime "date", precision: nil
     t.datetime "notified_date", precision: nil
+    t.boolean "notify_email", default: true
     t.text "body"
-    t.boolean "notify_push", default: true
+    t.boolean "notify", default: true
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.bigint "user_id"
     t.datetime "created_at", precision: nil, null: false

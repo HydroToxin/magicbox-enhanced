@@ -1,5 +1,5 @@
 function initAdminAlertForm() {
-  const adminAlertForm = document.getElementById("admin-alert-form") as HTMLFormElement | null;
+  const adminAlertForm = document.getElementById("admin-alerts-form") as HTMLFormElement | null;
 
   if (!adminAlertForm) {
     return; // Exit the function if the form is not present
