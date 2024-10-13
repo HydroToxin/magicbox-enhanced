@@ -1,4 +1,4 @@
-<%= form_with(model: [:admin, @grow, @harvest, batch], local: true, class: "col-md-12 col-lg-8 mx-auto", id: "admin-batch-form") do |form| %>
+<%= form_with(model: [:admin, @grow, @harvest, batch, data: { turbo: false }], local: true, class: "col-md-12 col-lg-8 mx-auto", id: "admin-batches-form") do |form| %>
   <h1>
     <%= batch.new_record? ? "New Batch" : "Editing Batch" %>
     <div class="float-right">

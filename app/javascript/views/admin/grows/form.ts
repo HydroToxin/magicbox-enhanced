@@ -6,11 +6,11 @@ function initAdminGrowsForm() {
   // Check if the admin grows form container is present in the DOM
   const adminGrowsWeeks = document.getElementById("admin-grows-form");
 
-  const birthTypeSelect: HTMLElement | null = document.getElementById("birth_type_select");
+  const birthTypeSelect: HTMLElement | null = document.getElementById("birth-type-select");
   if (birthTypeSelect === null) return;
   birthTypeSelect.addEventListener("change", toggleMotherSelect);
 
-  const dateInput = document.getElementById('start_date_input') as HTMLInputElement;
+  const dateInput = document.getElementById('grows-form-date-input') as HTMLInputElement;
   if (dateInput) {
     flatpickr(dateInput, {
       allowInput: true,
@@ -26,8 +26,8 @@ function initAdminGrowsForm() {
 }
 
 function toggleMotherSelect() {
-  const birthTypeSelect = document.getElementById("birth_type_select") as HTMLSelectElement;
-  const motherSelect = document.getElementById("mother_select") as HTMLSelectElement;
+  const birthTypeSelect = document.getElementById("birth-type-select") as HTMLSelectElement;
+  const motherSelect = document.getElementById("mother-select") as HTMLSelectElement;
 
   if (birthTypeSelect === null) return;
   if (motherSelect === null) return;
