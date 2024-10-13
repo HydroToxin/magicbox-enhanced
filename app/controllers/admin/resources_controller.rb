@@ -11,7 +11,9 @@ class Admin::ResourcesController < Admin::AdminController
     end
 
     respond_to do |format|
-      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("resource_select", partial: "resources/resource_options", locals: { resources: @resources })
+      end
       format.json { render json: @resources }
     end
   end
@@ -91,11 +93,11 @@ class Admin::ResourcesController < Admin::AdminController
     # Never trust parameters from the scary internet, only allow the white list through.
     def resource_params
       params.require(:resource).permit(
-        :name, 
-        :shortname, 
-        :description, 
-        :category_id, 
-        choices: [], 
+        :name,
+        :shortname,
+        :description,
+        :category_id,
+        choices: [],
         units: [])
     end
 end

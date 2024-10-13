@@ -202,9 +202,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.integer "birth_type", default: 0
     t.boolean "auto_update_status", default: true
     t.float "estimated_weight_by_square_meter", default: 0.0
-    t.bigint "mother_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.bigint "mother_id"
     t.index ["mother_id"], name: "index_grows_on_mother_id"
   end
 
@@ -253,6 +253,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
   end
 
   create_table "observations", force: :cascade do |t|
+    t.string "name"
     t.text "body"
     t.float "water", default: 0.0
     t.float "nutrients", default: 0.0
@@ -469,7 +470,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
   add_foreign_key "events", "devices"
   add_foreign_key "events", "rooms"
   add_foreign_key "events", "users"
-  add_foreign_key "grows", "grows", column: "mother_id"
+  add_foreign_key "grows", "subjects", column: "mother_id"
   add_foreign_key "harvests", "grows"
   add_foreign_key "issues", "observations"
   add_foreign_key "issues", "resources"
