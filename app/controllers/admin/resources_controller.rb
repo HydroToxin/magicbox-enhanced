@@ -9,13 +9,6 @@ class Admin::ResourcesController < Admin::AdminController
     if params[:category_id] and !params[:category_id].empty?
       @resources = @resources.where(category_id: params[:category_id])
     end
-
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("resource_select", partial: "resources/resource_options", locals: { resources: @resources })
-      end
-      format.json { render json: @resources }
-    end
   end
 
   # GET /resources/1
@@ -80,6 +73,7 @@ class Admin::ResourcesController < Admin::AdminController
     @resource.destroy
     respond_to do |format|
       format.html { redirect_to admin_resources_url, notice: 'Resource was successfully destroyed.' }
+      format.turbo_stream { head :no_content }
       format.json { head :no_content }
     end
   end

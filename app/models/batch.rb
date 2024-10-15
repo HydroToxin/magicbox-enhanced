@@ -9,14 +9,15 @@ class Batch < ApplicationRecord
     bud:		1
   }
 
-  validate :remaining_harvest_weight
-  validate :weight_count_multiplier
+  #validate :remaining_harvest_weight
+
+	#validate :weight_count_multiplier
 
   def total_price
   	total_weight * price_per_weight
   end
 
-private 
+private
 	def weight_count_multiplier
 		if batch_weight * batch_count > total_weight
 			errors.add :batch_weight, "Batch weight exceeds total weight"

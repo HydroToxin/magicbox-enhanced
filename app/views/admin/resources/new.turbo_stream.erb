@@ -1,0 +1,6 @@
+<%= turbo_stream.append "resource" do %>
+  <%= fields_for 'resource[resource_attributes][]', Resource.new, index: Time.current.to_i do |form| %>
+    <%= render "turbo
+    _fields", ff: form %>
+  <% end %>
+<% end %>

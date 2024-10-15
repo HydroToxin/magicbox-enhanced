@@ -70,8 +70,6 @@ Rails.application.routes.draw do
 
   # Room-related resources
   resources :rooms, only: [:show] do
-    post :take_camshot, on: :member
-
     resources :devices, only: [:show] do
       post :query, on: :member
       resources :events  # Hinzufügen von Events unter Devices
@@ -114,16 +112,40 @@ Rails.application.routes.draw do
     resources :strains
     resources :data_types
     resources :batches, except: [:edit, :update]
+
     resources :scenarios do
-      member do
-        get :run
-        get :export
+      resources :condition_groups, only: [:new, :create, :destroy] do
+        resources :conditions, only: [:new, :create, :destroy]
+        resources :operations, only: [:new, :create, :destroy]
       end
       collection do
+        get :export
         post :import
       end
     end
 
+    #resources :scenarios do
+    #  resources :condition_groups, only: [:new, :create, :destroy] do
+    #    resources :conditions, only: [:new, :create, :destroy]
+    #    resources :operations, only: [:new, :create, :destroy]
+    #  end
+    #  member do
+    #    post 'run'
+    #  end
+    #  collection do
+    #    get :export
+    #    post :import
+    #  end
+    #end
+
+    resources :scenarios do
+      resources :condition_groups, only: [:new, :create, :destroy] do
+        resources :conditions, only: [:new, :create, :destroy]
+        resources :operations, only: [:new, :create, :destroy]
+      end
+    end
+
+    resources :condition_groups
     resources :conditions
     resources :operations
     resources :alerts do
@@ -134,6 +156,9 @@ Rails.application.routes.draw do
     end
     resources :categories
     resources :resources
+    resources :resource_datas
+    resources :issues, only: [:new]
+
     resource :settings
 
     get '/', to: "users#index"

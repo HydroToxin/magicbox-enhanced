@@ -1,7 +1,6 @@
-<hr>
-<div class="d-flex align-items-center pb-2">
-	<%= f.select :device_type, options_for_select(Device.device_types.keys.map { |e| [e.titleize, e] }, f.object.device_type), {}, class: "form-control me-2" %>
-	<%= f.select :command, options_for_select(["start", "stop"], f.object.command), {}, class: "form-control me-2" %>
-	<%= f.number_field :duration, value: f.object.duration, placeholder: "Duration (sec)", class: "form-control me-2" %>
-	<%= f.link_to_remove "Remove", class: "btn btn-sm btn-danger" %>
+<div class="operation-fields d-flex align-items-center pb-2" id="<%= dom_id(f.object) %>">
+  <%= f.select :device_type, options_for_select(Device.device_types.keys.map { |e| [e.titleize, e] }, f.object.device_type), {}, class: "form-control me-2" %>
+  <%= f.select :command, options_for_select(["start", "stop"], f.object.command), {}, class: "form-control me-2" %>
+  <%= f.number_field :duration, value: f.object.duration, placeholder: "Duration (sec)", class: "form-control me-2" %>
+  data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger" %>
 </div>
