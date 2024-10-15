@@ -7,7 +7,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./app/assets/builds"
+    "outDir": "./app/assets/builds",
+    "noImplicitAny": false,
   },
   "include": ["app/javascript/**/*"]
 }

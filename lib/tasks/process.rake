@@ -171,7 +171,7 @@ namespace :process do
 
       # take room picture
       Room.all.each do |r|
-        r.take_camshot
+        #r.take_camshot
       end
 
     rescue Exception => e

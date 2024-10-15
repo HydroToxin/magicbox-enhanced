@@ -1,6 +1,6 @@
 class Admin::RoomsController < Admin::AdminController
   before_action :authenticate_user!
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :take_camshot]
+  before_action :set_room, only: [:show, :edit, :update, :destroy]
 
   # GET /rooms
   # GET /rooms.json

@@ -1,4 +1,4 @@
-<%= form_with(model: [:admin, @grow, @harvest, batch, data: { turbo: false }], local: true, class: "col-md-12 col-lg-8 mx-auto", id: "admin-batches-form") do |form| %>
+<%= form_with(model: [:admin, @grow, @harvest, batch], data: { turbo: false }, local: true, class: "col-md-12 col-lg-8 mx-auto", id: "admin-batches-form") do |form| %>
   <h1>
     <%= batch.new_record? ? "New Batch" : "Editing Batch" %>
     <div class="float-right">
@@ -14,7 +14,6 @@
   <% if batch.errors.any? %>
     <div id="error_explanation" class="alert alert-danger">
       <h4><%= pluralize(batch.errors.count, "error") %> prohibited this batch from being saved:</h4>
-
       <ul>
       <% batch.errors.messages.each do |message| %>
         <li><b><%= message.first.to_s.titleize %></b>: <%= message.last.join(", ") %></li>
@@ -22,9 +21,6 @@
       </ul>
     </div>
   <% end %>
-
-  <%= form.hidden_field :grow_id, value: @grow.id %>
-  <%= form.hidden_field :harvest_id, value: @harvest.id %>
 
   <div class="form-group">
     <%= form.label :name %>
@@ -35,10 +31,16 @@
     <%= form.label :batch_type %>
     <%= form.select :batch_type, options_for_select(Batch.batch_types.keys, form.object.batch_type), {}, class: "form-control col-12 col-md-3" %>
   </div>
-
+  <div class="form-group">
+    <%= form.label :grow %>
+    <%= form.select :grow_id, options_from_collection_for_select(Grow.all, "id", "description", form.object.id), { include_blank: 'None' }, class: "form-select", data: { style: "btn-white", live_search: true, size: 10, title: "None" }, id: "grow-select" %>
+  </div>
+  <div class="form-group">
+    <%= form.label :harvest %>
+    <%= form.select :harvest_id, options_from_collection_for_select(Harvest.all, "id", "description", form.object.id), { include_blank: 'None' }, class: "form-select", data: { style: "btn-white", live_search: true, size: 10, title: "None" }, id: "grow-select" %>
+  </div>
 
   <hr>
-
   <div class="row">
     <div class="col-6">
       <div class="form-group">
@@ -70,45 +72,3 @@
   </div>
 
 <% end %>
-
-
-<script type="text/javascript">
-  $("#batch_batch_price").change(function() {
-    batch_price  = $("#batch_batch_price").val()
-    batch_weight = $("#batch_batch_weight").val()
-
-    if(batch_price && batch_weight) {
-      $("#batch_price_per_weight").val(batch_price / batch_weight)
-    }
-  });
-
-  $("#batch_price_per_weight").change(function() {
-    batch_weight = $("#batch_batch_weight").val()
-    weight_price = $("#batch_price_per_weight").val()
-
-    if(batch_weight && weight_price) {
-      $("#batch_batch_price").val(batch_weight * weight_price)
-    }
-  });
-
-
-  $("#batch_total_weight").change(function() {
-    total  = $("#batch_total_weight").val()
-    weight = $("#batch_batch_weight").val()
-    count  = $("#batch_batch_count").val()
-
-    if(total && weight) {
-      $("#batch_batch_count").val(total / weight)
-    }
-  });
-
-  $("#batch_batch_weight").change(function() {
-    total  = $("#batch_total_weight").val()
-    weight = $("#batch_batch_weight").val()
-    count  = $("#batch_batch_count").val()
-
-    if(total && weight) {
-      $("#batch_batch_count").val(total / weight)
-    }
-  });
-</script>

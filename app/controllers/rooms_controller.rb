@@ -1,6 +1,6 @@
 class RoomsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_room, only: [:show, :take_camshot]
+  before_action :set_room, only: [:show]
 
 
 
@@ -11,13 +11,6 @@ class RoomsController < ApplicationController
 
     @camera = @room.devices.where(device_type: :camera).first
   end
-
-
-  def take_camshot
-    @room.take_camshot
-    redirect_to [:admin, @room], notice: 'Camshot was successfully created.'
-  end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
