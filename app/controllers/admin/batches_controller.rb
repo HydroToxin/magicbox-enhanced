@@ -1,7 +1,7 @@
 class Admin::BatchesController < Admin::AdminController
-  before_action :set_grow, only: [:create, :edit, :update, :destroy]
-  before_action :set_harvest, only: [:create, :edit, :update, :destroy]
   before_action :set_batch, only: [:show, :edit, :update, :destroy]
+  before_action :set_grow, only: [:show, :edit, :update, :destroy]
+  #before_action :set_harvest, only: [:show, :edit, :update, :destroy]
 
   def show
   end
@@ -58,13 +58,13 @@ class Admin::BatchesController < Admin::AdminController
 
   private
     def set_grow
-      #@grow = Grow.find(params[:grow_id])
-      #add_breadcrumb "Grow ##{@grow.id}"
+      @grow = Grow.find(params[:grow_id])
+      add_breadcrumb "Grow ##{@grow.id}"
     end
 
     def set_harvest
-      #@harvest = Harvest.find(params[:harvest_id])
-      #add_breadcrumb "Harvest"
+      @harvest = Harvest.find(params[:harvest_id])
+      add_breadcrumb "Harvest"
     end
 
     # Use callbacks to share common setup or constraints between actions.
