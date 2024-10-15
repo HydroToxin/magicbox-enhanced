@@ -9,6 +9,22 @@ function initAdminScenariosConditionfields() {
     return; // Exit the function if the container is not present
   }
 
+  document.addEventListener('click', function(event) {
+    const target = event.target;
+
+    // Überprüfen Sie, ob das Ziel ein Element ist und das Attribut data-remove-field enthält
+    if (target instanceof HTMLElement && target.hasAttribute('data-remove-field')) {
+      event.preventDefault();
+
+      // Suche das übergeordnete '.card'-Element
+      let fieldContainer = target.closest('.card');
+
+      if (fieldContainer) {
+        fieldContainer.remove();
+      }
+    }
+  });
+
   const dateInput = document.getElementById('scenarios-form-start-time-input') as HTMLInputElement;
   if (dateInput) {
     flatpickr(dateInput, {

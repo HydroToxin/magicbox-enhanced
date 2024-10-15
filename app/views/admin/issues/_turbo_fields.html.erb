@@ -1,0 +1,27 @@
+<div data-controller="issues">
+  <div class="mb-3">
+    <div class="row">
+      <div class="col-12 col-lg-2">
+        <%= ff.label "Status" %>
+        <%= ff.select :issue_status, options_for_select(Issue.issue_statuses.keys.map { |e| [e.titleize, e] }, ff.object.issue_status), {}, class: "form-select mb-2" %>
+      </div>
+
+      <div class="col-12 col-lg-3">
+        <%= ff.label "Resource" %>
+        <%= ff.select :resource_id, options_for_select(Resource.all.map { |p| [p.name, p.id] }, ff.object.resource_id), {}, class: "form-select mb-2" %>
+      </div>
+      <div class="col-12 col-lg-2">
+        <%= ff.label "Severity" %>
+        <%= ff.select :severity, options_for_select(Issue.severities.keys.map { |e| [e.titleize, e] }, ff.object.severity), {}, class: "form-select mb-2" %>
+      </div>
+      <div class="col-12 col-lg-2">
+        <%= ff.label "Type" %>
+        <%= ff.select :issue_type, options_for_select(Issue.issue_types.keys.map { |e| [e.titleize, e] }, ff.object.issue_type), {}, class: "form-select mb-2" %>
+      </div>
+      <div class="col-2 col-lg-1">
+        <%= ff.label " " %>
+        <%= link_to "Remove", "#", class: "btn btn-sm btn-danger", data: { action: "remove" } %>
+      </div>
+    </div>
+  </div>
+</div>

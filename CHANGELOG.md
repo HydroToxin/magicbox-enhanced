@@ -41,4 +41,5 @@
 - 1dc5a2c cleanup migrations and also fix serveral issues
 ## 2024-10-13
 
+- 05e6afe Fix and refactor Todos. Fix Migrations and Javascripts. Remove last JQuery artefacts. Bye Bye JQuery!
 - d1560ca Fix polymorphing. Also grows form refactores and fix serveral bugs

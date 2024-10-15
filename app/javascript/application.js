@@ -6,6 +6,8 @@ import "@hotwired/turbo-rails"
 
 // Import Stimulus
 import { Application } from "@hotwired/stimulus"
+import "./controllers/application"
+
 import { createPopper } from '@popperjs/core';
 
 import * as bootstrap from "bootstrap";

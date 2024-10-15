@@ -3,4 +3,5 @@ import './views/admin/batches/form';
 import './views/admin/grows/weeks';
 import './views/admin/grows/form';
 import './views/admin/todos/form';
-import './views/admin/scenarions/form';
+//import './views/admin/scenarions/form';
+import './views/admin/resource_data/form';
