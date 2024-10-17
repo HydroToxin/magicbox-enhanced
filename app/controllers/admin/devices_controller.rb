@@ -37,7 +37,9 @@ class Admin::DevicesController < Admin::AdminController
 
 
   def edit
+  end
 
+  def destroy
   end
 
 

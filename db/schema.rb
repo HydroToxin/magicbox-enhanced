@@ -90,11 +90,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.float "batch_price", default: 0.0
     t.integer "batch_count"
     t.integer "batch_type", default: 0
-    t.bigint "grow_id"
     t.bigint "harvest_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.index ["grow_id"], name: "index_batches_on_grow_id"
     t.index ["harvest_id"], name: "index_batches_on_harvest_id"
   end
 
@@ -191,7 +189,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.date "end_date"
     t.integer "substrate"
     t.integer "flowering"
-    t.integer "grow_status"
+    t.integer "grow_status", null: false
     t.integer "number_of_subjects"
     t.integer "seedling_weeks"
     t.integer "vegging_weeks"
@@ -204,8 +202,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.float "estimated_weight_by_square_meter", default: 0.0
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.bigint "mother_id"
-    t.index ["mother_id"], name: "index_grows_on_mother_id"
   end
 
   create_table "harvests", force: :cascade do |t|
@@ -260,10 +256,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.bigint "user_id"
     t.bigint "grow_id"
     t.bigint "room_id"
+    t.bigint "subject_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["grow_id"], name: "index_observations_on_grow_id"
     t.index ["room_id"], name: "index_observations_on_room_id"
+    t.index ["subject_id"], name: "index_observations_on_subject_id"
     t.index ["user_id"], name: "index_observations_on_user_id"
   end
 
@@ -459,7 +457,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
   add_foreign_key "alerts", "data_types"
   add_foreign_key "alerts", "resources"
   add_foreign_key "alerts", "users"
-  add_foreign_key "batches", "grows"
   add_foreign_key "batches", "harvests"
   add_foreign_key "condition_groups", "scenarios"
   add_foreign_key "conditions", "condition_groups"
@@ -470,7 +467,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
   add_foreign_key "events", "devices"
   add_foreign_key "events", "rooms"
   add_foreign_key "events", "users"
-  add_foreign_key "grows", "subjects", column: "mother_id"
   add_foreign_key "harvests", "grows"
   add_foreign_key "issues", "observations"
   add_foreign_key "issues", "resources"
@@ -478,6 +474,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
   add_foreign_key "notifications", "users"
   add_foreign_key "observations", "grows"
   add_foreign_key "observations", "rooms"
+  add_foreign_key "observations", "subjects"
   add_foreign_key "observations", "users"
   add_foreign_key "observations_subjects", "observations"
   add_foreign_key "observations_subjects", "subjects"

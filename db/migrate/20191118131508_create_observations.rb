@@ -11,6 +11,7 @@ class CreateObservations < ActiveRecord::Migration[5.2]
       t.references :user, foreign_key: true
       t.references :grow, foreign_key: true
       t.references :room, foreign_key: true
+      t.references :subject, foreign_key: true
 
       t.timestamps
     end

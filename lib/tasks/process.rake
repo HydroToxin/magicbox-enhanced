@@ -29,7 +29,7 @@ namespace :process do
       cpu_temp = `/usr/bin/vcgencmd measure_temp`.to_s.split("=")[1].to_f.round(1)
     end
 
-    ActionCable.server.broadcast "dashboards_channel", cpu_temp: "#{cpu_temp.to_s}°C"
+    #ActionCable.server.broadcast "dashboards_channel", cpu_temp: "#{cpu_temp.to_s}°C"
 
     cpu_usage = 0
     if OS.mac?
@@ -38,7 +38,7 @@ namespace :process do
       cpu_usage = `/bin/grep 'cpu ' /proc/stat | /usr/bin/awk '{usage=100-($5*100)/($2+$3+$4+$5+$6+$7+$8)} END {print usage}'`.to_f.round(1)
     end
 
-    ActionCable.server.broadcast "dashboards_channel", cpu_usage: "#{cpu_usage.to_s}%"
+    #ActionCable.server.broadcast "dashboards_channel", cpu_usage: "#{cpu_usage.to_s}%"
 
     cpu_voltage = 0
     if OS.mac?
@@ -47,7 +47,7 @@ namespace :process do
       cpu_voltage = `/usr/bin/vcgencmd measure_volts`.split("=")[1].to_f.round(1)
     end
 
-    ActionCable.server.broadcast "dashboards_channel", cpu_voltage: "#{cpu_voltage.to_s}V"
+    #ActionCable.server.broadcast "dashboards_channel", cpu_voltage: "#{cpu_voltage.to_s}V"
 
     used_memory = 0
     if OS.mac?
@@ -56,7 +56,7 @@ namespace :process do
       used_memory = `free -h | grep Mem | awk '{print $3}'`.chomp
     end
 
-    ActionCable.server.broadcast "dashboards_channel", used_memory: used_memory
+    #ActionCable.server.broadcast "dashboards_channel", used_memory: used_memory
 
     free_memory = 0
     if OS.mac?
@@ -65,7 +65,7 @@ namespace :process do
       free_memory = `free -h | grep Mem | awk '{print $4}'`.chomp
     end
 
-    ActionCable.server.broadcast "dashboards_channel", free_memory: free_memory
+    #ActionCable.server.broadcast "dashboards_channel", free_memory: free_memory
 
     Sample.create(
       product_reference: "System",

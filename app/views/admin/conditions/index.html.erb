@@ -26,7 +26,7 @@
         <td><%= condition.end_time %></td>
         <td><%= link_to 'Show', condition %></td>
         <td><%= link_to 'Edit', edit_condition_path(condition) %></td>
-        <td><%= link_to 'Destroy', condition, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Destroy', condition, method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %></td>
       </tr>
     <% end %>
   </tbody>

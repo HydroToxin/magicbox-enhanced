@@ -1,4 +1,4 @@
-<%= form_for [:admin, room, device], html: {role: "form", class: "col-md-12 col-lg-8 mx-auto" } do |f| %>
+<%= form_for [:admin, room, device], data: { turbo: false }, html: {role: "form", class: "col-md-12 col-lg-8 mx-auto" } do |f| %>
 	<h1>
 		<% if device.new_record? %>
 			New device
@@ -9,7 +9,7 @@
 		<div class="actions float-end">
       <%= link_to 'Cancel', :back, class: "btn btn-light border" %>
       <% unless device.new_record? %>
-      	<%= link_to "Delete", admin_room_device_path(device.room, device), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+				<%= button_to 'Destroy', admin_room_device_path(device.room, device), method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
       <% end %>
       <%= f.submit "Save", class: "btn btn-primary" %>
     </div>
