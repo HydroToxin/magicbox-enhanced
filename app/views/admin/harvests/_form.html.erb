@@ -3,7 +3,7 @@
     <%= harvest.new_record? ? "New Harvest" : "Editing Harvest" %>
     <div class="float-end">
       <% unless harvest.new_record? %>
-        <%= link_to "Delete", [:admin, @grow, harvest], method: :delete, class: "btn btn-outline-danger", data: { confirm: 'Are you sure?' } %>
+        <%= button_to 'Destroy', [:admin, @grow, harvest],, method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
       <% end %>
       <%= form.submit "Save", class: "btn btn-primary" %>
     </div>

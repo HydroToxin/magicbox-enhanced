@@ -3,6 +3,7 @@ class CreateResourceData < ActiveRecord::Migration[5.2]
   def change
     create_table :resource_datas do |t|
       t.string :value
+      t.string :unit
 
       t.references :resource, foreign_key: true
       t.references :observation, foreign_key: true

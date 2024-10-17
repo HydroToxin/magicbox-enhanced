@@ -52,8 +52,6 @@ Rails.application.routes.draw do
 
   resources :batches, only: [:index, :show]
 
-  resources :harvests, only: [:index]
-
   # Nested resources for grows
   resources :grows, except: [:edit, :update, :new, :create] do
     resources :harvests, only: [:show]
@@ -80,6 +78,7 @@ Rails.application.routes.draw do
 
   # Default events route (falls eigenständige events benötigt werden)
   resources :events
+  resources :harvests, only: [:index, :new]
 
   # Admin namespace
   namespace :admin do
@@ -112,6 +111,7 @@ Rails.application.routes.draw do
     resources :strains
     resources :data_types
     resources :batches, except: [:edit, :update]
+    resources :harvests, only: [:index, :new]
 
     resources :scenarios do
       resources :condition_groups, only: [:new, :create, :destroy] do

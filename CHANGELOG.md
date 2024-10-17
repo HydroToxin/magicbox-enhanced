@@ -43,3 +43,6 @@
 
 - 05e6afe Fix and refactor Todos. Fix Migrations and Javascripts. Remove last JQuery artefacts. Bye Bye JQuery!
 - d1560ca Fix polymorphing. Also grows form refactores and fix serveral bugs
+## 2024-10-15
+
+- fbf212b refactor observations#new for tubo-stream and stimulus

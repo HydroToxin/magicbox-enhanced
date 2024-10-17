@@ -1,7 +1,7 @@
 class DevicesController < ApplicationController
 	before_action :authenticate_user!
-  before_action :set_room, only: [:index, :new, :show, :edit, :update, :destroy, :start, :stop, :samples, :query]
-  before_action :set_device, only: [:show, :edit, :update, :destroy, :start, :stop, :query]
+  before_action :set_room, only: [:index, :show, :query]
+  before_action :set_device, only: [:show, :query]
 
   def index
   end
@@ -18,12 +18,10 @@ class DevicesController < ApplicationController
     redirect_to room_path(@room), alert: 'Query device failed.'
   end
 
-
 private
   def set_room
     if params[:room_id].present?
       @room = Room.find(params[:room_id])
-
       add_breadcrumb @room.name, @room
     end
   end
