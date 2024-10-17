@@ -46,3 +46,6 @@
 ## 2024-10-15
 
 - fbf212b refactor observations#new for tubo-stream and stimulus
+## 2024-10-17
+
+- 0f0cc6b Fix a hudge of Bugs. Also normalize some database relations
