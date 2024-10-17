@@ -37,10 +37,10 @@
 				<td><%= link_to d.room.name, admin_room_path(d.room) %></td>
 				<td>
 					<% if d.sensor? %>
-						<%= link_to "Query", query_room_device_path(d.room, d), method: :post, class: "btn btn-sm btn-outline-info" %>
+						<%= button_to 'Query', query_room_device_path(d.room, d), method: :post, class: "btn btn-sm btn-outline-info"%>
 					<% else %>
-						<%= link_to "Stop", stop_admin_room_device_path(d.room, d), method: :post, class: "btn btn-sm btn-outline-danger" %>
-						<%= link_to "Start", start_admin_room_device_path(d.room, d), method: :post, class: "btn btn-sm btn-outline-info" %>
+						<%= button_to 'Stop', stop_admin_room_device_path(d.room, d), method: :post, class: "btn btn-sm btn-outline-danger"%>
+						<%= button_to 'Start', start_admin_room_device_path(d.room, d), method: :post, class: "btn btn-sm btn-outline-info"%>
 					<% end %>
 					<%= link_to "Edit", edit_admin_room_device_path(d.room, d), class: "btn btn-sm btn-outline-success" %>
 				</td>

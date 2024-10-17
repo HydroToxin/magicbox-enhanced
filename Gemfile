@@ -73,6 +73,7 @@ group :development, :test do
   gem 'license_finder'
   gem 'spring'
   gem 'spring-watcher-listen'
+  gem 'rails-erd'
 end
 
 group :development do

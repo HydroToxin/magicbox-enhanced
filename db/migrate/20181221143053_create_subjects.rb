@@ -7,13 +7,10 @@ class CreateSubjects < ActiveRecord::Migration[5.2]
 
       t.references :room, foreign_key: true
       t.references :grow, foreign_key: true
-      t.references :mother, foreign_key: { to_table: :subjects }
+      t.references :mother, foreign_key: { to_table: :subjects }, on_delete: :nullify, null: true, default: nil
       t.references :strain, foreign_key: true
 
       t.timestamps
     end
-
-    add_reference(:grows, :mother, foreign_key: { to_table: :subjects }, null: true, default: nil)
-
   end
 end

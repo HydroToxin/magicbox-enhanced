@@ -10,7 +10,6 @@ class CreateBatches < ActiveRecord::Migration[5.2]
       t.integer :batch_count
       t.integer :batch_type, default: 0
 
-      t.references :grow, foreign_key: true
       t.references :harvest, foreign_key: true
 
       t.timestamps

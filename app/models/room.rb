@@ -2,7 +2,7 @@ class Room < ApplicationRecord
 	attr_accessor :scenario_id
 
 	has_many :subjects
-	has_many :devices, dependent: :delete_all
+	has_many :devices, dependent: :destroy
   has_many :events, :as => :eventable, dependent: :destroy
 
 	has_many :observations, through: :subjects

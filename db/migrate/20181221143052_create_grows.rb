@@ -6,7 +6,7 @@ class CreateGrows < ActiveRecord::Migration[5.2]
       t.date :end_date
       t.integer :substrate
       t.integer :flowering
-      t.integer :grow_status
+      t.integer :grow_status, null: false
       t.integer :number_of_subjects
       t.integer :seedling_weeks
       t.integer :vegging_weeks

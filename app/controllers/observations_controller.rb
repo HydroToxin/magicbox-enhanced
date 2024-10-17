@@ -41,7 +41,6 @@ class ObservationsController < ApplicationController
   # POST /observations
   # POST /observations.json
   def create
-    binding.pry
     @observation = Observation.new(observation_params)
 
     respond_to do |format|

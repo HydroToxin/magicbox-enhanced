@@ -1,8 +1,8 @@
 <h1>
   Alerts
   <div class="float-end">
-    <%= link_to new_admin_alert_path, class: "btn btn-info" do %>
-      <i class="bi-plus h4"></i>
+    <%= link_to new_admin_alert_path, class: "btn btn-info btn d-flex align-items-center" do %>
+      <i class="bi-plus my-1 h5"></i>
       New
     <% end %>
   </div>
@@ -48,7 +48,6 @@
           <%= link_to 'Edit', edit_admin_alert_path(alert), class: "btn btn-sm btn-outline-success" %>
           <%= link_to 'Test', test_admin_alert_path(alert), method: :post, class: "btn btn-sm btn-outline-warning" %>
           <%= form_with(url: [:admin, alert], method: :post, data: { turbo_confirm: 'Are you sure?' }, class: "d-inline") do %>
-            <%= hidden_field_tag '_method', 'delete' %>
             <%= submit_tag 'Destroy', class: "btn btn-sm btn-outline-danger" %>
           <% end %>
         </td>
