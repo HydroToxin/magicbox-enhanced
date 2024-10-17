@@ -151,7 +151,7 @@ watering_scenario = Scenario.import("db/samples/Watering.json", "Watering")
 r.scenarios << [growing_scenario, climat_scenario, watering_scenario]
 r.save!
 
-Grow.create! description: 'Test', start_date: Time.now, flowering: 1
+Grow.create! description: 'Test', start_date: Time.now, flowering: 1, grow_status: :seedling
 Observation.create! user: User.first, grow: Grow.first, body: 'Observation Test', water: true, nutrients: 10, room: r
 
 s = Sample.create(

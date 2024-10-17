@@ -1,38 +1,36 @@
 <h1>
   <%= @grow.name %>
 
-  <div class="float-end">
-    <%= link_to 'Back', grows_path, class: "btn btn-light border" %>
+ <div class="float-end d-inline-flex">
+    <%= link_to 'Back', grows_path, class: "btn btn-light border d-flex align-items-center me-2" %>
 
     <% if @grow.harvestable?  %>
       <% if @grow.harvest.nil? %>
-        <%= link_to new_admin_grow_harvest_path(@grow), class: "btn btn-success" do %>
-          <i class="bi-flower1 h4"></i>
+        <%= link_to new_admin_grow_harvest_path(@grow), class: "btn btn-success d-flex align-items-center me-2" do %>
+          <i class="bi-flower1 my-1 h5"></i>
           Harvest
         <% end %>
       <% else %>
-        <%= link_to [@grow, @grow.harvest], class: "btn btn-success" do %>
-          <i class="bi-flower1 h4"></i>
+        <%= link_to [@grow, @grow.harvest], class: "btn btn-success d-flex align-items-center me-2" do %>
+          <i class="bi-flower1 my-1 h5"></i>
           Harvest
         <% end %>
       <% end %>
     <% end %>
 
-    <%= link_to new_admin_grow_subject_path(@grow), class: "btn btn-info" do %>
-      <i class="bi-plus h4"></i>
-      Subject
+    <%= link_to 'Edit', edit_admin_grow_path(@grow), class: "btn btn-success d-flex align-items-center me-2" %>
+    <%= link_to new_admin_grow_subject_path(@grow), class: "btn btn-info d-flex align-items-center me-2" do %>
+      <i class="bi-plus my-1 h5"></i>Subject
     <% end %>
-    <%= link_to 'Edit', edit_admin_grow_path(@grow), class: "btn btn-success" %>
-    <%= link_to new_grow_observation_path(@grow), class: "btn btn-outline-primary" do %>
-      <i class="bi-plus h4"></i> <i class="bi-comment-dots h4"></i>
+    <%= link_to new_grow_observation_path(@grow), class: "btn btn-outline-primary d-flex align-items-center" do %>
+      <i class="bi-plus my-1 h5"></i>Observation<i class="bi-comment-dots h4"></i>
     <% end %>
-  </div>
-</h1>
+</div>
 
 <hr>
 
 <div>
-  <div class="float-end ms-3">
+  <div class="float-end ms-3 h6">
     <span class="badge bg-primary"><%= @grow.grow_status %></span>
     <span class="badge bg-info"><%= @grow.substrate %></span>
     <span class="badge bg-secondary"><%= @grow.flowering %></span>

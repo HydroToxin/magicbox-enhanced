@@ -26,7 +26,7 @@
         <td><%= observation.nutrients %></td>
         <td><%= link_to 'Show', observation %></td>
         <td><%= link_to 'Edit', edit_observation_path(observation) %></td>
-        <td><%= link_to 'Destroy', observation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Destroy', observation, method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %></td>
       </tr>
     <% end %>
   </tbody>

@@ -10,7 +10,7 @@
 		<% end %>
 
 		<%= link_to "Edit", edit_admin_room_device_path(@device.room, @device), class: "btn btn-success" %>
-		<%= link_to "Delete", admin_room_device_path(@device.room, @device), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+		<%= button_to 'Destroy', admin_room_device_path(@device.room, @device), method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
 	</div>
 </h1>
 

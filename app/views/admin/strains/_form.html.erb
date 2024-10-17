@@ -1,12 +1,12 @@
 <%= form_with(model: [:admin, strain], local: true, class: "col-md-12 col-lg-8 mx-auto") do |form| %>
   <h1>
     <% if strain.new_record? %>
-      New Strain
+      New
     <% else %>
-      Editing Strain
+     Edit
 
       <div class="float-end">
-        <%= link_to 'Destroy', [:admin, strain], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        <%= button_to 'Destroy', [:admin, strain], method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
       </div>
     <% end %>
   </h1>

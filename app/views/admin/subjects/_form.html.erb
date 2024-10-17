@@ -9,7 +9,7 @@
     <div class="actions float-end">
       <%= link_to 'Cancel', :back, class: "btn btn-light border" %>
       <% unless subject.new_record? %>
-        <%= link_to 'Destroy', admin_grow_subject_path(subject.grow, subject), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        <%= button_to 'Destroy', admin_grow_subject_path(subject.grow, subject), method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
       <% end %>
       <%= form.submit "Save", class: "btn btn-primary" %>
     </div>

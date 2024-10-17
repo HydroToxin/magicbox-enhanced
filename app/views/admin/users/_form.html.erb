@@ -9,7 +9,7 @@
     <div class="actions float-end">
       <%= link_to 'Cancel', :back, class: "btn btn-light border" %>
       <% unless user.new_record? %>
-        <%= link_to 'Destroy', [:admin, user], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        <%= button_to 'Destroy', [:admin, user], method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
       <% end %>
       <%= form.submit "Save", class: "btn btn-primary" %>
     </div>

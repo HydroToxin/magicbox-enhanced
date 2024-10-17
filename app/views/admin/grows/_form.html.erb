@@ -1,9 +1,9 @@
-<%= form_with(model: [:admin, grow], local: true,  data: { turbo: false }, class: "col-md-12 col-lg-8 mx-auto") do |form| %>
+<%= form_with(model: [:admin, grow], local: true, class: "col-md-12 col-lg-8 mx-auto") do |form| %>
   <h1>
     <%= grow.new_record? ? "New Grow" : "Editing Grow" %>
     <div class="float-end">
       <% unless grow.new_record? %>
-        <%= link_to 'Destroy', [:admin, grow], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" %>
+        <%= button_to 'Destroy', admin_grow_path(grow), method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
       <% end %>
       <%= form.submit "Save", class: "btn btn-primary" %>
     </div>
@@ -58,8 +58,6 @@
         <%= form.select :birth_type, options_for_select(Grow.birth_types.keys.to_a.map{ |t| [t.capitalize, t] }, form.object.birth_type || 'from_seed'), {}, class: "form-select", id: "birth-type-select" %>
       </div>
       <div class="col-md-4 mt-2">
-        <%= form.label :mother_id, class: 'form-label' %>
-        <%= form.select :mother_id, options_from_collection_for_select(Subject.all, "id", "name_with_grow", form.object.mother_id), { include_blank: 'None' }, class: "form-select selectpicker", data: { style: "btn-white", live_search: true, size: 10, title: "None" }, id: "mother-select" %>
       </div>
       <div class="col-md-4 mt-2">
         <%= form.label 'Estimated g/m2', class: 'form-label' %>

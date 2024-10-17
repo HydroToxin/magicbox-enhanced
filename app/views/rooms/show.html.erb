@@ -2,12 +2,12 @@
   <%= @room.name %> <span class="text-muted" style="font-size: 14px">
     [<%= @room.room_type.titleize %>] (<%= @room.length %> x <%= @room.width %> x <%= @room.height %>)
   </span>
-  <div class="float-end">
-    <%= link_to new_admin_room_device_path(@room), class: "btn btn-info" do %>
-      <i class="bi-plus h4"></i> Device
+  <div class="float-end" style="display: inline-flex">
+    <%= link_to new_admin_room_device_path(@room), class: "btn btn-info d-flex align-items-center mr-1", style: "margin-right: 8px" do %>
+      <i class="bi-plus my-1 h5"></i> Device
     <% end %>
-    <%= link_to edit_admin_room_path(@room), class: "btn btn-success" do %>
-      <i class="bi-pencil h4"></i> Edit
+    <%= link_to edit_admin_room_path(@room), class: "btn btn-success d-flex align-items-center" do %>
+      <i class="bi-pencil my-1 h6" style="margin-right: 6px"></i> Edit
     <% end %>
   </div>
 </h1>

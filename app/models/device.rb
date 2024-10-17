@@ -16,9 +16,9 @@ class Device < ApplicationRecord
 
   belongs_to :room
 
-  has_many :samples
+  has_many :samples, dependent: :delete_all
   has_many :events, :as => :eventable
-  has_many :devices_data_types
+  has_many :devices_data_types, dependent: :delete_all
   has_many :data_types, through: :devices_data_types, source: :data_type
   has_many :notifications, as: :notified
 
@@ -223,8 +223,8 @@ class Device < ApplicationRecord
         unit: "%"
       )
 
-      ActionCable.server.broadcast "dashboards_channel", temperature: "#{temp_s} °C"
-      ActionCable.server.broadcast "dashboards_channel", humidity: "#{hum_s} °%"
+      #ActionCable.server.broadcast "dashboards_channel", temperature: "#{temp_s} °C"
+      #ActionCable.server.broadcast "dashboards_channel", humidity: "#{hum_s} °%"
 
     rescue Exception => e
       Rails.logger.error " -> failed    : MISSING_DATA"

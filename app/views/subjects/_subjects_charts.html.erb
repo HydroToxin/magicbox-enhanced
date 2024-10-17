@@ -5,7 +5,7 @@
         {
           name: resource.name,
           data: ResourceData.joins(:subject, :resource).where(subject_id: subjects).where("resources.id = #{resource.id}").group("resource_datas.id").group_by_day(:created_at).map { |e|
-              [fdatetime(e.created_at), e.value]
+              [e.created_at, e.value]
           }
         }
       }.compact %>

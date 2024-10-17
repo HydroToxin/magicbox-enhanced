@@ -3,8 +3,8 @@
 
 	<div class="float-end">
 		<%= link_to 'Back', room_path(@subject.room), class: "btn btn-light border" %>
-		<%= link_to 'Edit', edit_admin_grow_subject_path(@subject.grow, @subject), class: "btn btn-success" %>
-		<%= link_to "<i class='bi-plus h4'></i> <i class='<bi-chat-left-dots h4'></i>".html_safe, new_grow_subject_observation_path(@subject.grow, @subject, subject_ids: [@subject.id]), class: "btn btn-outline-primary" %>
+		<%= link_to 'Edit', edit_admin_grow_subject_path(@subject.grow, @subject), class: "btn btn-success d-flex align-items-center" %>
+		<%= link_to "<i class='bi-plus my-1 h5'></i> <i class='<bi-chat-left-dots h4'></i>".html_safe, new_grow_subject_observation_path(@subject.grow, @subject, subject_ids: [@subject.id]), class: "btn btn-outline-primary" %>
 	</div>
 </h1>
 

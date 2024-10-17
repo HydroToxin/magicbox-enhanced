@@ -1,4 +1,4 @@
-class CreateObservationsSubjects < ActiveRecord::Migration[5.2]
+class CreateObservationSubjects < ActiveRecord::Migration[5.2]
   disable_ddl_transaction!
   def change
     create_table :observations_subjects do |t|

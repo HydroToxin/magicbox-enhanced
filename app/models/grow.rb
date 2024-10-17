@@ -36,6 +36,7 @@ class Grow < ApplicationRecord
   has_one :harvest
 
   validates :description, presence: true
+  validates :grow_status, presence: true
   validate :validate_number_of_subjects
   validate :validate_birth_type_and_mother
 
