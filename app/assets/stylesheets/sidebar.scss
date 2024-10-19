@@ -66,8 +66,7 @@ a[data-toggle="collapse"] {
 
 .dropdown-toggle::after {
   position: relative;
-  top: 50%;
-  right: 20px;
+  left: 25%;
   transform: translateY(-50%);
   margin-top: 1em;
   display:inline-block;
@@ -100,4 +99,9 @@ a.article,
 a.article:hover {
   background: #6d7fcc !important;
   color: #fff !important;
+}
+
+i {
+  top: 3px;
+  position: relative;
 }

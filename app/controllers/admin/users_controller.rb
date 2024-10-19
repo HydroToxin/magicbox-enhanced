@@ -52,7 +52,7 @@ class Admin::UsersController < Admin::AdminController
   end
 
   def update_password
-    
+
   end
 
 
