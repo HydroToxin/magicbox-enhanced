@@ -17,10 +17,6 @@
     </div>
   <% end %>
 
-  <%= form.fields_for :resource do |ff| %>
-    <%= render partial: '_resource_fields', locals: { ff: ff } %>
-  <% end %>
-
   <div class="mb-3">
     <%= form.label :name, class: 'form-label' %>
     <%= form.text_field :name, class: "form-control" %>

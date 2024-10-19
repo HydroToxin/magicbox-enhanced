@@ -1,14 +1,15 @@
-<%= form_with(model: [:admin, @data_type], local: true, class: "col-md-12 col-lg-8 mx-auto") do |form| %>
-  <h1>
+<h1>
+  <div class="col-md-12 col-lg-8 mx-auto">
     <%= @data_type.new_record? ? "New DataType" : "Editing DataType" %>
     <div class="float-end">
       <% unless @data_type.new_record? %>
-        <%= button_to 'Destroy', [:admin, @data_type], method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
+        <%= button_to 'Destroy', [:admin, data_type], method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
       <% end %>
-      <%= form.submit "Save", class: "btn btn-primary" %>
     </div>
-  </h1>
+  </div>
+</h1>
 
+<%= form_with(model: [:admin, data_type], local: true, class: "col-md-12 col-lg-8 mx-auto") do |form| %>
   <hr>
 
   <% if @data_type.errors.any? %>
@@ -26,4 +27,6 @@
     <%= form.label :name, class: 'form-label' %>
     <%= form.text_field :name, class: "form-control" %>
   </div>
+
+  <%= form.submit "Save", class: "btn btn-primary" %>
 <% end %>
