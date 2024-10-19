@@ -47,7 +47,7 @@ class Admin::StrainsController < Admin::AdminController
   def update
     respond_to do |format|
       if @strain.update(strain_params)
-        format.html { redirect_to [:admin, @strain], notice: 'Strain was successfully updated.' }
+        format.html { redirect_to admin_strains_url, notice: 'Strain was successfully created.'}
         format.json { render :show, status: :ok, location: @strain }
       else
         format.html { render :edit }
@@ -61,7 +61,7 @@ class Admin::StrainsController < Admin::AdminController
   def destroy
     @strain.destroy
     respond_to do |format|
-      format.html { redirect_to strains_url, notice: 'Strain was successfully destroyed.' }
+      format.html { redirect_to admin_strains_url, notice: 'Strain was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
