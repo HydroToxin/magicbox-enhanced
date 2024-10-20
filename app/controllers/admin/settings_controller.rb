@@ -2,6 +2,11 @@ module Admin
   class SettingsController < ApplicationController
   	add_breadcrumb 'Settings'
 
+    def show
+      respond_to do |format|
+        format.html   # Falls Sie auch reguläre HTML-Anfragen unterstützen
+      end
+    end
     def create
       setting_params.keys.each do |key|
         Setting.send("#{key}=", setting_params[key].strip) unless setting_params[key].nil?

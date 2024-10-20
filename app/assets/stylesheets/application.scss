@@ -71,6 +71,9 @@ body {
   background: #fafafa;
 }
 
+#wrapper {
+}
+
 p {
   font-family: 'Poppins', sans-serif;
   font-size: 1.1em;
@@ -118,15 +121,16 @@ span {
     CONTENT STYLE
 ----------------------------------------------------- */
 
-#content {
-  width: calc(100% - 200px);
+#main-content {
   padding: 0px;
   min-height: 100vh;
   transition: all 0.3s;
   position: absolute;
   top: 0;
   right: 0;
+  left: 200px;
 }
+
 
 #content.active {
   width: 100%;
@@ -146,7 +150,8 @@ span {
   }
 
   #content {
-    width: 100%;
+    overflow-y: auto;
+    padding: 1em;
   }
 
   #content.active {
