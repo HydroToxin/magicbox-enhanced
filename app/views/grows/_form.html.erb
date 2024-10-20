@@ -1,19 +1,18 @@
-<%= form_with(model: grow, local: true, class: "col-md-12 col-lg-8 mx-auto") do |form| %>
+<%= form_with(model: grow, local: true, , data: { turbo: false }, class: "col-md-12 col-lg-8 mx-auto") do |form| %>
   <h1>
     <%= grow.new_record? ? "New Grow" : "Editing Grow" %>
-    <div class="float-right">
+    <div class="float-end">
       <% unless grow.new_record? %>
-        <%= link_to 'Destroy', grow, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn btn-outline-danger" %></td>
+        <%= button_to 'Destroy', grow, method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
       <% end %>
       <%= form.submit "Save", class: "btn btn-primary" %>
-
     </div>
   </h1>
 
   <hr>
 
   <% if grow.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(grow.errors.count, "error") %> prohibited this grow from being saved:</h2>
 
       <ul>
@@ -24,43 +23,42 @@
     </div>
   <% end %>
 
-
-  <div class="form-group">
-    <%= form.label :description %>
-    <%= form.text_field :description, class: "form-control col-8" %>
+  <div class="mb-3">
+    <%= form.label :description, class: 'form-label' %>
+    <%= form.text_field :description, class: "form-control" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :grow_status %>
-    <%= form.select :grow_status, options_for_select(Grow.grow_statuses.keys.to_a.map{ |t| [t(t), t] }, form.object.grow_status), {}, {:class => "form-control col-4" } %>
+  <div class="mb-3">
+    <%= form.label :grow_status, class: 'form-label' %>
+    <%= form.select :grow_status, options_for_select(Grow.grow_statuses.keys.to_a.map{ |t| [t(t), t] }, form.object.grow_status), {}, class: "form-control" %>
   </div>
 
   <hr>
 
-  <div class="form-group">
+  <div class="mb-3">
     <div class="row">
       <div class="col-md-4">
-        <%= form.label :substrate %>
-        <%= form.select :substrate, options_for_select(Grow.substrates.keys.to_a.map{ |t| [t(t), t] }, form.object.substrate), {}, {:class => "form-control" } %>
+        <%= form.label :substrate, class: 'form-label' %>
+        <%= form.select :substrate, options_for_select(Grow.substrates.keys.to_a.map{ |t| [t(t), t] }, form.object.substrate), {}, class: "form-control" %>
       </div>
       <div class="col-md-4">
-        <%= form.label :flowering %>
-        <%= form.select :flowering, options_for_select(Grow.flowerings.keys.to_a.map{ |t| [t(t), t] }, form.object.flowering), {}, {:class => "form-control" } %>
+        <%= form.label :flowering, class: 'form-label' %>
+        <%= form.select :flowering, options_for_select(Grow.flowerings.keys.to_a.map{ |t| [t(t), t] }, form.object.flowering), {}, class: "form-control" %>
       </div>
     </div>
   </div>
 
   <hr>
 
-  <div class="form-group">
+  <div class="mb-3">
     <div class="row">
       <div class="col-md-4">
-        <%= form.label "Create subjects" %>
+        <%= form.label "Create subjects", class: 'form-label' %>
         <%= form.number_field :number_of_subjects, class: "form-control", disabled: !grow.new_record? %>
       </div>
 
       <div class="col-md-4">
-        <%= form.label "Put them in room" %>
+        <%= form.label "Put them in room", class: 'form-label' %>
         <%= select_tag :room, options_from_collection_for_select(Room.all, "id", "name"), class: "form-control", disabled: !grow.new_record? %>
       </div>
     </div>
@@ -69,36 +67,36 @@
   <br>
   <hr>
 
-  <div class="form-group">
+  <div class="mb-3">
     <div class="row">
       <div class="col-md-6">
-        <%= form.label "Start Date" %>
-        <%= form.hidden_field :start_date, value: fdate(form.object.start_date), class: "form-control col-3 weekpicker", id: "weekpicker-#{form.object.id}-start_date", data: { toggle: "datetimepicker", target: "#weekpicker-#{form.object.id}-start_date" } %>
+        <%= form.label "Start Date", class: 'form-label' %>
+        <%= form.hidden_field :start_date, value: fdate(form.object.start_date), class: "form-control weekpicker", id: "weekpicker-#{form.object.id}-start_date", data: { toggle: "datetimepicker", target: "#weekpicker-#{form.object.id}-start_date" } %>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
-          <%= form.label :seedling_weeks %>
+        <div class="mb-3">
+          <%= form.label :seedling_weeks, class: 'form-label' %>
           <%= form.number_field :seedling_weeks, value: form.object.seedling_weeks, min: 0, max: 52, class: "form-control" %>
         </div>
 
-        <div class="form-group">
-          <%= form.label :vegging_weeks %>
+        <div class="mb-3">
+          <%= form.label :vegging_weeks, class: 'form-label' %>
           <%= form.number_field :vegging_weeks, value: form.object.vegging_weeks, min: 0, max: 52, class: "form-control" %>
         </div>
-        <div class="form-group">
-          <%= form.label :flowering_weeks %>
+        <div class="mb-3">
+          <%= form.label :flowering_weeks, class: 'form-label' %>
           <%= form.number_field :flowering_weeks, value: form.object.flowering_weeks, min: 0, max: 52, class: "form-control" %>
         </div>
-        <div class="form-group">
-          <%= form.label :flushing_weeks %>
+        <div class="mb-3">
+          <%= form.label :flushing_weeks, class: 'form-label' %>
           <%= form.number_field :flushing_weeks, value: form.object.flushing_weeks, min: 0, max: 52, class: "form-control" %>
         </div>
-        <div class="form-group">
-          <%= form.label :drying_weeks %>
+        <div class="mb-3">
+          <%= form.label :drying_weeks, class: 'form-label' %>
           <%= form.number_field :drying_weeks, value: form.object.drying_weeks, min: 0, max: 52, class: "form-control" %>
         </div>
-        <div class="form-group">
-          <%= form.label :curing_weeks %>
+        <div class="mb-3">
+          <%= form.label :curing_weeks, class: 'form-label' %>
           <%= form.number_field :curing_weeks, value: form.object.curing_weeks, min: 0, max: 52, class: "form-control" %>
         </div>
 

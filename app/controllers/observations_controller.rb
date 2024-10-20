@@ -55,10 +55,9 @@ class ObservationsController < ApplicationController
           format.html { redirect_to @grow, notice: 'Observation was successfully created.' }
         end
 
-
         format.json { render :show, status: :created, location: @observation }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @observation.errors, status: :unprocessable_entity }
       end
     end

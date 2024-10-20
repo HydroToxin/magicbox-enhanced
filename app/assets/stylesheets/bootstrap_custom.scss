@@ -1,0 +1,14 @@
+// Override deprecated Sass color functions
+$enable-deprecation-messages: false;
+// Import Bootstrap
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons';
+
+.button_to,
+.button_to div {
+  display: inline;
+}
+
+i {
+
+}

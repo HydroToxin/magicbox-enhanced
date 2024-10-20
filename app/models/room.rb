@@ -2,7 +2,7 @@ class Room < ApplicationRecord
 	attr_accessor :scenario_id
 
 	has_many :subjects
-	has_many :devices, dependent: :delete_all
+	has_many :devices, dependent: :destroy
   has_many :events, :as => :eventable, dependent: :destroy
 
 	has_many :observations, through: :subjects
@@ -110,45 +110,45 @@ class Room < ApplicationRecord
 	end
 
 
-	def take_camshot
-		# Get the first camera device
-		camera_device = devices.where(device_type: :camera).first
-		return unless camera_device
+	# def take_camshot
+	# 	# Get the first camera device
+	# 	camera_device = devices.where(device_type: :camera).first
+	# 	return unless camera_device
 
-		# Generate temporary image path
-		tmp_name = "camshot-image-#{Time.now.to_i}"
-		tmp_image_path = "/tmp/#{tmp_name}.jpeg"
+	# 	# Generate temporary image path
+	# 	tmp_name = "camshot-image-#{Time.now.to_i}"
+	# 	tmp_image_path = "/tmp/#{tmp_name}.jpeg"
 
-		begin
-			# Capture image based on the type of camera device
-			case camera_device.product_reference
-			when "usb_webcam"
-				# Capture image from USB webcam with fswebcam
-				system("/usr/bin/fswebcam -d /dev/video0 --flip v --no-banner -r 384x288 #{tmp_image_path}")
-			when "rpi_camera_module_v2"
-				# No implementation as per original code
-			when "ustreamer"
-				# Capture image from ustreamer
-				system("curl http://magicbox.read-write.fr:8888/snapshot -o #{tmp_image_path}")
-			else
-				return # Exit method if no known camera type is matched
-			end
+	# 	begin
+	# 		# Capture image based on the type of camera device
+	# 		case camera_device.product_reference
+	# 		when "usb_webcam"
+	# 			# Capture image from USB webcam with fswebcam
+	# 			system("/usr/bin/fswebcam -d /dev/video0 --flip v --no-banner -r 384x288 #{tmp_image_path}")
+	# 		when "rpi_camera_module_v2"
+	# 			# No implementation as per original code
+	# 		when "ustreamer"
+	# 			# Capture image from ustreamer
+	# 			system("curl http://magicbox.read-write.fr:8888/snapshot -o #{tmp_image_path}")
+	# 		else
+	# 			return # Exit method if no known camera type is matched
+	# 		end
 
-			# Attach the image to the camshots collection
-			if File.exist?(tmp_image_path)
-				self.camshots.attach(io: File.open(tmp_image_path), filename: "image-#{Time.now.strftime('%s%L')}.jpeg")
-				# Delete the temporary file
-				File.delete(tmp_image_path)
-			else
-				puts "Failed to create image file: #{tmp_image_path}"
-			end
-		rescue => e
-			Rails.logger.error "Error taking camshot: #{e.message}"
-		ensure
-			# Ensure the temporary file is deleted even if errors occur
-			File.delete(tmp_image_path) if File.exist?(tmp_image_path)
-		end
-	end
+	# 		# Attach the image to the camshots collection
+	# 		if File.exist?(tmp_image_path)
+	# 			self.camshots.attach(io: File.open(tmp_image_path), filename: "image-#{Time.now.strftime('%s%L')}.jpeg")
+	# 			# Delete the temporary file
+	# 			File.delete(tmp_image_path)
+	# 		else
+	# 			puts "Failed to create image file: #{tmp_image_path}"
+	# 		end
+	# 	rescue => e
+	# 		Rails.logger.error "Error taking camshot: #{e.message}"
+	# 	ensure
+	# 		# Ensure the temporary file is deleted even if errors occur
+	# 		File.delete(tmp_image_path) if File.exist?(tmp_image_path)
+	# 	end
+	# end
 
 	def is_dark
 		require 'rmagick'

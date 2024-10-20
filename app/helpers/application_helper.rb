@@ -43,12 +43,18 @@ module ApplicationHelper
   end
 
   def sidebar_item(path, text, options = {}, &block)
+    raise ArgumentError, "Options must be a Hash" unless options.is_a?(Hash)
+    options[:data] ||= {}
+    options[:data][:turbo_frame] = 'main-content'
+    options[:data][:action] = 'sidebar#activateLink'
+
     content_tag(:li, class: current_page?(path) ? "active" : "") do
       if block_given?
         link_to path, options do
           concat capture(&block)
           concat " #{text}"
-          if options[:badge_count].present? and options[:badge_count] > 0
+
+          if options[:badge_count].present? && options[:badge_count] > 0
             concat(
               content_tag(:div, class: "float-right") do
                 content_tag(:span, class: "badge badge-light") do
@@ -64,6 +70,9 @@ module ApplicationHelper
     end
   end
 
+  def icon(i, c=nil, style=nil)
+    "<i class='bi-#{i} #{style}'>#{c}</i>".html_safe
+  end
 
   def issue_icon(issue)
     arrow = ""
@@ -75,11 +84,11 @@ module ApplicationHelper
     end
 
     if issue.level1?
-      icon("fas", "arrow#{arrow}")
+      icon("bi", "arrow#{arrow}")
     elsif issue.level2?
-      icon("fas", "arrow#{arrow}") + " " + icon("fas", "arrow#{arrow}")
+      icon("bi", "arrow#{arrow}") + " " + icon("bi", "arrow#{arrow}")
     elsif issue.level3?
-      icon("fas", "arrow#{arrow}") + " " + icon("fas", "arrow#{arrow}") + " " + icon("fas", "arrow#{arrow}")
+      icon("bi", "arrow#{arrow}") + " " + icon("bi", "arrow#{arrow}") + " " + icon("bi", "arrow#{arrow}")
     end
   end
 

@@ -6,21 +6,20 @@
       Edit subject
     <% end %>
 
-    <div class="actions float-right">
+    <div class="actions float-end">
       <%= link_to 'Cancel', :back, class: "btn btn-light border" %>
       <% unless subject.new_record? %>
-        <%= link_to 'Destroy', admin_grow_subject_path(subject.grow, subject), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        <%= button_to 'Destroy', admin_grow_subject_path(subject.grow, subject), method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
       <% end %>
-      <%= form.submit "Save", :class => "btn btn-primary" %>
+      <%= form.submit "Save", class: "btn btn-primary" %>
     </div>
   </h1>
 
   <hr>
 
   <% if subject.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(subject.errors.count, "error") %> prohibited this subject from being saved:</h2>
-
       <ul>
       <% subject.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -33,15 +32,17 @@
 
   <div class="row">
     <div class="col-md-4">
-      <div class="form-group">
-        <%= form.label :name %>
+      <div class="mb-3">
+        <%= form.label :name, class: 'form-label' %>
         <%= form.text_field :name, class: "form-control" %>
       </div>
     </div>
 
     <div class="col-md-4">
-      <%= form.label :mother_id %>
-      <%= form.select :mother_id, options_from_collection_for_select(Subject.all, "id", "name_with_grow", form.object.mother_id), {}, class: "form-control selectpicker", data: { style: "btn-white", live_search: true, size: 10, title: "None" } %>
+      <div class="mb-3">
+        <%= form.label :mother_id, class: 'form-label' %>
+        <%= form.select :mother_id, options_from_collection_for_select(Subject.all, "id", "name_with_grow", form.object.mother_id), {}, class: "form-control selectpicker", data: { style: "btn-white", live_search: true, size: 10, title: "None" } %>
+      </div>
     </div>
   </div>
 
@@ -49,26 +50,28 @@
 
   <div class="row">
     <div class="col-md-4">
-      <%= form.label "Strain" %>
-      <%= form.select :strain_id, options_from_collection_for_select(Strain.all, "id", "name", form.object.strain_id), {}, class: "form-control selectpicker", data: { style: "btn-white", live_search: true, size: 10, title: "Unknow" } %>
+      <div class="mb-3">
+        <%= form.label "Strain", class: 'form-label' %>
+        <%= form.select :strain_id, options_from_collection_for_select(Strain.all, "id", "name", form.object.strain_id), {}, class: "form-control selectpicker", data: { style: "btn-white", live_search: true, size: 10, title: "Unknown" } %>
+      </div>
     </div>
 
     <div class="col-md-4">
-      <%= form.label :birth_type %>
-      <%= form.select :birth_type, options_for_select(Grow.birth_types.keys.to_a.map{ |t| [t(t), t] }, form.object.birth_type), {}, {:class => "form-control" } %>
+      <div class="mb-3">
+        <%= form.label :birth_type, class: 'form-label' %>
+        <%= form.select :birth_type, options_for_select(Grow.birth_types.keys.to_a.map{ |t| [t(t), t] }, form.object.birth_type), {}, class: "form-control" %>
+      </div>
     </div>
   </div>
-
 
   <hr>
 
   <div class="row">
     <div class="col-4">
-      <div class="form-group">
-        <%= form.label "Room" %>
-        <%= form.select :room_id, options_from_collection_for_select(Room.all, "id", "name", subject.room_id), {}, :class => "form-control" %>
+      <div class="mb-3">
+        <%= form.label "Room", class: 'form-label' %>
+        <%= form.select :room_id, options_from_collection_for_select(Room.all, "id", "name", subject.room_id), {}, class: "form-control" %>
       </div>
     </div>
   </div>
-
 <% end %>

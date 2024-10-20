@@ -1,18 +1,17 @@
 <h1>
   Scenarios
-  <div class="float-right">
+  <div class="float-end">
     <%= link_to "New", new_admin_scenario_path, class: "btn btn-info" %>
   </div>
 </h1>
 
-
-<%= form_for :scenario, url: import_admin_scenarios_path, method: :post, class: "col-12" do |form| %>
-  <div class="form-group">
-    <%= form.label :name %>
+<%= form_for :scenario, url: import_admin_scenarios_path, method: :post, class: "col-12", data: { turbo_frame: "_top" } do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
     <%= form.text_field :name, class: "form-control" %>
   </div>
-  <div class="form-group">
-    <%= form.label "JSON File" %>
+  <div class="mb-3">
+    <%= form.label "JSON File", class: 'form-label' %>
     <%= form.file_field :json_file, class: "form-control" %>
   </div>
   <%= form.submit "Import", class: "btn btn-primary" %>
@@ -32,28 +31,35 @@
   </thead>
 
   <tbody>
-    <% @scenarios.each do |scenario| %>
+    <% if @scenarios %>
+      <% @scenarios.each do |scenario| %>
+        <tr id="<%= dom_id(scenario) %>">
+          <td style="vertical-align: middle;">
+            <b class="text-primary"><%= link_to scenario.name, admin_scenario_path(scenario) %></b>
+          </td>
+          <td style="vertical-align: middle;"><%= scenario.description %></td>
+          <td style="vertical-align: middle;">
+            <% scenario.rooms.each do |room| %>
+              <%= link_to room do %>
+                <span class="badge bg-info"><%= room.name %></span>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="text-center" style="vertical-align: middle;">
+            <% if scenario.enabled %>
+              <i class="bi-check2 h4 text-success"></i>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "Run", run_admin_scenario_path(scenario), class: "btn btn-sm btn-outline-primary", data: { turbo_frame: "_top" } %>
+            <%= link_to "Edit", edit_admin_scenario_path(scenario), class: "btn btn-sm btn-outline-success", data: { turbo_frame: "_top" } %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
       <tr>
         <td style="vertical-align: middle;">
-          <b class="text-primary"><%= link_to scenario.name, admin_scenario_path(scenario) %></b>
-        </td>
-        <td style="vertical-align: middle;"><%= scenario.description %></td>
-        <td style="vertical-align: middle;">
-          <% scenario.rooms.each do |room| %>
-            <%= link_to room do %>
-              <span class="badge badge-info"><%= room.name %></span>
-            <% end %>
-          <% end %>
-        </td>
-        <td class="text-center" style="vertical-align: middle;">
-          <% if scenario.enabled %>
-            <%= icon "fas", "check", class: "text-success" %>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to "Run", run_admin_scenario_path(scenario), class: "btn btn-sm btn-outline-primary" %>
-
-          <%= link_to "Edit", edit_admin_scenario_path(scenario), class: "btn btn-sm btn-outline-success" %>
+          <b class="text-primary">No Scenarios available</b>
         </td>
       </tr>
     <% end %>

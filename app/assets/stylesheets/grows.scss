@@ -1,3 +1,16 @@
 // Place all the styles related to the Grows controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+/* Entfernen von Styles, die das Standard-Spinner-Aussehen beeinträchtigen könnten */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: auto;
+  opacity: 1;
+  /* Sicherstellen, dass die Pfeile nicht ausgeblendet werden */
+}
+
+input[type="number"]::-moz-outer-spin-button,
+input[type="number"]::-moz-inner-spin-button {
+  appearance: textfield;
+}

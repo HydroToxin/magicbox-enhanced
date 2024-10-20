@@ -1,5 +1,4 @@
 class Event < ApplicationRecord
-  include ActionView::Helpers::UrlHelper
 
   default_scope { order(created_at: :desc) }
 
@@ -30,7 +29,7 @@ class Event < ApplicationRecord
 
   def text
     "#{event_type}: #{message}"
-  end 
+  end
 
   def start_date
     created_at
@@ -52,20 +51,30 @@ class Event < ApplicationRecord
       ActionController::Base.helpers.link_to(eventable.name, eventable)
 
     elsif eventable_type == "Device"
-      ActionController::Base.helpers.link_to(eventable.name, [eventable.room, eventable])
-
+      if eventable.room
+        helpers.link_to(eventable.room.name, url_helpers.room_path(eventable.room))
+      else
+        raise 'Room not assigned'
+      end
     elsif eventable_type == "Subject"
       ActionController::Base.helpers.link_to(eventable.name, [eventable.grow, eventable])
 
     elsif eventable_type == "Observation"
       ActionController::Base.helpers.link_to(eventable.grow.name, [eventable.grow])
-
     elsif eventable_type == "Alert"
       #ActionController::Base.helpers.link_to(eventable.id, [:admin, eventable])
 
     end
   end
 
+
+  def url_helpers
+    Rails.application.routes.url_helpers
+  end
+
+  def helpers
+    ActionController::Base.helpers
+  end
 
   def self.search(params)
     events = Event.all
@@ -91,5 +100,16 @@ class Event < ApplicationRecord
     end
 
     return events
+  end
+
+  def generate_eventable_path(eventable)
+    case eventable.eventable_type
+    when "Room"
+      Rails.application.routes.url_helpers.room_event_path(eventable.eventable_id, eventable.id)
+    when "Device"
+      Rails.application.routes.url_helpers.device_event_path(eventable.eventable_id, eventable.id)
+    else
+      '#'
+    end
   end
 end

@@ -10,6 +10,9 @@ class Admin::StrainsController < Admin::AdminController
     @flavors    = Strain.all.pluck(:flavors).flatten.uniq.reject(&:blank?).sort
     @locations  = Strain.all.pluck(:location).uniq.reject(&:blank?).sort
     @strains    = Strain.search(params).paginate(page: params[:page], per_page: 100)
+    respond_to do |format|
+      format.html   # Falls Sie auch reguläre HTML-Anfragen unterstützen
+    end
   end
 
   # GET /strains/1
@@ -33,7 +36,7 @@ class Admin::StrainsController < Admin::AdminController
 
     respond_to do |format|
       if @strain.save
-        format.html { redirect_to [:admin, @strain], notice: 'Strain was successfully created.' }
+        format.html { redirect_to admin_strains_url, notice: 'Strain was successfully created.' }
         format.json { render :show, status: :created, location: @strain }
       else
         format.html { render :new }
@@ -47,7 +50,7 @@ class Admin::StrainsController < Admin::AdminController
   def update
     respond_to do |format|
       if @strain.update(strain_params)
-        format.html { redirect_to [:admin, @strain], notice: 'Strain was successfully updated.' }
+        format.html { redirect_to admin_strains_url, notice: 'Strain was successfully created.'}
         format.json { render :show, status: :ok, location: @strain }
       else
         format.html { render :edit }
@@ -61,7 +64,7 @@ class Admin::StrainsController < Admin::AdminController
   def destroy
     @strain.destroy
     respond_to do |format|
-      format.html { redirect_to strains_url, notice: 'Strain was successfully destroyed.' }
+      format.html { redirect_to admin_strains_url, notice: 'Strain was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -13,6 +13,20 @@
  *= require_tree .
  *= require_self
  */
+@import 'bootstrap_custom';
+@import "dhtmlx-scheduler/codebase/dhtmlxscheduler";
+@import 'flatpickr/dist/flatpickr.min';
+
+//@import "/Users/dirk.kramer/Projects/magicbox-enhanced/node_modules/dhtmlx-scheduler/codebase/dhtmlxscheduler.css";
+ //@import "dhtmlxscheduler";
+ //@import "simple_calendar";
+
+ //@import "bootstrap4-toggle";
+ //@import "tempusdominus-bootstrap-4.css";
+
+ @import "sidebar";
+ @import "grows";
+
 $grid-breakpoints: (
   xs: 0,
   sm: 720px,
@@ -25,21 +39,6 @@ $container-max-widths: (
   md: 720px,
   lg: 960px
 );
-
-
-@import "bootstrap";
-@import "dhtmlxscheduler";
-@import "simple_calendar";
-@import "font-awesome-sprockets";
-@import "font-awesome";
-@import "bootstrap4-toggle";
-@import "tempusdominus-bootstrap-4.css";
-@import "jquery.mCustomScrollbar.min.css";
-@import 'bootstrap-select';
-@import 'commontator/application';
-@import 'commontator/comments';
-
-
 
 .timeline-dot {
   width: 10px;
@@ -70,6 +69,9 @@ $container-max-widths: (
 body {
   font-family: 'Poppins', sans-serif;
   background: #fafafa;
+}
+
+#wrapper {
 }
 
 p {
@@ -116,116 +118,19 @@ span {
 }
 
 /* ---------------------------------------------------
-    SIDEBAR STYLE
------------------------------------------------------ */
-
-.wrapper {
-  display: flex;
-  width: 100%;
-}
-
-#sidebar {
-  width: 200px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  z-index: 999;
-  background: #708090;
-  color: #fff;
-  transition: all 0.3s;
-}
-
-#sidebar.active {
-  margin-left: -200px;
-}
-
-#sidebar .sidebar-header {
-  padding: 12px;
-  background: #657382;
-}
-
-#sidebar ul.components {
-  padding: 20px 0;
-  border-bottom: 1px solid #657382;
-}
-
-#sidebar ul p {
-  color: #fff;
-  padding: 10px;
-}
-
-#sidebar ul li a {
-  padding: 10px;
-  font-size: 1.1em;
-  display: block;
-}
-
-#sidebar ul li a:hover {
-  color: #657382;
-  background: #fff;
-}
-
-#sidebar ul li.active>a,
-a[aria-expanded="true"] {
-  color: #fff;
-  background: #657382;
-}
-
-a[data-toggle="collapse"] {
-  position: relative;
-}
-
-.dropdown-toggle::after {
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-}
-
-ul ul a {
-  font-size: 0.9em !important;
-  padding-left: 30px !important;
-  background: #657382;
-}
-
-ul.CTAs {
-  padding: 20px;
-}
-
-ul.CTAs a {
-  text-align: center;
-  font-size: 0.9em !important;
-  display: block;
-  border-radius: 5px;
-  margin-bottom: 5px;
-}
-
-a.download {
-  background: #fff;
-  color: #7386D5;
-}
-
-a.article,
-a.article:hover {
-  background: #6d7fcc !important;
-  color: #fff !important;
-}
-
-/* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
 
-#content {
-  width: calc(100% - 200px);
+#main-content {
   padding: 0px;
   min-height: 100vh;
   transition: all 0.3s;
   position: absolute;
   top: 0;
   right: 0;
+  left: 200px;
 }
+
 
 #content.active {
   width: 100%;
@@ -245,7 +150,8 @@ a.article:hover {
   }
 
   #content {
-    width: 100%;
+    overflow-y: auto;
+    padding: 1em;
   }
 
   #content.active {

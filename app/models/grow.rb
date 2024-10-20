@@ -36,6 +36,23 @@ class Grow < ApplicationRecord
   has_one :harvest
 
   validates :description, presence: true
+  validates :grow_status, presence: true
+  validate :validate_number_of_subjects
+  validate :validate_birth_type_and_mother
+
+  def validate_number_of_subjects
+    if birth_type == 'from_clone' && mother_id.present?
+      if number_of_subjects.blank?
+        errors.add(:number_of_subjects, "can't be blank when birth type is 'from clone' and mother is selected.")
+      end
+    end
+  end
+
+  def validate_birth_type_and_mother
+    if birth_type == 'from_clone' && mother_id.blank?
+      errors.add(:mother_id, "must be selected when birth type is 'from clone'.")
+    end
+  end
 
   def name
     "##{id} - #{description}"
@@ -50,7 +67,7 @@ class Grow < ApplicationRecord
   end
 
   def nb_weeks
-  	start_date.step(end_date, 7).count  
+  	start_date.step(end_date, 7).count
   end
 
   def status_badge_class
@@ -71,6 +88,8 @@ class Grow < ApplicationRecord
 
   def generate_weeks
     weeks.destroy_all
+
+    return if start_date.nil?
 
     # create weeks
     sdate = self.start_date
@@ -122,10 +141,10 @@ class Grow < ApplicationRecord
 
   def generate_weeks_with(type, index, start_date, end_date)
     Week.create(
-      grow_id: self.id, 
-      week_type: type, 
-      week_number: index+1, 
-      start_date: start_date, 
+      grow_id: self.id,
+      week_type: type,
+      week_number: index+1,
+      start_date: start_date,
       end_date: end_date)
   end
 
@@ -147,12 +166,12 @@ class Grow < ApplicationRecord
     week_end_date = week_start_date + 7.days
     now = Date.today
 
-    if now > week_end_date 
+    if now > week_end_date
       return "success"
 
     elsif week_start_date < now and now < week_end_date
       return "primary"
-    end 
+    end
 
     return "secondary"
   end
@@ -162,11 +181,13 @@ class Grow < ApplicationRecord
     now = Date.today
 
     return "success" if done?
-    return "danger" if now > end_date
+    return "danger" if end_date.present? && now > end_date
     return "primary"
   end
 
   def progress_percents
+    # FIXME
+    return
   	start_time = self.start_date.to_time
 		end_time   = self.end_date.to_time
 
@@ -213,7 +234,7 @@ class Grow < ApplicationRecord
 
         if old_status != grow.grow_status
           Event.create!(event_type: :cron, message: "Grow <b>#{grow.description}</b> status updated to <b>#{grow.grow_status}</b>", eventable: grow)
-          
+
           grow.save
         end
       end

@@ -1,9 +1,9 @@
 <h1>
 	<%= @user.username %>
-		
-	<div class="float-right">
+
+	<div class="float-end">
 		<%= link_to edit_user_registration_path(@user), class: "btn btn-success"  do %>
-			<%= icon "fas", "edit" %> Edit
+			<i class="bi-pencil"></i> Edit
 		<% end %>
 	</div>
 </h1>
@@ -22,7 +22,7 @@
 				<ul class="list-group">
 					<% current_user.push_devices.each do |pd| %>
 						<li class="list-group-item">
-							<span class="text-monospace"><%= pd.device_id %></span>
+							<span class="font-monospace"><%= pd.device_id %></span>
 						</li>
 					<% end %>
 				</ul>

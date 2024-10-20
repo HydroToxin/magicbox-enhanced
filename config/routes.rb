@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  get 'test/index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
-  # Devise setup
+  # Root Settings for authenticated and unauthenticated users
   devise_scope :user do
     authenticated :user do
       root to: 'dashboard#index', as: :authenticated_root
@@ -13,6 +10,7 @@ Rails.application.routes.draw do
     end
   end
 
+  # Devise routes for users
   devise_for :users, skip: [:registrations]
 
   as :user do
@@ -20,62 +18,76 @@ Rails.application.routes.draw do
     put 'users/:id' => 'devise/registrations#update'
   end
 
+  # Standard routes
   resources :users, only: [:show]
 
-  get "/dashboard" => "dashboard#index"
-  get "/journal" => "journal#index"
-  get "/calendar" => "calendar#index"
+  # Static page controllers
+  get '/dashboard', to: 'dashboard#index'
+  get '/journal', to: 'journal#index'
+  get '/calendar', to: 'calendar#index'
 
+  # Task-related routes
   resources :todos do
-    post :done, on: :member
-    post :undone, on: :member
+    member do
+      post :done
+      post :undone
+    end
   end
 
   resources :notifications do
-    delete :clear_all, on: :collection
+    collection do
+      delete :clear_all
+    end
   end
 
-  resources :samples, only: [:index, :general, :rooms, :harvest] do
-    get :general, on: :collection
-    get :rooms, on: :collection
-    get :harvest, on: :collection
+  resources :samples, only: [:index] do
+    collection do
+      get :general
+      get :rooms
+      get :harvest
+    end
   end
+
   resources :observations
 
   resources :batches, only: [:index, :show]
 
-  resources :harvests, only: [:index]
-
+  # Nested resources for grows
   resources :grows, except: [:edit, :update, :new, :create] do
-    resources :harvests, only: [:show] do
-
-    end
-
+    resources :harvests, only: [:show]
     resources :weeks
     resources :observations
     resources :subjects do
       resources :observations
     end
 
-    get :print_qr, on: :member
-  end
-
-  resources :events
-
-  resources :rooms, only: [:show, :take_camshot] do
-    post :take_camshot, on: :member
-    resources :devices, only: [:show, :query]  do
-      post :query, on: :member
+    member do
+      get :print_qr
     end
   end
 
+  # Room-related resources
+  resources :rooms, only: [:show] do
+    resources :devices, only: [:show] do
+      post :query, on: :member
+      resources :events  # Hinzufügen von Events unter Devices
+    end
+
+    resources :events
+  end
+
+  # Default events route (falls eigenständige events benötigt werden)
+  resources :events
+  resources :harvests, only: [:index, :new]
+
   # Admin namespace
   namespace :admin do
+    get "/dashboard/gpio", to: "dashboard#gpio"
 
-    get "/dashboard/gpio" => "dashboard#gpio"
-
-    resources :users, only: [:index, :new, :edit, :create, :update, :destroy, :update_password] do
-      get :update_password, on: :member
+    resources :users, except: [:show] do
+      member do
+        get :update_password
+      end
     end
 
     resources :grows, only: [:edit, :update, :new, :create, :destroy] do
@@ -88,53 +100,84 @@ Rails.application.routes.draw do
     end
 
     resources :rooms do
-      resources :devices, only: [:index, :edit, :update, :new, :create, :start, :stop, :destroy] do
+      resources :devices, only: [:index, :edit, :update, :new, :create, :destroy] do
         post :start, on: :member
-        post :stop,  on: :member
+        post :stop, on: :member
+        resources :events  # Hinzufügen von Events unter Devices im Admin-Bereich
       end
     end
 
     resources :devices, only: [:index]
-
     resources :strains
     resources :data_types
-    resources :batches, only: [:index, :show, :new, :create, :update, :destroy]
+    resources :batches, except: [:edit, :update]
+    resources :harvests, only: [:index, :new]
 
     resources :scenarios do
-      get :run, on: :member
-      get :export, on: :member
-      post :import, on: :collection
+      resources :condition_groups, only: [:new, :create, :destroy] do
+        resources :conditions, only: [:new, :create, :destroy]
+        resources :operations, only: [:new, :create, :destroy]
+      end
+      collection do
+        get :export
+        post :import
+      end
     end
 
+    #resources :scenarios do
+    #  resources :condition_groups, only: [:new, :create, :destroy] do
+    #    resources :conditions, only: [:new, :create, :destroy]
+    #    resources :operations, only: [:new, :create, :destroy]
+    #  end
+    #  member do
+    #    post 'run'
+    #  end
+    #  collection do
+    #    get :export
+    #    post :import
+    #  end
+    #end
+
+    resources :scenarios do
+      resources :condition_groups, only: [:new, :create, :destroy] do
+        resources :conditions, only: [:new, :create, :destroy]
+        resources :operations, only: [:new, :create, :destroy]
+      end
+    end
+
+    resources :condition_groups
     resources :conditions
     resources :operations
     resources :alerts do
-      post :test, on: :member
-      post :trigger, on: :member
+      member do
+        post :test
+        post :trigger
+      end
     end
     resources :categories
     resources :resources
+    resources :resource_datas
+    resources :issues, only: [:new]
 
     resource :settings
 
-  	get '/' => "users#index"
+    get '/', to: "users#index"
   end
 
-
-  # The API namespace ()
+  # API namespace
   namespace :api do
-  	namespace :v1 do
-  		get '/context', to: "context#index"
+    namespace :v1 do
+      get '/context', to: "context#index"
 
-      # device token
       resources :users, only: [:show] do
         resources :push_devices, only: [:create]
       end
 
-  		resources :devices, only: [:index, :show, :update, :start, :stop] do
-  			post :start, on: :member
-  			post :stop,  on: :member
-  		end
+      resources :devices, only: [:index, :show, :update] do
+        post :start, on: :member
+        post :stop, on: :member
+        resources :events  # API-Unterstützung für verschachtelte Events unter Devices
+      end
 
       resources :rooms
       resources :grows
@@ -146,15 +189,18 @@ Rails.application.routes.draw do
       resources :operations
       resources :observations
       resources :events
-      resources :users, only: [:index]
 
-	  	resources :data_types, only: [:index, :show] do
-	  		resources :samples, :defaults => { :format => :json }, only: [:index, :show]
-	  	end
+      resources :data_types, only: [:index, :show] do
+        resources :samples, defaults: { format: :json }, only: [:index, :show]
+      end
 
-	  	resources :samples, :defaults => { :format => :json }, only: [:index, :show, :create]
-		end
-	end
-  # API doc
-	apipie
+      resources :samples, defaults: { format: :json }, only: [:index, :show, :create]
+    end
+  end
+
+  # API documentation
+  apipie
+
+  # Test route
+  get 'test/index'
 end

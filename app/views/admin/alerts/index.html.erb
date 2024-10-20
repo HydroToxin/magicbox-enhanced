@@ -1,10 +1,10 @@
 <h1>
   Alerts
-  <div class="float-right">
-    <%= link_to new_admin_alert_path, class: "btn btn-info" do %>
-      <%= icon "fas", "plus" %>  
+  <div class="float-end">
+    <%= link_to new_admin_alert_path, class: "btn btn-info btn d-flex align-items-center" do %>
+      <i class="bi-plus my-1 h5"></i>
       New
-    <% end %>  
+    <% end %>
   </div>
 </h1>
 
@@ -24,14 +24,14 @@
 
   <tbody>
     <% @alerts.each do |alert| %>
-      <tr>        
+      <tr>
         <td>
-          <span class="badge badge-pill badge-<%= alert.data_type_alert? ? 'primary' : 'success' %>">
-            <%= alert.alert_type.titleize %>    
+          <span class="badge bg-<%= alert.data_type_alert? ? 'primary' : 'success' %>">
+            <%= alert.alert_type.titleize %>
           </span>
         </td>
         <td class="text-center">
-          <span class="badge badge-dark">
+          <span class="badge bg-dark">
             <% if alert.data_type_alert? %>
               <%= alert.data_type.name.titleize %>
             <% else %>
@@ -41,13 +41,15 @@
         </td>
         <td><%= alert.operator %></td>
         <td class="text-center"><%= alert.value %></td>
-        <td class="text-monospace"><%= alert.message %></td>
-        <td><%= alert.enabled ? icon("fas", "check", class: "text-success") : icon("fas", "close") %></td>
-        <td><%= alert.push_enabled ? icon("fas", "check", class: "text-success") : icon("fas", "close") %></td>
+        <td class="font-monospace"><%= alert.message %></td>
+        <td><%= alert.enabled ? "<i class='bi-check h4 text-success'></i>".html_safe : "<i class='bi-clock h4'></i>".html_safe %></td>
+        <td><%= alert.push_enabled ? "<i class='bi-check h4 text-success'></i>".html_safe : "<i class='bi-clock h4'></i>".html_safe %></td>
         <td>
           <%= link_to 'Edit', edit_admin_alert_path(alert), class: "btn btn-sm btn-outline-success" %>
           <%= link_to 'Test', test_admin_alert_path(alert), method: :post, class: "btn btn-sm btn-outline-warning" %>
-          <%= link_to 'Destroy', [:admin, alert], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-outline-danger" %>
+          <%= form_with(url: [:admin, alert], method: :post, data: { turbo_confirm: 'Are you sure?' }, class: "d-inline") do %>
+            <%= submit_tag 'Destroy', class: "btn btn-sm btn-outline-danger" %>
+          <% end %>
         </td>
       </tr>
     <% end %>

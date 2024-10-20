@@ -8,6 +8,9 @@ class Admin::UsersController < Admin::AdminController
   end
 
   def show
+    respond_to do |format|
+      format.html   # Falls Sie auch reguläre HTML-Anfragen unterstützen
+    end
   end
 
   def new
@@ -52,7 +55,7 @@ class Admin::UsersController < Admin::AdminController
   end
 
   def update_password
-    
+
   end
 
 

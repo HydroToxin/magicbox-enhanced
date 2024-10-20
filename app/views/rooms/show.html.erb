@@ -2,12 +2,12 @@
   <%= @room.name %> <span class="text-muted" style="font-size: 14px">
     [<%= @room.room_type.titleize %>] (<%= @room.length %> x <%= @room.width %> x <%= @room.height %>)
   </span>
-  <div class="float-right">
-    <%= link_to new_admin_room_device_path(@room), class: "btn btn-info" do %>
-      <%= icon "fas", "plus" %> Device
+  <div class="float-end" style="display: inline-flex">
+    <%= link_to new_admin_room_device_path(@room), class: "btn btn-info d-flex align-items-center mr-1", style: "margin-right: 8px" do %>
+      <i class="bi-plus my-1 h5"></i> Device
     <% end %>
-    <%= link_to edit_admin_room_path(@room), class: "btn btn-success" do %>
-      <%= icon "fas", "edit" %> Edit
+    <%= link_to edit_admin_room_path(@room), class: "btn btn-success d-flex align-items-center" do %>
+      <i class="bi-pencil my-1 h6" style="margin-right: 6px"></i> Edit
     <% end %>
   </div>
 </h1>
@@ -53,12 +53,12 @@
 
 <h4>
   Devices
-  <div class="float-right">
-    <%= link_to admin_room_devices_path(@room), class: "text-muted mr-2", style: "font-size: 11px;" do %>
-      <%= icon "fas", "eye" %> All devices
+  <div class="float-end">
+    <%= link_to admin_room_devices_path(@room), class: "text-muted me-2", style: "font-size: 11px;" do %>
+      <i class="bi-eye h4"></i> All devices
     <% end %>
     <%= link_to events_path(room_id: @room.id), class: "text-muted", style: "font-size: 11px;" do %>
-      <%= icon "fas", "eye" %> All events
+      <i class="bi-eye h4"></i> All events
     <% end %>
   </div>
 </h4>
@@ -77,7 +77,7 @@
   </div> -->
 </div>
 
-<br> 
+<br>
 
 <h4>
   Subjects
@@ -90,8 +90,8 @@
 </div>
 
 <% unless @room.scenarios.empty? %>
-  <br> 
-  
+  <br>
+
   <% @room.scenarios.each do |scenario| %>
     <h4><%= scenario.name %></h4>
 
@@ -100,4 +100,3 @@
     <br>
   <% end %>
 <% end %>
-

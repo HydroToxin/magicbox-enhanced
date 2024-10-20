@@ -1,0 +1,47 @@
+<% resource_units_map = Resource.all.each_with_object({}) do |resource, map|
+  map[resource.id] = resource.units
+end %>
+
+<div data-controller="resource-data">
+  <div class="mb-3">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-lg-3">
+            <%= ff.label "Resource", class: "form-label" %>
+            <%= ff.select :resource_id,
+                options_from_collection_for_select(Resource.where.not(units: []), "id", "name", ff.object.resource_id),
+                {},
+                {
+                  class: "form-select mb-2",
+                  data: {
+                    action: "change->resource-data#changeResource",
+                    resource_data_target: "resourceSelect"
+                  },
+                  id: "resource-select"
+                } %>
+                      </div>
+          <div class="col-12 col-lg-3">
+            <%= ff.label "Unit", class: "form-label" %>
+            <%= ff.select :unit, [], {}, {
+                class: "form-select",
+                id: "unit-select",
+                data: {
+                  resource_data_target: "unitSelect",
+                  units_map: resource_units_map.to_json
+                }
+              } %>
+          </div>
+          <div class="col-12 col-lg-3">
+            <%= ff.label "Value", class: "form-label" %>
+            <%= ff.text_field :value, value: ff.object.value, class: "form-control" %>
+          </div>
+          <div class="col-2 col-lg-1">
+            <%= ff.label " ", class: "form-label" %>
+            <%= link_to '<i class="bi-trash h4"></i>'.html_safe, "#", class: "btn btn-sm btn-danger mt-2 d-block", data: { action: "click->resource-data#removeResource" } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

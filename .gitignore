@@ -32,10 +32,19 @@
 /apns
 /public/packs
 /public/packs-test
+/public/fonts/*
 /node_modules
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+yarn.lock
+package.json.lock
+magicbox-enhanced.code-workspace
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+/config/credentials/production.key
+
+/public/assets
+/app/assets/builds

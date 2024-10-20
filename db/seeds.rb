@@ -12,13 +12,13 @@ strains_csv = Rails.root.join('db', 'samples', 'strains-kushy_api.2017-11-14.csv
 CSV.parse(File.new(strains_csv), col_sep: ",", headers: false) do |row|
   Strain.create!(
     name: (row[3] and row[3] != "NULL") ? row[3] : nil,
-    description: (row[6] and row[6] != "NULL") ? row[6] : nil, 
-    strain_type: (row[7] and row[7] != "type") ? row[7].downcase.to_sym : nil, 
-    crosses:  (row[8] and row[8] != "NULL") ? row[8] : nil, 
-    breeder:  (row[9] and row[9] != "NULL") ? row[9] : nil, 
-    effects:  (row[10] and row[10] != "NULL") ? row[10].split(",").map { |e| e.downcase.strip } : nil, 
-    ailments: (row[11] and row[11] != "NULL") ? row[11].split(",").map { |e| e.downcase.strip } : nil, 
-    flavors:  (row[12] and row[12] != "NULL") ? row[12].split(",").map { |e| e.downcase.strip } : nil, 
+    description: (row[6] and row[6] != "NULL") ? row[6] : nil,
+    strain_type: (row[7] and row[7] != "type") ? row[7].downcase.to_sym : nil,
+    crosses:  (row[8] and row[8] != "NULL") ? row[8] : nil,
+    breeder:  (row[9] and row[9] != "NULL") ? row[9] : nil,
+    effects:  (row[10] and row[10] != "NULL") ? row[10].split(",").map { |e| e.downcase.strip } : nil,
+    ailments: (row[11] and row[11] != "NULL") ? row[11].split(",").map { |e| e.downcase.strip } : nil,
+    flavors:  (row[12] and row[12] != "NULL") ? row[12].split(",").map { |e| e.downcase.strip } : nil,
     location: (row[13] and row[13] != "NULL") ? row[13] : nil,
     terpenes: (row[14] and row[14] != "NULL") ? row[14] : nil)
 end
@@ -47,10 +47,23 @@ DataType.create(name: "cpu_voltage")
 DataType.create(name: "memory_used")
 DataType.create(name: "memory_free")
 
+DevicesDataType.create(device_id: 1, data_type_id: 1)
+DevicesDataType.create(device_id: 1, data_type_id: 2)
+DevicesDataType.create(device_id: 2, data_type_id: 3)
+DevicesDataType.create(device_id: 3, data_type_id: 4)
+
+
 # create default device in the room
 d = Device.create!(room_id: r.id, device_type: :sensor, device_state: 2, name: "Temp/hum", product_reference: "dht11", description: "Temperature/humidity sensor (DHT11)")
 d.data_types << t
 d.data_types << h
+
+Device.create(device_type: 1, device_state: 2, name: "Temperature/humidity", product_reference: "vma311", description: "Temperature/humidity (NTC/DHT11) sensor for Arduino")
+Device.create(device_type: 1, device_state: 2, name: "Soil moisture", product_reference: "vma303", description: "Soil moisture sensor for Arduino")
+Device.create(device_type: 1, device_state: 2, name: "Water level", product_reference: "vma303", description: "Water level sensor for Arduino")
+Device.create(device_type: 2, device_state: 0, name: "Cooling fan", product_reference: "SanACE40", description: "Fan used to cool the environment when the temperature goes up too much")
+Device.create(device_type: 3, device_state: 0, name: "Water pump", product_reference: "unknow", description: "Water pump used to fill the water tank when level goes down")
+Device.create(device_type: 4, device_state: 0, name: "Air pump", product_reference: "unknow", description: "Air pump to brew and keep hight level of oxygen in the water tank")
 
 Device.create!(room_id: r.id, pin_number: 18, device_type: :light, device_state: 0, name: "Light", product_reference: "unknow", description: "Light giving some sun to the room")
 Device.create!(room_id: r.id, pin_number: 23, device_type: :extractor, device_state: 0, name: "Extractor", product_reference: "unknow", description: "Extractor device pushing used air out the room")
@@ -136,3 +149,19 @@ climat_scenario = Scenario.import("db/samples/Climat.json", "Climat")
 watering_scenario = Scenario.import("db/samples/Watering.json", "Watering")
 
 r.scenarios << [growing_scenario, climat_scenario, watering_scenario]
+r.save!
+
+Grow.create! description: 'Test', start_date: Time.now, flowering: 1, grow_status: :seedling
+Observation.create! user: User.first, grow: Grow.first, body: 'Observation Test', water: true, nutrients: 10, room: r
+
+s = Sample.create(
+  product_reference: "System",
+  data_type_id: DataType.first.id,
+  value: '22',
+  category_name: "cpu",
+  html_color: "red",
+  unit: "°C"
+)
+
+d.samples << s
+d.save!

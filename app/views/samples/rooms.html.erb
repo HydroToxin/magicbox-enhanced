@@ -10,7 +10,7 @@
 				<div class="card mb-4">
 				  <div class="card-header">
 				    <%= room.name  %>
-				    <div class="float-right">
+				    <div class="float-end">
 				    	<%= " " %>
 				    </div>
 				  </div>
@@ -37,13 +37,15 @@
 			                enabled: false
 			              }
 			            }
-			          }
+			          },
+								accessibility: {
+        					description: ''
+    						},
 			        }
 			        %>
 			    </div>
 			  </div>
-
-		<% end %>
+			<% end %>
 		</div>
 	</div>
 <% end %>

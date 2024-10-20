@@ -1,9 +1,9 @@
 <h1>
 	Users
-		
-	<div class="float-right">
-		<%= link_to new_admin_user_path, class: "btn btn-success"  do %>
-			<%= icon "fas", "plus" %> New
+
+	<div class="float-end">
+		<%= link_to new_admin_user_path, class: "btn btn-success d-flex align-items-center" do %>
+			<i class="bi-plus my-1 h5"></i> New
 		<% end %>
 	</div>
 </h1>
@@ -25,13 +25,13 @@
 				<td><%= user.authentication_token %></td>
 				<td>
 					<%= link_to update_password_admin_user_path(user), class: "btn btn-sm btn-outline-black border-dark" do %>
-						<%= icon "fas", "lock" %>
+						<i class="bi-person-lock h4"></i>
 					<% end %>
 					<%= link_to edit_admin_user_path(user), class: "btn btn-sm btn-outline-success" do %>
-						<%= icon "fas", "edit" %>
+						<i class="bi-pencil h4"></i>
 					<% end %>
 				</td>
 			</tr>
 		<% end %>
-	</tbody>	
+	</tbody>
 </table>

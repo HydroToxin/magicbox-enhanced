@@ -2,11 +2,11 @@
 	<h1>
 	  Grow Journal
 
-	   <div class="float-right">
-	    <%= link_to new_observation_path, class: "btn btn-outline-primary" do %>
-	      <%= icon( "fas", "plus") %> <%= icon( "fas", "comment-dots") %>
+	  <div class="float-end">
+	    <%= link_to new_observation_path, class: "btn btn-outline-primary d-flex align-items-center" do %>
+	      <i class="bi-plus my-1 h5"></i> <i class="bi-comment-dots h4"></i>
 	    <% end %>
-	  </div> 
+	  </div>
 	</h1>
 
 	<div class="row">

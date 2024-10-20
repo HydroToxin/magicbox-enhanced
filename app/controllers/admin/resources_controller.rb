@@ -9,11 +9,6 @@ class Admin::ResourcesController < Admin::AdminController
     if params[:category_id] and !params[:category_id].empty?
       @resources = @resources.where(category_id: params[:category_id])
     end
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @resources }
-    end
   end
 
   # GET /resources/1
@@ -78,6 +73,7 @@ class Admin::ResourcesController < Admin::AdminController
     @resource.destroy
     respond_to do |format|
       format.html { redirect_to admin_resources_url, notice: 'Resource was successfully destroyed.' }
+      format.turbo_stream { head :no_content }
       format.json { head :no_content }
     end
   end
@@ -91,11 +87,11 @@ class Admin::ResourcesController < Admin::AdminController
     # Never trust parameters from the scary internet, only allow the white list through.
     def resource_params
       params.require(:resource).permit(
-        :name, 
-        :shortname, 
-        :description, 
-        :category_id, 
-        choices: [], 
+        :name,
+        :shortname,
+        :description,
+        :category_id,
+        choices: [],
         units: [])
     end
 end

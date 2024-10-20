@@ -4,11 +4,10 @@ class Observation < ApplicationRecord
 	belongs_to :room, optional: true
 
 	has_many :events, :as => :eventable, dependent: :destroy
+	has_many :observations_subjects, dependent: :destroy
+	has_many :resource_datas, class_name: 'ResourceData'
+	has_many :subjects, through: :observations_subjects, dependent: :destroy
 
-	has_many :observations_subjects
-	has_many :subjects, through: :observations_subjects
-
-	has_many :resource_datas
 	accepts_nested_attributes_for :resource_datas, allow_destroy: true, :reject_if => proc { |attributes| attributes['value'].blank? }
 
 	has_many :issues

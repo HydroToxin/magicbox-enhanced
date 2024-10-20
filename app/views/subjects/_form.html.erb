@@ -6,12 +6,12 @@
       Edit subject
     <% end %>
 
-    <div class="actions float-right">
+    <div class="actions float-end">
       <%= link_to 'Cancel', :back, class: "btn btn-light border" %>
       <% unless subject.new_record? %>
-        <%= link_to 'Destroy', admin_grow_subject_path(subject.grow, subject), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        <%= button_to 'Destroy', admin_grow_subject_path(subject.grow, subject), method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>‚
       <% end %>
-      <%= form.submit "Save", :class => "btn btn-primary" %>
+      <%= form.submit "Save", class: "btn btn-primary" %>
     </div>
   </h1>
 
@@ -33,9 +33,9 @@
 
   <div class="row">
     <div class="col-4">
-      <div class="form-group">
-        <%= form.label "Room" %>
-        <%= form.select :room_id, options_from_collection_for_select(Room.all, "id", "name", subject.room_id), {}, :class => "form-control" %>
+      <div class="mb-3">
+        <%= form.label "Room", class: 'form-label' %>
+        <%= form.select :room_id, options_from_collection_for_select(Room.all, "id", "name", subject.room_id), {}, class: "form-control" %>
       </div>
     </div>
   </div>
@@ -44,8 +44,8 @@
 
   <div class="row">
     <div class="col-4">
-      <div class="form-group">
-        <%= form.label :name %>
+      <div class="mb-3">
+        <%= form.label :name, class: 'form-label' %>
         <%= form.text_field :name, class: "form-control" %>
       </div>
     </div>

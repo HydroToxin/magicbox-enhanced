@@ -1,7 +1,7 @@
-<%= form_with(model: [:admin, alert], local: true, class: "col-md-12 col-lg-8 mx-auto") do |form| %>
+<%= form_with(model: [:admin, alert], local: true, class: "col-md-12 col-lg-8 mx-auto",  data: { turbo: :false }, id: "admin-alerts-form") do |form| %>
   <h1>
     <%= alert.new_record? ? "New alert" : "Editing alert" %>
-    <div class="float-right">
+    <div class="float-end">
       <%= form.submit "Save", class: "btn btn-primary" %>
     </div>
   </h1>
@@ -20,43 +20,43 @@
 
   <hr>
 
-  <div class="form-group">
+  <div class="mb-3">
     <%= form.check_box :enabled, data: {toggle: "toggle", size: "sm"} %> Enabled
   </div>
 
-  <div class="form-group">
+  <div class="mb-3">
     <%= form.check_box :push_enabled, data: {toggle: "toggle", size: "sm"} %> Web Push Enabled
   </div>
 
   <hr>
 
-  <div class="form-group">
-    <%= form.label :alert_type %>
+  <div class="mb-3">
+    <%= form.label :alert_type, class: 'form-label' %>
     <%= form.select :alert_type, options_for_select(Alert.alert_types.keys.map { |e| [e.titleize, e] }, form.object.alert_type), {}, class: "form-control alert_types" %>
   </div>
 
-  <div id="data_type_alert" class="form-group alert_type_from_group">
-    <%= form.label :data_type_id %>
+  <div id="data_type_alert" class="mb-3 alert_type_from_group">
+    <%= form.label :data_type_id, class: 'form-label' %>
     <%= form.select :data_type_id, options_from_collection_for_select(DataType.all, "id", "name", form.object.data_type_id), {}, class: "form-control" %>
   </div>
 
-  <div id="resource_alert" class="form-group alert_type_from_group">
-    <%= form.label :resource_id %>
+  <div id="resource_alert" class="mb-3 alert_type_from_group">
+    <%= form.label :resource_id, class: 'form-label' %>
     <%= form.select :resource_id, options_from_collection_for_select(Resource.all, "id", "name", form.object.resource_id), {}, class: "form-control" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :operator %>
+  <div class="mb-3">
+    <%= form.label :operator, class: 'form-label' %>
     <%= form.select :operator, options_for_select(Alert.operators.keys.map { |e| [e.titleize, e] }, form.object.operator), {}, class: "form-control" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :value %>
+  <div class="mb-3">
+    <%= form.label :value, class: 'form-label' %>
     <%= form.text_field :value, class: "form-control" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :message %>
+  <div class="mb-3">
+    <%= form.label :message, class: 'form-label' %>
     <%= form.text_area :message, class: "form-control" %>
   </div>
 
@@ -64,7 +64,7 @@
 
   <h4>Notified users</h4>
 
-  <div class="form-group">
+  <div class="mb-3">
     <table class="table">
     <%= form.collection_check_boxes :user_ids, User.all, "id", "email", class: "form-control" do |ff| %>
       <tr>
@@ -86,30 +86,3 @@
     </table>
   </div>
 <% end %>
-
-<script type="text/javascript">
-
-function toggle_alert_types() {
-  $(".alert_types").change(function() {
-    $(".alert_type_from_group").hide();
-    $("#" + $(this).val()).toggle()
-  });
-}
-
-function init() {
-  toggle_alert_types();
-  $(".alert_types").change()
-}
-
-$(document).on("ready", function() {
-  init()
-});
-
-$(document).on('turbo:load', function () {
-  init()
-});
-
-$(document).on('nested:fieldAdded', function(event){
-  init()
-});
-</script>

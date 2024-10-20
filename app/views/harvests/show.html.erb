@@ -1,11 +1,11 @@
 <h3>Weight report
-  <div class="float-right">
-    <%= link_to edit_admin_grow_harvest_path(@grow, @harvest), class: "btn btn-success" do %>
-      <%= icon "fas", "edit" %> Edit
+  <div class="float-end">
+    <%= link_to edit_admin_grow_harvest_path(@grow, @harvest), class: "btn btn-success d-flex align-items-center" do %>
+      <i class="bi-pencil my-1 h5"></i> Edit
     <% end %>
 
-    <%= link_to new_admin_grow_harvest_batch_path(@grow, @harvest), class: "btn btn-primary" do %>
-      <%= icon "fas", "plus" %> New Batch
+    <%= link_to new_admin_grow_harvest_batch_path(@grow, @harvest), class: "btn btn-primary d-flex align-items-center" do %>
+      <i class="bi-plus my-1 h5"></i> New Batch
     <% end %>
   </div>
 </h3>
@@ -21,35 +21,35 @@
     </thead>
     <tbody>
       <tr>
-        <td class=" text-muted"><b>Trim weight</b></td>
-        <td class="text-center text-monospace"><%= weight_with_unit @harvest.harvested_trim_weight %></td>
-        <td class="text-center text-monospace"><%= weight_with_unit @harvest.dry_trim_weight %></td>
-        <td class="text-center text-monospace text-primary"><b><%= @harvest.trim_batched %> / <%= weight_with_unit @harvest.dry_trim_weight %></b></td>
-        <td class="text-center text-monospace text-success"><b><%= weight_with_unit @harvest.dry_trim_weight - @harvest.trim_batched %></b></td>
+        <td class="text-muted"><b>Trim weight</b></td>
+        <td class="text-center font-monospace"><%= weight_with_unit @harvest.harvested_trim_weight %></td>
+        <td class="text-center font-monospace"><%= weight_with_unit @harvest.dry_trim_weight %></td>
+        <td class="text-center font-monospace text-primary"><b><%= @harvest.trim_batched %> / <%= weight_with_unit @harvest.dry_trim_weight %></b></td>
+        <td class="text-center font-monospace text-success"><b><%= weight_with_unit @harvest.dry_trim_weight - @harvest.trim_batched %></b></td>
       </tr>
       <tr>
-        <td class=" text-muted"><b>Waste weight</b></td>
-        <td class="text-center text-monospace"><%= weight_with_unit @harvest.harvested_waste_weight %></td>
-        <td class="text-center text-monospace">-</td>
-        <td class="text-center text-monospace">-</td>
-        <td class="text-center text-monospace">-</td>
+        <td class="text-muted"><b>Waste weight</b></td>
+        <td class="text-center font-monospace"><%= weight_with_unit @harvest.harvested_waste_weight %></td>
+        <td class="text-center font-monospace">-</td>
+        <td class="text-center font-monospace">-</td>
+        <td class="text-center font-monospace">-</td>
       </tr>
       <tr>
-        <td class=" text-muted"><b>Bud weight</b></td>
-        <td class="text-center text-monospace"><%= weight_with_unit @harvest.harvested_bud_weight %></td>
-        <td class="text-center text-monospace"><%= weight_with_unit @harvest.dry_bud_weight %></td>
-        <td class="text-center text-monospace text-primary"><b><%= @harvest.bud_batched %> / <%= weight_with_unit @harvest.dry_bud_weight %></b></td>
-        <td class="text-center text-monospace text-success"><b><%= weight_with_unit @harvest.dry_bud_weight - @harvest.bud_batched %></b></td>
+        <td class="text-muted"><b>Bud weight</b></td>
+        <td class="text-center font-monospace"><%= weight_with_unit @harvest.harvested_bud_weight %></td>
+        <td class="text-center font-monospace"><%= weight_with_unit @harvest.dry_bud_weight %></td>
+        <td class="text-center font-monospace text-primary"><b><%= @harvest.bud_batched %> / <%= weight_with_unit @harvest.dry_bud_weight %></b></td>
+        <td class="text-center font-monospace text-success"><b><%= weight_with_unit @harvest.dry_bud_weight - @harvest.bud_batched %></b></td>
       </tr>
       <tr>
-        <td class=" text-muted"><b>Total</b></td>
-        <td class="text-center text-monospace">
+        <td class="text-muted"><b>Total</b></td>
+        <td class="text-center font-monospace">
           <b><%= weight_with_unit @harvest.total_wet %></b>
         </td>
-        <td class="text-center text-monospace">
+        <td class="text-center font-monospace">
           <b><%= weight_with_unit @harvest.total_dry %></b>
         </td>
-        <td class="text-center text-monospace"></td>
+        <td class="text-center font-monospace"></td>
       </tr>
     </tbody>
   </table>

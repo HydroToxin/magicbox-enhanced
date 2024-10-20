@@ -1,44 +1,44 @@
 <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light mb-4">
   <div class="container-fluid">
-    <button type="button" id="sidebarCollapse" class="btn text-black mr-4">
-        <i class="fas fa-align-left"></i>
+    <button type="button" id="sidebarCollapse" class="btn text-black me-4">
+      <i class="bi-list h4"></i>
     </button>
 
     <% if user_signed_in? %>
       <ol class="breadcrumb p-0 m-0 bg-transparent">
-        <%= render_breadcrumbs tag: :li, separator: "<span class='mx-2'>#{icon( "fas","angle-right")}</span>" %>
+        <%= render_breadcrumbs tag: :li, separator: "<span class='mx-2'><i class='bi-chat-left-dots h4'></i></span>" %>
       </ol>
     <% end %>
 
-    <button class="btn btn-light d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <%= icon "fas", "list" %>
+    <button class="btn btn-light d-inline-block d-lg-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="bi-list h4"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ms-auto">
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to new_observation_path, class: "nav-link " do %>
-              <%= icon( "fas", "plus") %> <%= icon( "fas", "comment-dots") %>
+            <%= link_to new_observation_path, class: "nav-link d-flex align-items-center" do %>
+              <i class="bi-plus my-1 h5"></i>Observation<i class="bi-comment-dots h4"></i>
             <% end %>
           </li>
 
           <li class="nav-item">
-            <%= link_to new_todo_path, class: "nav-link" do %>
-              <%= icon "fas", "plus" %>
+            <%= link_to new_todo_path, class: "nav-link d-flex align-items-center" do %>
+              <i class="bi-plus my-1 h5"></i>
               Todo
             <% end %>
           </li>
 
           <li class="nav-item">
-            <%= link_to new_admin_grow_path, class: "nav-link" do %>
-              <%= icon "fas", "plus" %>
+            <%= link_to new_admin_grow_path, class: "nav-link d-flex align-items-center" do %>
+              <i class="bi-plus my-1 h5"></i>
               Grow
             <% end %>
           </li>
 
           <li class="nav-item">
-            <%= link_to new_admin_room_path, class: "nav-link" do %>
-              <%= icon "fas", "plus" %>
+            <%= link_to new_admin_room_path, class: "nav-link d-flex align-items-center" do %>
+              <i class="bi-plus my-1 h5"></i>
               Room
             <% end %>
           </li>
@@ -46,7 +46,7 @@
 
         <li class="nav-item">
           <%= link_to "/apidoc", class: "nav-link" do %>
-            <%= icon "fas", "database" %>
+            <i class="bi-database h4"></i>
             API
           <% end %>
         </li>
