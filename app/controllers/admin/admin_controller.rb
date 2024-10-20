@@ -1,6 +1,7 @@
 class Admin::AdminController < ApplicationController
   before_action :authenticate_user!
   before_action :is_admin?
+  layout 'application'
 
   add_breadcrumb "Admin"
 
