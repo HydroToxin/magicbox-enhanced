@@ -1,18 +1,17 @@
+# frozen_string_literal: true
+
 class Alert < ApplicationRecord
   include ActionView::Helpers::TextHelper
 
-	enum alert_type: {
-    :data_type_alert => 0,
-    :resource_alert  => 1
-  }
+  enum alert_type: { data_type_alert: 0, resource_alert: 1 }
 
   enum operator: {
-    :equal 							=> 0,
-    :not_equal 					=> 1,
-    :lesser 						=> 2,
-    :greater 						=> 3,
-    :lesser_or_equal 		=> 4,
-    :greater_or_equal 	=> 5,
+    equal: 0,
+    not_equal: 1,
+    lesser: 2,
+    greater: 3,
+    lesser_or_equal: 4,
+    greater_or_equal: 5
     # :like               => 6,
     # :not_like           => 7,
     # :contain 						=> 8,
@@ -29,39 +28,34 @@ class Alert < ApplicationRecord
   has_many :alert_users
   has_many :users, through: :alert_users
 
-  has_many :alert_push_users, class_name: "AlertPushUser"
+  has_many :alert_push_users, class_name: 'AlertPushUser'
   has_many :push_users, through: :alert_push_users, source: :user
 
   has_many :notifications, as: :notifiable, dependent: :delete_all
-  has_many :events, :as => :eventable, dependent: :destroy
+  has_many :events, as: :eventable, dependent: :destroy
 
   validates :value, presence: true
   validates :message, presence: true
 
   def title
-    "Alert"
+    'Alert'
   end
-
 
   def email_subject
     "ALERT: #{title}"
   end
 
-
   def notifiable_color
-    "danger"
+    'danger'
   end
-
 
   def notifiable_icon
-    "exclamation-triangle"
+    'exclamation-triangle'
   end
-
 
   def notifiable_url
     Setting.app_hostname + Rails.application.routes.url_helpers.notifications_path
   end
-
 
   def test_alert
     trigger
@@ -74,11 +68,9 @@ class Alert < ApplicationRecord
   end
 
   def self.trigger
-    MB_LOGGER.info("# Start Trigger Alerts ############")
-    Alert.all.each do |alert|
-      alert.trigger
-    end
-    MB_LOGGER.info("# End Trigger Alerts ##############")
+    MB_LOGGER.info('# Start Trigger Alerts ############')
+    Alert.all.each(&:trigger)
+    MB_LOGGER.info('# End Trigger Alerts ##############')
   end
 
   def trigger
@@ -86,7 +78,6 @@ class Alert < ApplicationRecord
 
     context_object = nil
     triggered = false
-    info = ""
 
     if data_type_alert?
       last_sample = Sample.where(data_type_id: data_type.id).limit(1).first
@@ -95,79 +86,75 @@ class Alert < ApplicationRecord
       case operator.to_sym
       when :equal
         triggered = last_sample.value.to_f == value
-        info = "#{last_sample.value.to_f} equal #{value}"
+        "#{last_sample.value.to_f} equal #{value}"
       when :not_equal
         triggered = last_sample.value.to_f != value
-        info = "#{last_sample.value.to_f} not_equal #{value}"
+        "#{last_sample.value.to_f} not_equal #{value}"
       when :lesser
         triggered = last_sample.value.to_f < value
-        info = "#{last_sample.value.to_f} lesser #{value}"
+        "#{last_sample.value.to_f} lesser #{value}"
       when :greater
         triggered = last_sample.value.to_f > value
-        info = "#{last_sample.value.to_f} greater #{value}"
+        "#{last_sample.value.to_f} greater #{value}"
       when :lesser_or_equal
         triggered = last_sample.value.to_f <= value
-        info = "#{last_sample.value.to_f} lesser_or_equal #{value}"
+        "#{last_sample.value.to_f} lesser_or_equal #{value}"
       when :greater_or_equal
         triggered = last_sample.value.to_f >= value
-        info = "#{last_sample.value.to_f} greater_or_equal #{value}"
-      # when :like
-      #   triggered = false
-      #   info = "false"
-      # when :not_like
-      #   triggered = false
-      #   info = "false"
-      # when :contain
-      #   triggered = false
-      #   info = "false"
-      # when :not_contain
-      #   triggered = false
-      #   info = "false"
-      # when :start_with
-      #   triggered = false
-      #   info = "false"
-      # when :not_start_with
-      #   triggered = false
-      #   info = "false"
-      # when :end_with
-      #   triggered = false
-      #   info = "false"
-      # when :not_end_with
-      #   triggered = false
-      #   info = "false"
+        "#{last_sample.value.to_f} greater_or_equal #{value}"
+        # when :like
+        #   triggered = false
+        #   info = "false"
+        # when :not_like
+        #   triggered = false
+        #   info = "false"
+        # when :contain
+        #   triggered = false
+        #   info = "false"
+        # when :not_contain
+        #   triggered = false
+        #   info = "false"
+        # when :start_with
+        #   triggered = false
+        #   info = "false"
+        # when :not_start_with
+        #   triggered = false
+        #   info = "false"
+        # when :end_with
+        #   triggered = false
+        #   info = "false"
+        # when :not_end_with
+        #   triggered = false
+        #   info = "false"
       end
 
     elsif resource_alert?
-      last_data = ResourceData.where(resource_id: resource.id).order("created_at").last
+      last_data = ResourceData.where(resource_id: resource.id).order('created_at').last
       context_object = last_data.observation
     end
 
-    if triggered
-      MB_LOGGER.info("  -> Alert triggered: #{self.message} - #{self.users.count} users")
+    return unless triggered
 
-      Event.create!(event_type: :alert, message: self.message, eventable: self)
+    MB_LOGGER.info("  -> Alert triggered: #{message} - #{users.count} users")
 
-      now = Time.zone.now
+    Event.create!(event_type: :alert, message:, eventable: self)
 
-      #if !latest_send or latest_send <= (now - 1.hour)
+    Time.zone.now
 
-      self.users.each do |u|
-        MB_LOGGER.info("  -> Before notify : #{u.inspect}")
+    # if !latest_send or latest_send <= (now - 1.hour)
 
-        n = Notification.create!(
-          user: u,
-          notify_email: true,
-          notifiable: self,
-          notified: context_object)
+    users.each do |u|
+      MB_LOGGER.info("  -> Before notify : #{u.inspect}")
 
-        MB_LOGGER.info("  -> Notification : #{n.inspect}")
+      n = Notification.create!(user: u, notify_email: true, notifiable: self, notified: context_object)
 
-        n.notify()
-      end
+      MB_LOGGER.info("  -> Notification : #{n.inspect}")
 
-      # self.latest_send = now
-      # self.save
-      #end
+      n.notify
     end
+
+    # self.latest_send = now
+    # self.save
+    # end
   end
 end

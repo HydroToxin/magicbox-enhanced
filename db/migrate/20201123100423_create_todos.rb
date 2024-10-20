@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateTodos < ActiveRecord::Migration[5.2]
   disable_ddl_transaction!
   def change
@@ -9,7 +11,7 @@ class CreateTodos < ActiveRecord::Migration[5.2]
       t.boolean :notify_email, default: true
       t.text :body
       t.boolean :notify, default: true
-      t.uuid :uuid, null: false, default: -> { "gen_random_uuid()" }
+      t.uuid :uuid, null: false, default: -> { 'gen_random_uuid()' }
 
       t.references :user, foreign_key: true
 

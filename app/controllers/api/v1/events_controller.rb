@@ -1,17 +1,21 @@
-class Api::V1::EventsController < ApiController
-	def index
-		@events = Event.all
+# frozen_string_literal: true
 
-		if params.has_key? :limit
-      @events = @events.limit(params[:limit])
-    else
-      @events = @events.limit(100)
+module Api
+  module V1
+    class EventsController < ApiController
+      def index
+        @events = Event.all
+
+        @events = if params.key? :limit
+                    @events.limit(params[:limit])
+                  else
+                    @events.limit(100)
+                  end
+
+        @events = @events.offset(params[:offset]) if params.key? :offset
+
+        render json: @events, include: %i[room device]
+      end
     end
-
-    if params.has_key? :offset
-      @events = @events.offset(params[:offset])
-    end
-
-    render json: @events, include: [:room, :device]
-	end
+  end
 end

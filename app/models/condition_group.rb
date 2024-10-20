@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 class ConditionGroup < ApplicationRecord
-	belongs_to :scenario
-	
-	has_many :conditions, dependent: :destroy
-	has_many :operations, dependent: :destroy
+  belongs_to :scenario
 
-	validates :name, presence: true
+  has_many :conditions, dependent: :destroy
+  has_many :operations, dependent: :destroy
 
-	accepts_nested_attributes_for :conditions, allow_destroy: true, reject_if: :all_blank
-	accepts_nested_attributes_for :operations, allow_destroy: true, reject_if: :all_blank
+  validates :name, presence: true
 
-	def as_json(*args)
-	  super.tap { |hash| 
-	  	hash["conditions_attributes"] = hash.delete "conditions"
-	  	hash["operations_attributes"] = hash.delete "operations"  
-	  }
-	end
+  accepts_nested_attributes_for :conditions, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :operations, allow_destroy: true, reject_if: :all_blank
+
+  def as_json(*args)
+    super.tap do |hash|
+      hash['conditions_attributes'] = hash.delete 'conditions'
+      hash['operations_attributes'] = hash.delete 'operations'
+    end
+  end
 end

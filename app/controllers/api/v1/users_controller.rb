@@ -1,13 +1,17 @@
-class Api::V1::UsersController < ApiController
-	def index
-		if params.has_key? :email
-			@user = User.where(email: params[:email]).first
+# frozen_string_literal: true
 
-			if @user
-				render json: [@user] and return
-			end
-		end
+module Api
+  module V1
+    class UsersController < ApiController
+      def index
+        if params.key? :email
+          @user = User.where(email: params[:email]).first
 
-		head :no_content
-	end
+          render json: [@user] and return if @user
+        end
+
+        head :no_content
+      end
+    end
+  end
 end

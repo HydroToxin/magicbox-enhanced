@@ -53,3 +53,6 @@
 ## 2024-10-19
 
 - 08ec828 Fix serveral Form issues and Styles.
+## 2024-10-20
+
+- 8873ac2 Refactor Sidebar for Turbo Streams. Also fix curren selection

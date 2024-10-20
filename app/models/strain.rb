@@ -1,43 +1,25 @@
+# frozen_string_literal: true
+
 class Strain < ApplicationRecord
-	enum strain_type: {
-    :indica 		=> 0,
-    :sativa 		=> 1,
-    :hybrid 		=> 2,
-    :ruderalis 	=> 3,
-    :unknow 		=> 10
-  }
+  enum strain_type: { indica: 0, sativa: 1, hybrid: 2, ruderalis: 3, unknow: 10 }
 
   def self.search(params)
     events = Strain.all
 
-    if params[:search].present?
-      events = events.where('name iLIKE ?', "%#{params[:search]}%")
-    end
+    events = events.where('name iLIKE ?', "%#{params[:search]}%") if params[:search].present?
 
-    if params[:strain_type].present?
-      events = events.where(strain_type: params[:strain_type])
-    end
+    events = events.where(strain_type: params[:strain_type]) if params[:strain_type].present?
 
-    if params[:location].present?
-      events = events.where('location iLIKE ?', "%#{params[:location]}%")
-    end
+    events = events.where('location iLIKE ?', "%#{params[:location]}%") if params[:location].present?
 
-    if params[:breeder].present?
-      events = events.where(breeder: params[:breeder])
-    end
+    events = events.where(breeder: params[:breeder]) if params[:breeder].present?
 
-    if params[:effect].present?
-      events = events.where('effects @> ARRAY[?]', [params[:effect]])
-    end
+    events = events.where('effects @> ARRAY[?]', [params[:effect]]) if params[:effect].present?
 
-    if params[:ailment].present?
-      events = events.where('ailments @> ARRAY[?]', [params[:ailment]])
-    end
+    events = events.where('ailments @> ARRAY[?]', [params[:ailment]]) if params[:ailment].present?
 
-    if params[:flavor].present?
-      events = events.where('flavors @> ARRAY[?]', [params[:flavor]])
-    end
+    events = events.where('flavors @> ARRAY[?]', [params[:flavor]]) if params[:flavor].present?
 
-    return events
+    events
   end
 end

@@ -1,4 +1,6 @@
-require "active_support/core_ext/integer/time"
+# frozen_string_literal: true
+
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -53,17 +55,17 @@ Rails.application.configure do
   config.force_ssl = true
 
   # Log to STDOUT by default
-  config.logger = ActiveSupport::Logger.new(STDOUT)
-    .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
-    .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+  config.logger = ActiveSupport::Logger.new($stdout)
+                                       .tap  { |logger| logger.formatter = Logger::Formatter.new }
+                                       .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # "info" includes generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
   # want to log everything, set the level to "debug".
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -78,21 +80,21 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.smtp_settings = {
-    address: "ssl0.ovh.net",
+    address: 'ssl0.ovh.net',
     port: 587,
-    domain: "magicbox.read-write.fr",
-    authentication: "login",
+    domain: 'magicbox.read-write.fr',
+    authentication: 'login',
     enable_starttls_auto: true,
-    user_name: ENV["EMAIL_USERNAME"],
-    password: ENV["EMAIL_PASSWORD"],
-    from: "no-reply@magicbox.read-write.fr"
+    user_name: ENV.fetch('EMAIL_USERNAME', nil),
+    password: ENV.fetch('EMAIL_PASSWORD', nil),
+    from: 'no-reply@magicbox.read-write.fr'
   }
   config.action_mailer.default_options = {
-    reply_to: "no-reply@magicbox.read-write.fr",
-    from: "no-reply@magicbox.read-write.fr"
+    reply_to: 'no-reply@magicbox.read-write.fr',
+    from: 'no-reply@magicbox.read-write.fr'
   }
-    # ActionMailer Config
-  config.action_mailer.default_url_options = { :host => 'magicbox.read-write.fr', :protocol => 'https' }
+  # ActionMailer Config
+  config.action_mailer.default_url_options = { host: 'magicbox.read-write.fr', protocol: 'https' }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -102,11 +104,11 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
   config.active_support.cache_format_version = 7.0
 
-   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  # Use default logging formatter so that PID and timestamp are not suppressed.
+  config.log_formatter = Logger::Formatter.new
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
+    logger           = ActiveSupport::Logger.new($stdout)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end

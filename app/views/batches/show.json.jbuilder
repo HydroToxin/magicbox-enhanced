@@ -1,1 +1,3 @@
-json.partial! "batches/batch", batch: @batch
+# frozen_string_literal: true
+
+json.partial! 'batches/batch', batch: @batch

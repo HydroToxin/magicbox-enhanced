@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Use this file to easily define all of your cron jobs.
 #
 # It's helpful, but not entirely necessary to understand cron before proceeding.
@@ -43,5 +45,5 @@
 # end
 
 every 4.minute do
-	runner "Scenario.run"
+  runner 'Scenario.run'
 end

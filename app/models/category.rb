@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Category < ApplicationRecord
-	has_many :resources
+  has_many :resources
 end

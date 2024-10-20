@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   # Root Settings for authenticated and unauthenticated users
   devise_scope :user do
@@ -50,10 +52,10 @@ Rails.application.routes.draw do
 
   resources :observations
 
-  resources :batches, only: [:index, :show]
+  resources :batches, only: %i[index show]
 
   # Nested resources for grows
-  resources :grows, except: [:edit, :update, :new, :create] do
+  resources :grows, except: %i[edit update new create] do
     resources :harvests, only: [:show]
     resources :weeks
     resources :observations
@@ -70,7 +72,7 @@ Rails.application.routes.draw do
   resources :rooms, only: [:show] do
     resources :devices, only: [:show] do
       post :query, on: :member
-      resources :events  # Hinzufügen von Events unter Devices
+      resources :events # Hinzufügen von Events unter Devices
     end
 
     resources :events
@@ -78,11 +80,11 @@ Rails.application.routes.draw do
 
   # Default events route (falls eigenständige events benötigt werden)
   resources :events
-  resources :harvests, only: [:index, :new]
+  resources :harvests, only: %i[index new]
 
   # Admin namespace
   namespace :admin do
-    get "/dashboard/gpio", to: "dashboard#gpio"
+    get '/dashboard/gpio', to: 'dashboard#gpio'
 
     resources :users, except: [:show] do
       member do
@@ -90,9 +92,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :grows, only: [:edit, :update, :new, :create, :destroy] do
-      resources :harvests, except: [:index, :show] do
-        resources :batches, except: [:index, :show]
+    resources :grows, only: %i[edit update new create destroy] do
+      resources :harvests, except: %i[index show] do
+        resources :batches, except: %i[index show]
       end
       resources :subjects do
         post :move_to, on: :member
@@ -100,23 +102,23 @@ Rails.application.routes.draw do
     end
 
     resources :rooms do
-      resources :devices, only: [:index, :edit, :update, :new, :create, :destroy] do
+      resources :devices, only: %i[index edit update new create destroy] do
         post :start, on: :member
         post :stop, on: :member
-        resources :events  # Hinzufügen von Events unter Devices im Admin-Bereich
+        resources :events # Hinzufügen von Events unter Devices im Admin-Bereich
       end
     end
 
     resources :devices, only: [:index]
     resources :strains
     resources :data_types
-    resources :batches, except: [:edit, :update]
-    resources :harvests, only: [:index, :new]
+    resources :batches, except: %i[edit update]
+    resources :harvests, only: %i[index new]
 
     resources :scenarios do
-      resources :condition_groups, only: [:new, :create, :destroy] do
-        resources :conditions, only: [:new, :create, :destroy]
-        resources :operations, only: [:new, :create, :destroy]
+      resources :condition_groups, only: %i[new create destroy] do
+        resources :conditions, only: %i[new create destroy]
+        resources :operations, only: %i[new create destroy]
       end
       collection do
         get :export
@@ -124,7 +126,7 @@ Rails.application.routes.draw do
       end
     end
 
-    #resources :scenarios do
+    # resources :scenarios do
     #  resources :condition_groups, only: [:new, :create, :destroy] do
     #    resources :conditions, only: [:new, :create, :destroy]
     #    resources :operations, only: [:new, :create, :destroy]
@@ -136,12 +138,12 @@ Rails.application.routes.draw do
     #    get :export
     #    post :import
     #  end
-    #end
+    # end
 
     resources :scenarios do
-      resources :condition_groups, only: [:new, :create, :destroy] do
-        resources :conditions, only: [:new, :create, :destroy]
-        resources :operations, only: [:new, :create, :destroy]
+      resources :condition_groups, only: %i[new create destroy] do
+        resources :conditions, only: %i[new create destroy]
+        resources :operations, only: %i[new create destroy]
       end
     end
 
@@ -161,22 +163,22 @@ Rails.application.routes.draw do
 
     resource :settings
 
-    get '/', to: "users#index"
+    get '/', to: 'users#index'
   end
 
   # API namespace
   namespace :api do
     namespace :v1 do
-      get '/context', to: "context#index"
+      get '/context', to: 'context#index'
 
       resources :users, only: [:show] do
         resources :push_devices, only: [:create]
       end
 
-      resources :devices, only: [:index, :show, :update] do
+      resources :devices, only: %i[index show update] do
         post :start, on: :member
         post :stop, on: :member
-        resources :events  # API-Unterstützung für verschachtelte Events unter Devices
+        resources :events # API-Unterstützung für verschachtelte Events unter Devices
       end
 
       resources :rooms
@@ -190,11 +192,11 @@ Rails.application.routes.draw do
       resources :observations
       resources :events
 
-      resources :data_types, only: [:index, :show] do
-        resources :samples, defaults: { format: :json }, only: [:index, :show]
+      resources :data_types, only: %i[index show] do
+        resources :samples, defaults: { format: :json }, only: %i[index show]
       end
 
-      resources :samples, defaults: { format: :json }, only: [:index, :show, :create]
+      resources :samples, defaults: { format: :json }, only: %i[index show create]
     end
   end
 

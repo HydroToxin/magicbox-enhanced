@@ -1,4 +1,6 @@
-require "active_support/core_ext/integer/time"
+# frozen_string_literal: true
+
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -19,20 +21,18 @@ Rails.application.configure do
 
   # Assets
   config.assets.debug = false
-  #config.assets.compile = true
-  #config.assets.quiet = true
+  # config.assets.compile = true
+  # config.assets.quiet = true
   config.assets.quiet = true
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join("tmp/caching-dev.txt").exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :memory_store
-    config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}"
-    }
+    config.public_file_server.headers = { 'Cache-Control' => "public, max-age=#{2.days.to_i}" }
   else
     config.action_controller.perform_caching = false
 
@@ -78,26 +78,26 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   config.action_mailer.smtp_settings = {
-    address: "ssl0.ovh.net",
+    address: 'ssl0.ovh.net',
     port: 587,
-    domain: "magicbox.read-write.fr",
-    authentication: "login",
+    domain: 'magicbox.read-write.fr',
+    authentication: 'login',
     enable_starttls_auto: true,
-    user_name: ENV["EMAIL_USERNAME"],
-    password: ENV["EMAIL_PASSWORD"],
-    from: "no-reply@magicbox.read-write.fr"
+    user_name: ENV.fetch('EMAIL_USERNAME', nil),
+    password: ENV.fetch('EMAIL_PASSWORD', nil),
+    from: 'no-reply@magicbox.read-write.fr'
   }
   config.action_mailer.default_options = {
-    reply_to: "no-reply@magicbox.read-write.fr",
-    from: "no-reply@magicbox.read-write.fr"
+    reply_to: 'no-reply@magicbox.read-write.fr',
+    from: 'no-reply@magicbox.read-write.fr'
   }
   # ActionMailer Config
-  config.action_mailer.default_url_options = { :host => 'localhost', :protocol => 'http', port: "3000" }
+  config.action_mailer.default_url_options = { host: 'localhost', protocol: 'http', port: '3000' }
 
   config.log_level = :debug
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
+    logger           = ActiveSupport::Logger.new($stdout)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end

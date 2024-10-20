@@ -4,8 +4,8 @@ class CreateUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :users do |t|
       ## Database authenticatable
-      t.string :email,              null: false, default: ""
-      t.string :encrypted_password, null: false, default: ""
+      t.string :email,              null: false, default: ''
+      t.string :encrypted_password, null: false, default: ''
 
       ## Recoverable
       t.string   :reset_password_token
@@ -34,10 +34,9 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :authentication_token
       t.string :username
       t.boolean :is_admin, default: false
-      t.uuid :alert_uuid, null: false, default: -> { "gen_random_uuid()" }
+      t.uuid :alert_uuid, null: false, default: -> { 'gen_random_uuid()' }
 
       t.timestamps null: false
-
     end
 
     add_index :users, :email,                unique: true

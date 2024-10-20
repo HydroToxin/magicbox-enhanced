@@ -1,34 +1,37 @@
-class Admin::ResourceDatasController < Admin::AdminController
-  before_action :set_resource_data, only: [:show, :edit, :update, :destroy]
+# frozen_string_literal: true
 
-  # GET /resource_datas/new
-  def new
-    @resource_data = ResourceData.new
-  end
+module Admin
+  class ResourceDatasController < Admin::AdminController
+    before_action :set_resource_data, only: %i[show edit update destroy]
 
-  def show
-  end
-
-  def edit
-  end
-
-  def update
-  end
-
-  def destroy
-    @resource_data.destroy
-    respond_to do |format|
-      format.html { redirect_to admin_resource_datas_url, notice: 'Resource Data was successfully destroyed.' }
-      format.turbo_stream { head :no_content }
+    # GET /resource_datas/new
+    def new
+      @resource_data = ResourceData.new
     end
-  end
 
-  private
+    def show; end
+
+    def edit; end
+
+    def update; end
+
+    def destroy
+      @resource_data.destroy
+      respond_to do |format|
+        format.html do
+          redirect_to admin_resource_datas_url, notice: 'Resource Data was successfully destroyed.'
+        end
+        format.turbo_stream { head :no_content }
+      end
+    end
+
+    private
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def resource_data_params
-      params.require(:resource_data).permit()
+      params.require(:resource_data).permit
     end
 
-    def set_resource_data
-    end
+    def set_resource_data; end
+  end
 end

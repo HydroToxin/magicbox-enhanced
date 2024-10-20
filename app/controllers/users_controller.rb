@@ -1,15 +1,15 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: [:show]
 
-
   def show
-    add_breadcrumb "Profile"
+    add_breadcrumb 'Profile'
     add_breadcrumb @user.email
   end
 
-
-private
+  private
 
   def set_user
     @user = User.find(params[:id]) if params[:id]
@@ -26,8 +26,7 @@ private
       :password,
       :password_confirmation,
       :avatar,
-      :role_ids => [],
+      role_ids: []
     )
   end
-
 end
