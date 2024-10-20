@@ -17,15 +17,15 @@
         <!-- Sidebar  -->
         <%= render 'layouts/sidebar' %>
 
-        <!-- Page Content  -->
-        <div id="content" class="flex-grow-1">
+        <turbo-frame id="main-content" target="_top">
+          <div id="content" class="flex-grow-1">
             <%= render 'layouts/nav' %>
-
             <div class="container-fluid">
               <%= render 'layouts/messages' %>
               <%= yield %>
             </div>
-        </div>
+          </div>
+        </turbo-frame>
       </div>
 
       <!-- Dark Overlay element -->

@@ -43,12 +43,18 @@ module ApplicationHelper
   end
 
   def sidebar_item(path, text, options = {}, &block)
+    raise ArgumentError, "Options must be a Hash" unless options.is_a?(Hash)
+    options[:data] ||= {}
+    options[:data][:turbo_frame] = 'main-content'
+    options[:data][:action] = 'sidebar#activateLink'
+
     content_tag(:li, class: current_page?(path) ? "active" : "") do
       if block_given?
         link_to path, options do
           concat capture(&block)
           concat " #{text}"
-          if options[:badge_count].present? and options[:badge_count] > 0
+
+          if options[:badge_count].present? && options[:badge_count] > 0
             concat(
               content_tag(:div, class: "float-right") do
                 content_tag(:span, class: "badge badge-light") do

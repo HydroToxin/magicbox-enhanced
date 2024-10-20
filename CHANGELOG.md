@@ -48,4 +48,8 @@
 - fbf212b refactor observations#new for tubo-stream and stimulus
 ## 2024-10-17
 
+- 3810d85 Update Changelog
 - 0f0cc6b Fix a hudge of Bugs. Also normalize some database relations
+## 2024-10-19
+
+- 08ec828 Fix serveral Form issues and Styles.
