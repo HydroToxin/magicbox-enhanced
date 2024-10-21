@@ -45,5 +45,5 @@
 # end
 
 every 4.minute do
-  runner 'Scenario.run'
+  runner 'Scenario.run_scenarios'
 end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Scenario
 class Scenario < ApplicationRecord
   attr_accessor :json_file
 
@@ -26,46 +27,32 @@ class Scenario < ApplicationRecord
     end
   end
 
-  def run2(room)
-    if enabled
-      condition_groups.where(enabled: true).each do |condition_group|
-        MB_LOGGER.tagged("Scenario-#{id}") do
-          MB_LOGGER.info "Condition group #{condition_group.name} checking..."
-        end
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def run(room)
+    return MB_LOGGER.info "Scenario #{name} skipped: disabled" unless enabled
 
-        conditions_matched = condition_group.conditions.empty?
+    condition_groups.where(enabled: true).each do |group|
+      MB_LOGGER.tagged("Scenario-#{id}") { MB_LOGGER.info "Checking condition group #{group.name}..." }
 
-        condition_group.conditions.each do |condition|
-          MB_LOGGER.tagged("Scenario-#{id}") do
-            MB_LOGGER.info '* Checking conditions...'
-          end
-
-          conditions_matched = condition.check_condition(room)
-
-          break unless conditions_matched
-        end
-
-        if conditions_matched
-          MB_LOGGER.tagged("Scenario-#{id}") do
-            MB_LOGGER.info '* All conditions matched, executing operations...'
-          end
-          condition_group.operations.each do |operation|
-            sleep 2
-
-            operation.execute_operation(room)
-          end
-        else
-          MB_LOGGER.tagged("Scenario-#{id}") do
-            MB_LOGGER.info '* No condition matched'
-          end
-        end
+      all_conditions_met = group.conditions.all? do |condition|
+        MB_LOGGER.tagged("Scenario-#{id}") { MB_LOGGER.info 'Evaluating condition...' }
+        condition.check_condition(room)
       end
-    else
-      MB_LOGGER.info "Scenario #{name} skipped: disabled "
+
+      if all_conditions_met
+        MB_LOGGER.tagged("Scenario-#{id}") { MB_LOGGER.info 'All conditions met, executing operations...' }
+        group.operations.each do |operation|
+          sleep 2
+          operation.execute_operation(room)
+        end
+      else
+        MB_LOGGER.tagged("Scenario-#{id}") { MB_LOGGER.info 'Conditions not met' }
+      end
     end
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
-  def self.run2
+  def self.run_scenarios
     MB_LOGGER.info '########################'
     MB_LOGGER.info '#  Run scenarios (v2)  #'
 
@@ -75,7 +62,7 @@ class Scenario < ApplicationRecord
           MB_LOGGER.info "-> #{room.name} : #{scenario.name} [#{scenario.conditions.count} conditions]"
         end
 
-        scenario.run2(room)
+        scenario.run(room)
       end
     end
 

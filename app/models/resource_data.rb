@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# ResourceData
 class ResourceData < ApplicationRecord
   self.table_name = 'resource_datas'
   belongs_to :resource

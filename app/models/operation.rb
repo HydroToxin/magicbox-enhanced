@@ -1,29 +1,33 @@
 # frozen_string_literal: true
 
+# Operation
 class Operation < ApplicationRecord
   include DeviceTypeEnum
 
   belongs_to :condition_group
 
-  def execute_operation(in_room)
-    device = in_room.devices.where(device_type:).first
+  def execute_operation(room)
+    device = room.devices.find_by(device_type:)
 
     return unless device
 
-    if command == 'start'
+    case command
+    when 'start'
       device.start(event_type: :cron, event: true)
-
-      if duration && (duration != 0)
-        MB_LOGGER.info "   -> #{device.name} started for #{duration} sec."
-        CommandJob.perform_in(duration.seconds, device.id, 'stop')
-      end
-    elsif command == 'stop'
+      schedule_opposite_command(device, duration) if duration.positive?
+    when 'stop'
       device.stop(event_type: :cron, event: true)
-
-      if duration && (duration != 0)
-        MB_LOGGER.info "   -> #{device.name} stopped for #{duration} sec."
-        CommandJob.perform_in(duration.seconds, device.id, 'start')
-      end
+      schedule_opposite_command(device, duration) if duration.positive?
     end
+  end
+
+  private
+
+  def schedule_opposite_command(device, duration)
+    CommandJob.perform_in(duration.seconds, device.id, opposite_command)
+  end
+
+  def opposite_command
+    command == 'start' ? 'stop' : 'start'
   end
 end

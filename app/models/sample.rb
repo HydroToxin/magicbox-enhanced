@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Sample
 class Sample < ApplicationRecord
   default_scope { order(created_at: :desc) }
 

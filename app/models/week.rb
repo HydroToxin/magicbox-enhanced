@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Week
 class Week < ApplicationRecord
   default_scope { order(start_date: :desc) }
 
@@ -39,7 +40,7 @@ class Week < ApplicationRecord
     end
   end
 
-  def is_current?
+  def current?
     now = Date.today
     puts "#{start_date} < #{now} < #{end_date}"
     return true if now >= start_date && now <= end_date
@@ -48,19 +49,13 @@ class Week < ApplicationRecord
   end
 
   def html_color
-    case week_type.to_sym
-    when :seedling
-      'lightgreen'
-    when :vegging
-      '#2ECC71'
-    when :flowering
-      '#CE93D8'
-    when :flushing
-      'blue'
-    when :drying
-      'maron'
-    when :curing
-      'lightgray'
-    end
+    {
+      seedling: 'lightgreen',
+      vegging: '#2ECC71',
+      flowering: '#CE93D8',
+      flushing: 'blue',
+      drying: 'maroon',
+      curing: 'lightgray'
+    }[week_type.to_sym]
   end
 end

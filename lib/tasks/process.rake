@@ -15,7 +15,7 @@ namespace :process do
     Alert.trigger
 
     # run enabled scenarios
-    Scenario.run2
+    Scenario.run_scenarios
 
     # process TODO notifications
     Todo.notify

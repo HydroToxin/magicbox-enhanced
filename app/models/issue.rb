@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Issue
 class Issue < ApplicationRecord
   attr_accessor :category_id
 

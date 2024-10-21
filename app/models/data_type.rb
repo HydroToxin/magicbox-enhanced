@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Datatype
 class DataType < ApplicationRecord
   has_many :samples
 

@@ -17,12 +17,18 @@ AllCops:
     - 'db/**/*'
     - 'config/**/*'
     - 'bin/**/*'
+    - 'app/views/**/*'
+    - 'app/javascript/**/*'
+    - 'app/assets/**/*'
 
   TargetRubyVersion: 3.2.5
   SuggestExtensions: false
 
 InternalAffairs/NodeMatcherDirective:
   Enabled: false
+
+# Style/HashLikeCase:
+#  Enabled: false
 
 Naming/InclusiveLanguage:
   Enabled: true
@@ -156,3 +162,9 @@ Layout/LineLength:
   Max: 120  # Setze dies auf eine größere Zahl, falls nötig
   AllowHeredoc: true
   AllowURI: true
+
+Metrics/MethodLength:
+  Max: 15
+
+Metrics/ClassLength:
+  Max: 150

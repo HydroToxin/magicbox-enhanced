@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Todo
 class Todo < ApplicationRecord
   include ActionView::Helpers::TextHelper
   include ApplicationHelper
@@ -61,28 +62,24 @@ class Todo < ApplicationRecord
     date + 1.hour
   end
 
-  def is_late?
-    return if date.nil?
+  def late?
+    return false if date.nil?
 
     date < DateTime.now
   end
 
   def self.notify
-    now   = DateTime.now
-    todos = Todo.where(todo_status: :todo).where('date < ?', now)
-    # todos = todos.where('notified_date IS NULL OR notified_date < ?', now - todo.renotify_every_minute)
-    logger.info todos.count
+    pending_todos = Todo.todo.where('date < ?', DateTime.now)
 
-    todos.each do |todo|
-      logger.info "todo.notified_date : #{todo.notified_date}"
-      logger.info "now - todo.renotify_every_minute : #{now - todo.renotify_every_minute.minutes}"
-      next unless (todo.notified_date.nil? ||
-         (todo.notified_date < (now - todo.renotify_every_minute.minutes))) && todo.notify_email?
+    pending_todos.each do |todo|
+      next unless todo.needs_notification?
 
       Notification.create(user: todo.user, notify_email: todo.notify_email?, notifiable: todo).notify
-
-      todo.notified_date = now
-      todo.save
+      todo.update(notified_date: todo.date)
     end
+  end
+
+  def needs_notification?
+    notified_date.nil? || notified_date < (date - renotify_every_minute.minutes)
   end
 end

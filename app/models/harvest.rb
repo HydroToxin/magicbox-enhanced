@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Harvest
 class Harvest < ApplicationRecord
   belongs_to :grow
 
@@ -13,9 +14,9 @@ class Harvest < ApplicationRecord
     consumed = batches.where(batch_type:).sum(:total_weight)
 
     if batch_type == :trim
-      return dry_trim_weight - consumed <= 0 ? 0 : dry_trim_weight - consumed
+      return [dry_trim_weight - consumed, 0].max
     elsif batch_type == :bud
-      return dry_bud_weight - consumed <= 0 ? 0 : dry_bud_weight - consumed
+      return [dry_bud_weight - consumed, 0].max
     end
 
     0

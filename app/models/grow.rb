@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Grow
 class Grow < ApplicationRecord
   include BirthTypeEnum
 
@@ -64,15 +65,16 @@ class Grow < ApplicationRecord
   end
 
   def status_badge_class
-    if done?
+    case grow_status
+    when 'done'
       'badge-light border'
-    elsif aborted?
+    when 'aborted'
       'badge-danger'
-    elsif seedling? || vegging? || flowering?
+    when 'seedling', 'vegging', 'flowering'
       'badge-success'
-    elsif flushing?
+    when 'flushing'
       'badge-info'
-    elsif drying? || curing?
+    when 'drying', 'curing'
       'badge-warning'
     else
       'badge-primary'
@@ -84,55 +86,21 @@ class Grow < ApplicationRecord
 
     return if start_date.nil?
 
-    # create weeks
-    sdate = start_date
-    edate = sdate + 7.days
-    index = 0
+    current_date = start_date
+    end_date = current_date + 7.days
+    week_index = 0
 
-    seedling_weeks.times do |i|
-      generate_weeks_with(:seedling, i, sdate, edate)
-      sdate += 7.days
-      edate = sdate + 7.days
-      index += 1
-    end
-
-    vegging_weeks.times do |_i|
-      generate_weeks_with(:vegging, index, sdate, edate)
-      sdate += 7.days
-      edate = sdate + 7.days
-      index += 1
-    end
-
-    flowering_weeks.times do |_i|
-      generate_weeks_with(:flowering, index, sdate, edate)
-      sdate += 7.days
-      edate = sdate + 7.days
-      index += 1
-    end
-
-    flushing_weeks.times do |_i|
-      generate_weeks_with(:flushing, index, sdate, edate)
-      sdate += 7.days
-      edate = sdate + 7.days
-      index += 1
-    end
-
-    drying_weeks.times do |_i|
-      generate_weeks_with(:drying, index, sdate, edate)
-      sdate += 7.days
-      edate = sdate + 7.days
-      index += 1
-    end
-
-    curing_weeks.times do |_i|
-      generate_weeks_with(:curing, index, sdate, edate)
-      sdate += 7.days
-      edate = sdate + 7.days
-      index += 1
+    %i[seedling vegging flowering flushing drying curing].each do |type|
+      send(:"#{type}_weeks").times do
+        generate_week_with_type(type, week_index, current_date, end_date)
+        current_date += 7.days
+        end_date = current_date + 7.days
+        week_index += 1
+      end
     end
   end
 
-  def generate_weeks_with(type, index, start_date, end_date)
+  def generate_weeks_with_type(type, index, start_date, end_date)
     Week.create(grow_id: id, week_type: type, week_number: index + 1, start_date:, end_date:)
   end
 
@@ -174,6 +142,7 @@ class Grow < ApplicationRecord
     'primary'
   end
 
+  # rubocop:disable Lint/UnreachableCode
   def progress_percents
     # FIXME
     return
@@ -189,6 +158,7 @@ class Grow < ApplicationRecord
 
     r
   end
+  # rubocop:enable Lint/UnreachableCode
 
   def self.active_grows
     Grow.where.not('grows.grow_status': %i[done aborted])
@@ -199,33 +169,19 @@ class Grow < ApplicationRecord
   end
 
   def self.update_status
-    active_grows = Grow.where.not('grows.grow_status': %i[done aborted])
-
-    active_grows.each do |grow|
+    Grow.where.not(grow_status: %i[done aborted]).find_each do |grow|
       next unless grow.auto_update_status?
 
       old_status = grow.grow_status
+      next if old_statusold_status == grow.grow_status = grow.current_week&.week_type&.to_sym
+      next if old_status == grow.grow_status
 
-      if grow.current_week.seedling?
-        grow.grow_status = :seedling
-      elsif grow.current_week.vegging?
-        grow.grow_status = :vegging
-      elsif grow.current_week.flowering?
-        grow.grow_status = :flowering
-      elsif grow.current_week.flushing?
-        grow.grow_status = :flushing
-      elsif grow.current_week.drying?
-        grow.grow_status = :drying
-      elsif grow.current_week.curing?
-        grow.grow_status = :curing
-      end
-
-      next unless old_status != grow.grow_status
-
-      Event.create!(event_type: :cron,
-                    message: "Grow <b>#{grow.description}</b> status updated to <b>#{grow.grow_status}</b>", eventable: grow)
-
-      grow.save
+      Event.create!(
+        event_type: :cron,
+        eventable: grow,
+        message: "Grow <b>#{grow.description}</b> status updated to <b>#{grow.grow_status}</b>"
+      )
+      grow.save!
     end
   end
 end

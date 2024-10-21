@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Observation
 class Observation < ApplicationRecord
   belongs_to :user
   belongs_to :grow

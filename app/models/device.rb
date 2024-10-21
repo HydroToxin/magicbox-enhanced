@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# Device
+# rubocop:disable Metrics/ClassLength
 class Device < ApplicationRecord
   include DeviceTypeEnum
 
@@ -21,13 +23,12 @@ class Device < ApplicationRecord
     samples.where(data_type:).order(created_at: :desc).limit(1).first
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength,  Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def start(options = {})
     default_options = { event_type: :action, event: true }
 
     options = options.reverse_merge(default_options)
     state_changed = off?
-
-    logger.info options
 
     case device_type
     when 'power_strip'
@@ -36,13 +37,10 @@ class Device < ApplicationRecord
 
     begin
       # RPi::GPIO.set_numbering :bcm
-
       # sleep 1
-
       # RPi::GPIO.setup self.pin_number, :as => :output, :initialize => :high
 
-      self.device_state = :on
-      save
+      update(device_state: :on)
 
       MB_LOGGER.tagged("Device-#{id}") do
         MB_LOGGER.info "  -> Start #{name} by #{options[:event_type]}"
@@ -52,7 +50,8 @@ class Device < ApplicationRecord
         CommandJob.perform_in(default_duration.seconds, id, 'stop', options[:event_type])
 
         Event.create!(event_type: options[:event_type],
-                      message: "<b>#{name}</b> started for <b>#{default_duration} sec</b> in <b>#{room.name}</b>.", eventable: self)
+                      message: "<b>#{name}</b> started for <b>#{default_duration} sec</b> in <b>#{room.name}</b>.",
+                      eventable: self)
       elsif options[:event_type] == :cron
         if state_changed
           Event.create!(event_type: :cron, message: "<b>#{name}</b> started in <b>#{room.name}</b>", eventable: self)
@@ -61,62 +60,51 @@ class Device < ApplicationRecord
         Event.create!(event_type: :action, message: "<b>#{name}</b> started in <b>#{room.name}</b>", eventable: self)
       end
 
-      return true
-    rescue Exception => e
-      return e
+      true
+    rescue StandardError
+      false
     end
-
-    false
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def start_power_strip(options)
-    begin
-      if options[:event_type] == :cron
-        if off?
-          Event.create!(event_type: :cron, message: "<b>#{name}</b> started in <b>#{room.name}</b>", eventable: self)
-        end
-      elsif options[:event]
-        Event.create!(event_type: :action, message: "<b>#{name}</b> started in <b>#{room.name}</b>", eventable: self)
+    if options[:event_type] == :cron
+      if off?
+        Event.create!(event_type: :cron, message: "<b>#{name}</b> started in <b>#{room.name}</b>", eventable: self)
       end
-
-      output = `/usr/bin/sispmctl -o #{custom_identifier}`
-      return false if output.include?('No GEMBIRD')
-
-      return true
-    rescue Exception => e
-      return e
+    elsif options[:event]
+      Event.create!(event_type: :action, message: "<b>#{name}</b> started in <b>#{room.name}</b>", eventable: self)
     end
+
+    output = `/usr/bin/sispmctl -o #{custom_identifier}`
+    return false if output.include?('No GEMBIRD')
+
+    true
+  rescue StandardError
     false
   end
 
   def stop_power_strip(options)
-    begin
-      if options[:event_type] == :cron
-        if on?
-          Event.create!(event_type: :cron, message: "<b>#{name}</b> stopped in <b>#{room.name}</b>", eventable: self)
-        end
-      elsif options[:event]
-        Event.create!(event_type: :action, message: "<b>#{name}</b> stopped in <b>#{room.name}</b>", eventable: self)
-      end
-
-      output = `/usr/bin/sispmctl -f #{custom_identifier}`
-      return false if output.include?('No GEMBIRD')
-
-      return true
-    rescue Exception => e
-      return e
+    if options[:event_type] == :cron
+      Event.create!(event_type: :cron, message: "<b>#{name}</b> stopped in <b>#{room.name}</b>", eventable: self) if on?
+    elsif options[:event]
+      Event.create!(event_type: :action, message: "<b>#{name}</b> stopped in <b>#{room.name}</b>", eventable: self)
     end
 
+    output = `/usr/bin/sispmctl -f #{custom_identifier}`
+    return false if output.include?('No GEMBIRD')
+
+    true
+  rescue StandardError
     false
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def stop(options = {})
     default_options = { event_type: :action, event: true }
 
     options = options.reverse_merge(default_options)
     state_changed = on?
-
-    logger.info options
 
     case device_type
     when 'power_strip'
@@ -127,8 +115,7 @@ class Device < ApplicationRecord
       # RPi::GPIO.set_numbering :bcm
       # sleep 1
       # RPi::GPIO.setup self.pin_number, :as => :output, :initialize => :low
-      self.device_state = :off
-      save
+      update(device_state: :off)
 
       MB_LOGGER.tagged("Device-#{id}") do
         MB_LOGGER.info "  -> Stop #{name} by #{options[:event_type]}"
@@ -141,13 +128,12 @@ class Device < ApplicationRecord
       elsif options[:event]
         Event.create!(event_type: :action, message: "<b>#{name}</b> stopped in <b>#{room.name}</b>", eventable: self)
       end
-      return true
-    rescue Exception => e
-      return e
+      true
+    rescue StandardError
+      false
     end
-
-    false
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def query_sensor
     if sensor? && pin_number.positive?
@@ -162,98 +148,83 @@ class Device < ApplicationRecord
     false
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def query_dht22
     require 'dht-sensor-ffi'
+
+    temperature_type = DataType.find_by(name: 'temperature')
+    humidity_type = DataType.find_by(name: 'humidity')
+
+    # return false if device is not configured for temperature and humidity
+    if data_types.include?(temperature_type) && data_types.include?(humidity_type)
+      MB_LOGGER.info ' -> failed    : Device is not configured for temperature and humidity'
+      return false
+    end
+
     result = DhtSensor.read(pin_number, 22)
 
+    temperature = result.temperature.to_f.round(1).to_s
+    humidity = result.humidity.to_f.round.to_i.to_s
+
     MB_LOGGER.info "# Query sensor: #{product_reference} (GPIO##{pin_number}) "
-    MB_LOGGER.info  " -> Temp    : #{result.temperature.to_f.round(1)}"
-    MB_LOGGER.info  " -> Humidity: #{result.humidity.to_f.round.to_i}"
+    MB_LOGGER.info  " -> Temp    : #{temperature}"
+    MB_LOGGER.info  " -> Humidity: #{humidity}"
 
-    temp_dt = DataType.find_by(name: 'temperature')
-    hum_dt  = DataType.find_by(name: 'humidity')
+    create_sample(temperature_type, temperature, 'sensor', 'coral', '°C')
+    create_sample(humidity_type, humidity, 'sensor', 'lightblue', '%')
 
-    temp_s = result.temperature.to_f.round(1).to_s
-    hum_s = result.humidity.to_f.round.to_i.to_s
+    # ActionCable.server.broadcast "dashboards_channel", temperature: "#{temp_s} °C"
+    # ActionCable.server.broadcast "dashboards_channel", humidity: "#{hum_s} °%"
 
-    data_types << temp_dt unless data_types.include? temp_dt
-    data_types << hum_dt  unless data_types.include? hum_dt
-
-    Sample.create(
-      device_id: id,
-      product_reference:,
-      data_type_id: temp_dt.id,
-      value: temp_s,
-      category_name: 'sensor',
-      html_color: 'coral',
-      unit: '°C'
-    )
-
-    Sample.create(
-      device_id: id,
-      product_reference:,
-      data_type_id: hum_dt.id,
-      value: hum_s,
-      category_name: 'sensor',
-      html_color: 'lightblue',
-      unit: '%'
-    )
-
-  # ActionCable.server.broadcast "dashboards_channel", temperature: "#{temp_s} °C"
-  # ActionCable.server.broadcast "dashboards_channel", humidity: "#{hum_s} °%"
-  rescue Exception => e
+    true
+  rescue StandardError
     Rails.logger.error ' -> failed    : MISSING_DATA'
-    e
+    false
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def query_dht11
     require 'dht11'
 
-    dht = DHT11::Sensor.new(pin_number)
+    MB_LOGGER.info "# Query sensor: #{product_reference} (GPIO##{pin_number})"
 
-    result = dht.read
+    temperature_type = DataType.find_by(name: 'temperature')
+    humidity_type = DataType.find_by(name: 'humidity')
 
-    MB_LOGGER.info "# Query sensor: #{product_reference} (GPIO##{pin_number}) "
+    # return false if device is not configured for temperature and humidity
+    if data_types.include?(temperature_type) && data_types.include?(humidity_type)
+      MB_LOGGER.info ' -> failed    : Device is not configured for temperature and humidity'
+      return false
+    end
 
-    if result.error_code == :MISSING_DATA
+    sensor = DHT11::Sensor.new(pin_number)
+    reading = sensor.read
+
+    # return false if sensor raise an error or
+    if reading.error_code == :MISSING_DATA
       MB_LOGGER.info ' -> failed    : MISSING_DATA'
       return false
     end
 
-    # MB_LOGGER.info " -> Temp    : #{result.temperature}"
-    # MB_LOGGER.info " -> Humidity: #{result.humidity}"
-    MB_LOGGER.info " -> Temp    : #{dht.temp}"
-    MB_LOGGER.info " -> Humidity: #{dht.humidity}"
+    temperature = reading.temperature
+    humidity = reading.humidity
 
-    return if result.temperature.nan? && result.humidity.nan?
+    MB_LOGGER.info " -> Temp    : #{sensor.temp}"
+    MB_LOGGER.info " -> Humidity: #{sensor.humidity}"
 
-    temp_dt = DataType.find_by(name: 'temperature')
-    hum_dt  = DataType.find_by(name: 'humidity')
+    # return false if no sensor data available
+    if temperature.nan? && humidity.nan?
+      MB_LOGGER.info ' -> failed    : No sensor data available.'
+      return false
+    end
 
-    # yeah, add data_types to device here if needed
-    data_types << temp_dt unless data_types.include? temp_dt
-    data_types << hum_dt  unless data_types.include? hum_dt
+    create_sample(temperature_type, temperature, 'sensor', 'coral', '°C')
+    create_sample(humidity_type, humidity, 'sensor', 'lightblue', '%')
 
-    Sample.create(
-      device_id: id,
-      product_reference:,
-      data_type_id: temp_dt.id,
-      value: result.temperature,
-      category_name: 'sensor',
-      html_color: 'coral',
-      unit: '°C'
-    )
-
-    Sample.create(
-      device_id: id,
-      product_reference:,
-      data_type_id: hum_dt.id,
-      value: result.humidity,
-      category_name: 'sensor',
-      html_color: 'lightblue',
-      unit: '%'
-    )
+    true
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def state_color
     if off?
@@ -278,4 +249,11 @@ class Device < ApplicationRecord
   def data_types_string
     data_types.map { |e| e.name.titleize }.join(', ')
   end
+
+  private
+
+  def create_sample(data_type, value, category_name, html_color, unit)
+    Sample.create(device: self, product_reference:, data_type:, value:, category_name:, html_color:, unit:)
+  end
 end
+# rubocop:enable Metrics/ClassLength

@@ -6,7 +6,7 @@
         <%= icon "fas", "camera" %>
       <% end %>
       <div class="float-right">
-      	<span class="text-muted">The room is <%= room.is_dark ? "dark" : "lit" %></span>
+        <span class="text-muted">The room is <%= room.dark? ? "dark" : "lit" %></span>
       </div>
     </div>
   </div>
@@ -15,7 +15,7 @@
   <div class="card mb-3">
     <%= image_tag room.observations.last.pictures.first, class: "card-img-top" %>
   </div>
-  
+
   <small class="text-muted"><i><%= fdatetime room.observations.last.pictures.first.created_at %></i></small>
 
   <% end %>

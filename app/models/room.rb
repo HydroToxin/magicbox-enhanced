@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Room
 class Room < ApplicationRecord
   attr_accessor :scenario_id
 
@@ -21,9 +22,8 @@ class Room < ApplicationRecord
   has_many_attached :camshots
 
   def all_events
-    Event.joins("
-			JOIN devices ON (devices.id = events.eventable_id AND events.eventable_type = 'Device' AND devices.room_id = #{id})
-			OR (events.eventable_id = #{id} AND events.eventable_type = 'Room')")
+    Event.where(eventable_type: 'Device', eventable_id: devices)
+         .or(Event.where(eventable_type: 'Room', eventable_id: id))
   end
 
   def active_subjects
@@ -64,31 +64,42 @@ class Room < ApplicationRecord
     w.round(2)
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize
   def kwh_day
-    kwh = 0
+    total_kwh = 0
 
     scenarios.each do |scenario|
       next unless scenario.enabled?
 
-      scenario.condition_groups.each do |group|
-        group.operations.each do |operation|
+      scenario.condition_groups.each do |condition_group|
+        condition_group.operations.each do |operation|
           next unless operation.command == 'start'
 
+          # running_time = calculate_running_time(condition_group)
           running_time = 24
 
-          group.conditions.where(condition_type: :date).each do |condition|
-            running_time = (condition.end_time - condition.start_time).abs / 3600
-          end
+          next unless running_time.positive?
 
-          if running_time.positive?
-            device = devices.where(device_type: operation.device_type).first
-            kwh += running_time * device.watts / 1000 if device
-          end
+          device = devices.find_by(device_type: operation.device_type)
+          total_kwh += running_time * device.watts / 1000 if device
         end
       end
     end
 
-    kwh.round(2)
+    total_kwh.round(2)
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/AbcSize
+
+  private
+
+  def calculate_running_time(condition_group)
+    running_time = 24
+
+    condition_group.conditions.where(condition_type: :date).each do |condition|
+      running_time = (condition.end_time - condition.start_time).abs / 3600
+    end
+
+    running_time
   end
 
   def kwh_month
@@ -138,7 +149,7 @@ class Room < ApplicationRecord
   # 	end
   # end
 
-  def is_dark
+  def dark?
     require 'rmagick'
     active_storage_disk_service = ActiveStorage::Service::DiskService.new(root: "#{Rails.root}/storage/")
     path = active_storage_disk_service.send(:path_for, camshots.last.blob.key)

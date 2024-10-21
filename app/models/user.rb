@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# User
 class User < ApplicationRecord
   acts_as_token_authenticatable
 
