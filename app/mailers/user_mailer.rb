@@ -1,7 +1,10 @@
-class UserMailer < ApplicationMailer
-	helper ApplicationHelper
+# frozen_string_literal: true
 
-	default from: Setting.app_email
+# Mailer for all user related emails
+class UserMailer < ApplicationMailer
+  helper ApplicationHelper
+
+  default from: Setting.app_email
 
   def notification_email
     @user = params[:user]

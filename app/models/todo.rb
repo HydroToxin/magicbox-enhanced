@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Todo
 class Todo < ApplicationRecord
   include ActionView::Helpers::TextHelper
   include ApplicationHelper
@@ -9,13 +12,9 @@ class Todo < ApplicationRecord
 
   default_scope { order('date ASC') }
 
-	enum todo_status: {
-  	:todo		=> 0,
-    :done		=> 1
-  }
+  enum todo_status: { todo: 0, done: 1 }
 
   has_many :notifications, as: :notifiable, dependent: :delete_all
-
 
   def url
     Rails.application.routes.url_helpers.todos_path
@@ -26,15 +25,15 @@ class Todo < ApplicationRecord
   end
 
   def email_subject
-    "#{title}"
+    title.to_s
   end
 
   def notifiable_color
-    "warning"
+    'warning'
   end
 
   def notifiable_icon
-    "clock"
+    'clock'
   end
 
   def notifiable_url
@@ -50,8 +49,9 @@ class Todo < ApplicationRecord
   end
 
   def color
-    return "orange" if self.todo?
-    return "lightgray" if self.done?
+    return 'orange' if todo?
+
+    'lightgray' if done?
   end
 
   def start_date
@@ -62,34 +62,24 @@ class Todo < ApplicationRecord
     date + 1.hour
   end
 
-  def is_late?
-    return if date.nil?
+  def late?
+    return false if date.nil?
 
     date < DateTime.now
   end
 
   def self.notify
-    now   = DateTime.now
-    todos = Todo.where(todo_status: :todo).where('date < ?', now)
-    #todos = todos.where('notified_date IS NULL OR notified_date < ?', now - todo.renotify_every_minute)
-    logger.info todos.count
+    pending_todos = Todo.todo.where('date < ?', DateTime.now)
 
-    todos.each do |todo|
-      logger.info "todo.notified_date : #{todo.notified_date}"
-      logger.info "now - todo.renotify_every_minute : #{now - todo.renotify_every_minute.minutes}"
-      if todo.notified_date == nil or
-         todo.notified_date < (now - todo.renotify_every_minute.minutes)
+    pending_todos.each do |todo|
+      next unless todo.needs_notification?
 
-        if todo.notify_email?
-          Notification.create(
-              user: todo.user,
-              notify_email: todo.notify_email?,
-              notifiable: todo).notify()
-
-          todo.notified_date = now
-          todo.save
-        end
-      end
+      Notification.create(user: todo.user, notify_email: todo.notify_email?, notifiable: todo).notify
+      todo.update(notified_date: todo.date)
     end
+  end
+
+  def needs_notification?
+    notified_date.nil? || notified_date < (date - renotify_every_minute.minutes)
   end
 end

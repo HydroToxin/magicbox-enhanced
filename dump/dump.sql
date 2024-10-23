@@ -24,7 +24,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner:
 --
 
 COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
@@ -1387,7 +1387,7 @@ CREATE TABLE public.users (
     updated_at timestamp without time zone NOT NULL,
     authentication_token character varying(30),
     username character varying,
-    is_admin boolean DEFAULT false
+    admin boolean DEFAULT false
 );
 
 
@@ -1832,7 +1832,7 @@ COPY public.devices (id, device_type, device_state, name, product_reference, des
 4	8	0	Intractor	unknow	Intractor device sucking new air into the room	2024-10-01 10:43:03.98951	2024-10-01 10:43:03.98951	6	0	\N	1	1	f	0	0	0	\N
 5	2	0	Fan	unknow	Fan that moves the air inside the room	2024-10-01 10:43:04.002384	2024-10-01 10:43:04.002384	12	0	\N	1	1	f	0	0	0	\N
 7	3	0	Water	unknow	A pump that manages an auto-catering system	2024-10-01 10:43:04.025095	2024-10-01 10:43:04.025095	25	0	\N	1	1	f	0	0	0	\N
-1	1	2	Temp/hum	dht11	Temperature/humidity sensor (DHT11)	2024-10-01 10:43:03.891313	2024-10-01 15:28:58.166597	0	0	\N	1	1	f	0	0	0	
+1	1	2	Temp/hum	dht11	Temperature/humidity sensor (DHT11)	2024-10-01 10:43:03.891313	2024-10-01 15:28:58.166597	0	0	\N	1	1	f	0	0	0
 6	11	1	Heater	silvershield_pms	Heater used to maintain the right temperature	2024-10-01 10:43:04.013642	2024-10-01 15:37:34.706422	16	0	\N	1	1	f	0	0	0	2
 \.
 
@@ -12132,7 +12132,7 @@ COPY public.todos (todo_status, user_id, date, body, notify_email, created_at, u
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: magicbox
 --
 
-COPY public.users (id, email, encrypted_password, reset_password_token, reset_password_sent_at, remember_created_at, created_at, updated_at, authentication_token, username, is_admin) FROM stdin;
+COPY public.users (id, email, encrypted_password, reset_password_token, reset_password_sent_at, remember_created_at, created_at, updated_at, authentication_token, username, admin) FROM stdin;
 1	admin@example.com	$2a$11$rs9MkE4JCb8vFXQ93BQBfuBBrkBfkhkqEsEuVsb9USJ.eO4au5X6a	\N	\N	2024-10-01 10:43:42.687861	2024-10-01 10:41:39.574095	2024-10-01 10:43:42.691095	5yzsFquEzyMTdbW2MS6M	Admin	t
 \.
 

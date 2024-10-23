@@ -1,103 +1,111 @@
+# frozen_string_literal: true
+
+# Samples Controller
+# ToDo: Refactor Me
 class SamplesController < ApplicationController
-	include SamplesHelper
-	before_action :authenticate_user!
+  include SamplesHelper
+  before_action :authenticate_user!
+  before_action :date_filter
 
-	add_breadcrumb "Statistics"
+  add_breadcrumb 'Statistics'
 
-	def index
-	end
+  def index; end
 
+  def general
+    @data_types_samples = {}
 
-	def general
-		@data_types_samples = {}
+    Sample.unscoped.distinct.where.not(product_reference: 'dht22').pluck(:product_reference).each do |product_reference|
+      data = DataType.all.filter_map do |data_type|
+        samples = filtered_samples(data_type.samples).where(product_reference:).order(created_at: :desc)
+        next unless samples.first
 
-		@date_filter = "today"
-		@date_filter = params[:date_filter] if params[:date_filter]
+        {
+          name: data_type.name,
+          data: samples.map { |e| [fdatetime(e.created_at), e.value] },
+          color: samples.first.html_color
+        }
+      end.compact
 
-		Sample.unscoped.distinct.where.not(product_reference: "dht22").pluck(:product_reference).each do |product_reference|
-			data = DataType.all.map { |data_type|
-				samples = data_type.samples
-				now = Time.zone.now
+      @data_types_samples[product_reference] = data
+    end
+  end
 
-				if @date_filter.to_s == "today"
-					samples = samples.where("samples.created_at": now.beginning_of_day..now.end_of_day)
-				elsif @date_filter.to_s == "last_week"
-					samples = samples.where("samples.created_at": (now-7.days)..now.end_of_day)
-				elsif @date_filter.to_s == "last_month"
-					samples = samples.where("samples.created_at": (now-1.month)..now.end_of_day)
-				elsif @date_filter.to_s == "last_year"
-					samples = samples.where("samples.created_at": (now-12.month)..now.end_of_day)
-				elsif @date_filter.to_s == "all_time"
-					samples = samples
-				else
-					puts "else"
-					samples = samples.where("samples.created_at": now.beginning_of_day..now.end_of_day)
-				end
+  def rooms
+    @data_types_samples = {}
 
-				samples = samples.where(product_reference: product_reference).order(created_at: :desc)
-				{
-					name: data_type.name,
-			    data: samples.map do |e|
-  					[fdatetime(e.created_at), e.value]
-					end,
-			    color: samples.first.html_color
-				} if samples.first
-			}.compact
+    Room.all.each do |room|
+      data_types_samples = DataType.all.filter_map do |data_type|
+        samples = filtered_samples(room.samples.where(data_type_id: data_type.id))
+        next unless samples.first
 
-			@data_types_samples[product_reference] = data
+        {
+          name: data_type.name,
+          data: samples.map { |e| [fdatetime(e.created_at, e.value)] },
+          color: samples.first.html_color
+        }
+      end.compact
 
-		end
-	end
+      @data_types_samples[room.name] = data_types_samples
+    end
+  end
 
+  def harvest
+    @data_types_samples = {}
+    @data_types_samples = %i[
+      harvested_trim_weight harvested_waste_weight harvested_bud_weight dry_bud_weight
+      dry_trim_weight
+    ].map do |k|
+      {
+        name: k.to_s.humanize,
+        data: Harvest.joins(:grow).order(
+          'harvests.created_at ASC'
+        ).group('harvests.created_at', 'grows.description').sum(k)
+      }
+    end
+  end
 
-	def rooms
-		@data_types_samples = {}
+  private
 
-		@date_filter = "today"
-		@date_filter = params[:date_filter] if params[:date_filter]
-		puts "date_filter = #{@date_filter}"
+  def date_filter
+    @date_filter = sample_params[:date_filter] ? sample_params[:date_filter].present? : 'today'
+  end
 
-		Room.all.each do |room|
-			data = DataType.all.map { |data_type|
-				samples = room.samples.where(data_type_id: data_type.id)
-				now = Time.zone.now
+  def filtered_samples(samples)
+    case @date_filter.to_s
+    when 'today'
+      todayk(samples)
+    when 'last_week'
+      last_week(samples)
+    when 'last_month'
+      last_month(samples)
+    when 'last_year'
+      last_year(samples)
+    end
 
-				if @date_filter.to_s == "today"
-					samples = samples.where("samples.created_at": now.beginning_of_day..now.end_of_day)
-				elsif @date_filter.to_s == "last_week"
-					samples = samples.where("samples.created_at": (now-7.days)..now.end_of_day)
-				elsif @date_filter.to_s == "last_month"
-					samples = samples.where("samples.created_at": (now-1.month)..now.end_of_day)
-				elsif @date_filter.to_s == "last_year"
-					samples = samples.where("samples.created_at": (now-12.month)..now.end_of_day)
-				elsif @date_filter.to_s == "all_time"
-					samples = samples
-				else
-					puts "else"
-					samples = samples.where("samples.created_at": now.beginning_of_day..now.end_of_day)
-				end
+    samples.order(created_at: :desc)
+  end
 
-				samples = samples.order(created_at: :desc)
-				puts "DataType = #{data_type.name}"
-				{
-					name: data_type.name,
-			    data: samples.map { |e| [ e.created_at, e.value] },
-			    color: samples.first.html_color
-				} if samples.present?
-			}.compact
-			@data_types_samples[room.name] = data
-		end
-	end
+  def today(samples)
+    now = Time.zone.now
+    samples.where('samples.created_at': (now - 7.days)..now.end_of_day)
+  end
 
+  def last_week(samples)
+    now = Time.zone.now
+    samples.where('samples.created_at': (now - 7.days)..now.end_of_day)
+  end
 
-	def harvest
-		@data_types_samples = {}
+  def last_month(samples)
+    now = Time.zone.now
+    samples.where('samples.created_at': (now - 7.days)..now.end_of_day)
+  end
 
-		@date_filter = "today"
-		@date_filter = params[:date_filter] if params[:date_filter]
+  def last_year(samples)
+    now = Time.zone.now
+    samples.where('samples.created_at': (now - 12.month)..now.end_of_day)
+  end
 
-		@data_types_samples = [:harvested_trim_weight, :harvested_waste_weight, :harvested_bud_weight, :dry_bud_weight, :dry_trim_weight].map { |k|
-		    {name: k.to_s.humanize, data: Harvest.joins(:grow).order("harvests.created_at ASC").group('harvests.created_at', 'grows.description').sum(k)}
-		}
-	end
+  def sample_params
+    params.require(:sample).permit(:product_reference, :data_type_id, :value, :unit, :date_filter)
+  end
 end

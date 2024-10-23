@@ -61,7 +61,7 @@
       <% end %>
     </ul>
 
-    <% if current_user.is_admin? %>
+    <% if current_user.admin? %>
     <ul class="list-unstyled">
       <%= sidebar_item(admin_scenarios_path, "Scenarios") do %>
         <i class="bi-clock h4 ms-1 me-2 pe-1"></i>

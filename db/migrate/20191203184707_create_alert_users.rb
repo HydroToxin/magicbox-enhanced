@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAlertUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :alert_users do |t|

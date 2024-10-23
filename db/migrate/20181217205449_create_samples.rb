@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSamples < ActiveRecord::Migration[5.2]
   disable_ddl_transaction!
   def change
@@ -14,7 +16,6 @@ class CreateSamples < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    add_index :samples, :created_at, :algorithm => :concurrently
-
+    add_index :samples, :created_at, algorithm: :concurrently
   end
 end

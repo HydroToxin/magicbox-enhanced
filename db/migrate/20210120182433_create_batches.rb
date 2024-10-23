@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateBatches < ActiveRecord::Migration[5.2]
   disable_ddl_transaction!
   def change
@@ -13,7 +15,6 @@ class CreateBatches < ActiveRecord::Migration[5.2]
       t.references :harvest, foreign_key: true
 
       t.timestamps
-
     end
   end
 end

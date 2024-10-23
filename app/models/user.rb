@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
+# User
 class User < ApplicationRecord
-	acts_as_token_authenticatable
+  acts_as_token_authenticatable
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
   has_many :alert_users
   has_many :alerts, through: :alert_users
@@ -20,7 +22,7 @@ class User < ApplicationRecord
   end
 
   def unread_notifications_count
-  	notifications.where(read: false).count
+    notifications.where(read: false).count
   end
 
   def mark_notifications_as_read

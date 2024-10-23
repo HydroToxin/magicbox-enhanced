@@ -1,1 +1,3 @@
-json.partial! "observations/observation", observation: @observation
+# frozen_string_literal: true
+
+json.partial! 'observations/observation', observation: @observation

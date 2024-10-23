@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# ApplicationJob
 class ApplicationJob
-	include Sidekiq::Worker
+  include Sidekiq::Worker
 end

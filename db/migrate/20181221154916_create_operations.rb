@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateOperations < ActiveRecord::Migration[5.2]
   def change
     create_table :operations do |t|
@@ -6,7 +8,7 @@ class CreateOperations < ActiveRecord::Migration[5.2]
       t.integer :delay
       t.integer :retries
       t.integer :duration, default: 0
-  	  t.integer :device_type, default: 0
+      t.integer :device_type, default: 0
 
       t.references :condition_group, foreign_key: true
 

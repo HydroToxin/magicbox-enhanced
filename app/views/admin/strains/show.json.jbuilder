@@ -1,1 +1,3 @@
-json.partial! "strains/strain", strain: @strain
+# frozen_string_literal: true
+
+json.partial! 'strains/strain', strain: @strain

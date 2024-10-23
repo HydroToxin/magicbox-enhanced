@@ -1,80 +1,97 @@
+# frozen_string_literal: true
+
 require 'os'
 
+# DashboardHelper
 module DashboardHelper
-	def cpu_temp
-    last = Sample.where(product_reference: "System", data_type_id: DataType.find_by(name: "cpu_temp").id).order(created_at: :desc).limit(1).first
+  def cpu_temp
+    last = Sample.where(product_reference: 'System',
+                        data_type_id: DataType.find_by(name: 'cpu_temp').id).order(created_at: :desc).limit(1).first
     return "#{last.value}#{last.unit}" if last
-    return "0°C"
+
+    '0°C'
   end
 
-
   def cpu_usage
-    last = Sample.where(product_reference: "System", data_type_id: DataType.find_by(name: "cpu_usage").id).order(created_at: :desc).limit(1).first
+    last = Sample.where(product_reference: 'System',
+                        data_type_id: DataType.find_by(name: 'cpu_usage').id).order(created_at: :desc).limit(1).first
     return "#{last.value}#{last.unit}" if last
-    return "0%"
+
+    '0%'
   end
 
   def used_memory
-    last = Sample.where(product_reference: "System", data_type_id: DataType.find_by(name: "memory_used").id).order(created_at: :desc).limit(1).first
+    last = Sample.where(product_reference: 'System',
+                        data_type_id: DataType.find_by(name: 'memory_used').id).order(created_at: :desc).limit(1).first
     return "#{last.value}#{last.unit}" if last
-    return "0 Mb"
+
+    '0 Mb'
   end
 
   def free_memory
-    last = Sample.where(product_reference: "System", data_type_id: DataType.find_by(name: "memory_free").id).order(created_at: :desc).limit(1).first
+    last = Sample.where(product_reference: 'System',
+                        data_type_id: DataType.find_by(name: 'memory_free').id).order(created_at: :desc).limit(1).first
     return "#{last.value}#{last.unit}" if last
-    return "0 Mb"
+
+    '0 Mb'
   end
 
   def voltage
-    last = Sample.where(product_reference: "System", data_type_id: DataType.find_by(name: "cpu_voltage").id).order(created_at: :desc).limit(1).first
+    last = Sample.where(product_reference: 'System',
+                        data_type_id: DataType.find_by(name: 'cpu_voltage').id).order(created_at: :desc).limit(1).first
     return "#{last.value}#{last.unit}" if last
-    return "0V"
-  end
 
+    '0V'
+  end
 
   def system_info
     if OS.mac?
-      "macOS"
+      'macOS'
     else
-      `/usr/bin/lsb_release -d`.split(":")[1].strip
+      `/usr/bin/lsb_release -d`.split(':')[1].strip
     end
   end
 
-
   def hard_info
     if OS.mac?
-      "Apple"
+      'Apple'
     else
       `cat /sys/firmware/devicetree/base/model`
     end
   end
 
-
   def uptime_info
     if OS.mac?
-      "Shitty"
+      'Shitty'
     else
       `uptime -p`
     end
   end
 
-
   def weather_temp
-    last = Sample.where(product_reference: "Openweather2", data_type_id: DataType.find_by(name: "weather_temperature").id).order(created_at: :asc).limit(1).first
+    last = Sample.where(
+      product_reference: 'Openweather2',
+      data_type: DataType.find_by(name: 'weather_temperature')
+    ).order(created_at: :asc).limit(1).first
+
     return "#{last.value}#{last.unit}" if last
-    return "0°C"
+
+    '0°C'
   end
 
   def weather_humidity
-    last = Sample.where(product_reference: "Openweather2", data_type_id: DataType.find_by(name: "weather_humidity").id).order(created_at: :asc).limit(1).first
+    last = Sample.where(
+      product_reference: 'Openweather2',
+      data_type: DataType.find_by(name: 'weather_humidity')
+    ).order(created_at: :asc).limit(1).first
+
     return "#{last.value}#{last.unit}" if last
-    return "0%"
+
+    '0%'
   end
 
-
-  def kwh_cost_estimation(kWh)
-    return (MagicboxEnhanced::Application::KWH_COST * kWh).round(2)
+  def kwh_cost_estimation(kwh)
+    (MagicboxEnhanced::Application::KWH_COST * kwh).round(2)
   end
 
   def total_watts
@@ -88,6 +105,4 @@ module DashboardHelper
   def total_kwh_month
     Room.all.inject(0) { |sum, room| sum + room.kwh_month }.round(2)
   end
-
-
 end

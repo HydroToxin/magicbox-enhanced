@@ -1,8 +1,10 @@
-require_relative "boot"
+# frozen_string_literal: true
 
-require "rails/all"
+require_relative 'boot'
+
+require 'rails/all'
 require 'devise'
-require "sprockets/railtie"
+require 'sprockets/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -16,7 +18,7 @@ module Magicbox
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w(assets tasks))
+    config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -28,8 +30,8 @@ module Magicbox
     config.time_zone = 'Europe/Berlin'
     config.active_record.default_timezone = :local
     config.load_defaults 7.0
-    #config.action_view.preload_links_header = false
-    #config.assets.enabled = true
-    KWH_COST  = 0.17
+    # config.action_view.preload_links_header = false
+    # config.assets.enabled = true
+    KWH_COST = 0.17
   end
 end

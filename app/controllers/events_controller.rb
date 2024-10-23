@@ -1,21 +1,23 @@
+# frozen_string_literal: true
+
+# Events Controller
 class EventsController < ApplicationController
   before_action :authenticate_user!
-  
-  #before_action :set_room, only: [:index, :new, :show, :edit, :update, :destroy]
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+
+  # before_action :set_room, only: [:index, :new, :show, :edit, :update, :destroy]
+  before_action :set_event, only: %i[show edit update destroy]
 
   # GET /events
   # GET /events.json
   def index
     @events = Event.search(params).paginate(page: params[:page], per_page: 100)
 
-    add_breadcrumb "Events"
+    add_breadcrumb 'Events'
   end
 
   # GET /events/1
   # GET /events/1.json
-  def show
-  end
+  def show; end
 
   # GET /events/new
   def new
@@ -23,8 +25,7 @@ class EventsController < ApplicationController
   end
 
   # GET /events/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /events
   # POST /events.json
@@ -67,19 +68,18 @@ class EventsController < ApplicationController
   end
 
   private
-    def set_room
-      @room = Room.find(params[:room_id])
 
-      add_breadcrumb @room.name, [:admin, @room]
-    end
+  def set_room
+    @room = Room.find(params[:room_id])
 
+    add_breadcrumb @room.name, [:admin, @room]
+  end
 
-    def set_event
-      @event = Event.find(params[:id])
-    end
+  def set_event
+    @event = Event.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def event_params
-      params.require(:event).permit(:event_type, :message, :data)
-    end
+  def event_params
+    params.require(:event).permit(:event_type, :message, :data)
+  end
 end

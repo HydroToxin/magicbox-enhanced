@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def format_message(severity, timestamp, progname, msg)
   "#{timestamp.to_formatted_s(:db)} #{severity} #{progname} #{msg}\n"
 end
