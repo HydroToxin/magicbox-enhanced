@@ -69,3 +69,6 @@
 - 8400cde migrate bootstrap4 to bootstrap 5
 - 919b587 WIP on upgrade rails 7.1.4
 - 36f6beb WIP change wordings
+## 2024-10-21
+
+- 8d23b5b further progress rubocop fixes
