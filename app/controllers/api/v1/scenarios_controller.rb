@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # ScenariosController
     class ScenariosController < ApiController
       before_action :set_scenario, only: %i[show edit update destroy]
 
@@ -30,8 +31,9 @@ module Api
       param :limit, :number, desc: 'Limit number of items (default: 100, max: 1000)'
       param :offset, :number, desc: 'Offset of items'
       param :sort_direction, %w[asc desc], desc: 'The sort direction key'
-      param :sort_column,
-            %w[id device_type device_state name pin_number pin_type product_reference description last_start_date created_at updated_at], desc: 'The sort column name'
+      param :sort_column, %w[id device_type device_state name pin_number
+                             pin_type product_reference description last_start_date
+                             created_at updated_at], desc: 'The sort column name'
       def index
         @items = Scenario.all
 
@@ -100,7 +102,7 @@ module Api
         @scenario = Scenario.find(params[:id])
       end
 
-      # Never trust parameters from the scary internet, only allow the white list through.
+      # rubocop:disable Metrics/MethodLength
       def scenario_params
         params.require(:scenario).permit(
           :name,
@@ -119,6 +121,7 @@ module Api
           ]
         )
       end
+      # rubocop:enable Metrics/MethodLength
     end
   end
 end

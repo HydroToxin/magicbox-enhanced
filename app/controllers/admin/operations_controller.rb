@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::OperationsController
   class OperationsController < Admin::AdminController
     before_action :authenticate_user!
     before_action :set_operation, only: %i[show edit update destroy]
@@ -70,7 +71,6 @@ module Admin
       @operation = Operation.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def operation_params
       params.require(:operation).permit(:command, :delay, :retries, :device_id, :description, :condition_id)
     end

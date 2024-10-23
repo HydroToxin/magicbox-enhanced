@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::DataTypesController
   class DataTypesController < Admin::AdminController
     before_action :authenticate_user!
     before_action :set_data_type, only: %i[show edit update destroy]
@@ -78,7 +79,6 @@ module Admin
       @data_type = DataType.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def data_type_params
       params.require(:data_type).permit(:name)
     end

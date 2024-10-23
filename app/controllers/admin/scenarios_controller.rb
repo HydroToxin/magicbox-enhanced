@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::ScenariosController
   class ScenariosController < Admin::AdminController
     before_action :authenticate_user!
     before_action :set_scenario, only: %i[show edit update destroy run export]
 
+    # rubocop:disable Metrics/MethodLength
     def new
       @scenario = Scenario.new
       @condition_group = @scenario.condition_groups.build
@@ -29,6 +31,7 @@ module Admin
         end
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     def update
       process_condition_durations(@scenario)
@@ -77,6 +80,7 @@ module Admin
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     def scenario_params
       params.require(:scenario).permit(
         :enabled,
@@ -119,6 +123,7 @@ module Admin
         ]
       )
     end
+    # rubocop:enable Metrics/MethodLength
 
     def set_scenario
       @scenario = Scenario.find(params[:id])

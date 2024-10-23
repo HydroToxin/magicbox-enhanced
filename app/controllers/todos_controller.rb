@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Todos Controller
 class TodosController < ApplicationController
   before_action :set_todo, only: %i[show edit update destroy done undone]
   add_breadcrumb 'To Do'

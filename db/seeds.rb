@@ -8,7 +8,7 @@ require 'csv'
 
 # create default user
 User.create(username: 'Admin', email: 'admin@example.com', password: 'changeme', password_confirmation: 'changeme',
-            is_admin: true)
+            admin: true)
 
 # parse strains
 strains_csv = Rails.root.join('db', 'samples', 'strains-kushy_api.2017-11-14.csv')

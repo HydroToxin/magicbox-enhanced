@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Batch model
 class Batch < ApplicationRecord
   include ApplicationHelper
 
@@ -24,21 +25,25 @@ class Batch < ApplicationRecord
     errors.add :batch_weight, 'Batch weight exceeds total weight'
   end
 
+  # rubocop:disable Metrics/MethodLength
   def remaining_harvest_weight
     if trim?
-      r = harvest.remaining_weight_for_batch_type(:trim)
-      r += total_weight_was if total_weight_was
+      remaining_harvest_weight = harvest.remaining_weight_for_batch_type(:trim)
+      remaining_harvest_weight += total_weight_was if total_weight_was
       if r < total_weight
         errors.add :total_weight,
-                   "Not enought trim (#{weight_with_unit r}) in harvest to batch #{weight_with_unit total_weight}"
+                   "Not enought trim (#{weight_with_unit remaining_harvest_weight}) " \
+                   "in harvest to batch #{weight_with_unit total_weight}"
       end
     elsif bud?
-      r = harvest.remaining_weight_for_batch_type(:bud)
-      r += total_weight_was if total_weight_was
+      remaining_harvest_weight = harvest.remaining_weight_for_batch_type(:bud)
+      remaining_harvest_weight += total_weight_was if total_weight_was
       if r < total_weight
         errors.add :total_weight,
-                   "Not enought bud (#{weight_with_unit r}) in harvest to batch #{weight_with_unit total_weight}"
+                   "Not enought bud (#{weight_with_unit remaining_harvest_weight}) " \
+                   "in harvest to batch #{weight_with_unit total_weight}"
       end
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

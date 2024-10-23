@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# ConditionGroup
 class ConditionGroup < ApplicationRecord
   belongs_to :scenario
 

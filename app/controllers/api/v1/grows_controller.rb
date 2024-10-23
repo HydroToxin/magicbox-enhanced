@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # GrowsController for the API
     class GrowsController < ApiController
       before_action :set_grow, only: [:show]
 

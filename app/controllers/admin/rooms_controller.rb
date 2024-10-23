@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::RoomsController
   class RoomsController < Admin::AdminController
     before_action :authenticate_user!
     before_action :set_room, only: %i[show edit update destroy]
@@ -83,7 +84,6 @@ module Admin
       @room = Room.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def room_params
       params.require(:room).permit(:name, :room_type, :length, :width, :height, scenario_ids: [])
     end

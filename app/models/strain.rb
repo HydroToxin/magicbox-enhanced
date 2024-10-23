@@ -4,7 +4,7 @@
 class Strain < ApplicationRecord
   enum strain_type: { indica: 0, sativa: 1, hybrid: 2, ruderalis: 3, unknow: 10 }
 
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
   def self.search(params)
     strains = Strain.all
 
@@ -18,5 +18,5 @@ class Strain < ApplicationRecord
 
     strains
   end
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
 end

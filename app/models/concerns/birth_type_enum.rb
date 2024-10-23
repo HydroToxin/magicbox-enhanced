@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# BirthTypeEnum
 module BirthTypeEnum
   extend ActiveSupport::Concern
 

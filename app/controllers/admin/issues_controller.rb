@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::IssuesController
   class IssuesController < Admin::AdminController
     before_action :set_issue, only: %i[show edit update destroy]
 
@@ -27,7 +28,6 @@ module Admin
 
     private
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def rissue_params
       params.require(:resource_data).permit
     end

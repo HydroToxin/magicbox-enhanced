@@ -23,7 +23,7 @@ class Device < ApplicationRecord
     samples.where(data_type:).order(created_at: :desc).limit(1).first
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength,  Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/MethodLength,  Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def start(options = {})
     default_options = { event_type: :action, event: true }
 
@@ -65,7 +65,7 @@ class Device < ApplicationRecord
       false
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def start_power_strip(options)
     if options[:event_type] == :cron
@@ -99,7 +99,7 @@ class Device < ApplicationRecord
     false
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength
   def stop(options = {})
     default_options = { event_type: :action, event: true }
 
@@ -133,7 +133,7 @@ class Device < ApplicationRecord
       false
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength
 
   def query_sensor
     if sensor? && pin_number.positive?
@@ -148,7 +148,7 @@ class Device < ApplicationRecord
     false
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength
   def query_dht22
     require 'dht-sensor-ffi'
 
@@ -181,9 +181,9 @@ class Device < ApplicationRecord
     Rails.logger.error ' -> failed    : MISSING_DATA'
     false
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength
   def query_dht11
     require 'dht11'
 
@@ -224,7 +224,7 @@ class Device < ApplicationRecord
 
     true
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength
 
   def state_color
     if off?

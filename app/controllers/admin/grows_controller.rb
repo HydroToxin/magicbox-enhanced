@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::GrowsController
   class GrowsController < Admin::AdminController
     before_action :authenticate_user!
     before_action :set_grow, only: %i[edit update destroy]
@@ -20,6 +21,7 @@ module Admin
 
     # POST /grows
     # POST /grows.json
+    # rubocop:disable Metrics/MethodLength
     def create
       @grow = Grow.new(grow_params)
 
@@ -51,6 +53,7 @@ module Admin
         end
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     # PATCH/PUT /grows/1
     # PATCH/PUT /grows/1.json
@@ -87,7 +90,7 @@ module Admin
       add_breadcrumb "Grow ##{@grow.id}"
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # rubocop:disable Metrics/MethodLength
     def grow_params
       params.require(:grow).permit(
         :grow_status,
@@ -109,5 +112,6 @@ module Admin
         :number_of_subjects
       )
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

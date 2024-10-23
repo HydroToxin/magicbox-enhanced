@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# DeviceTypeEnum
 module DeviceTypeEnum
   extend ActiveSupport::Concern
 
@@ -18,8 +19,8 @@ module DeviceTypeEnum
       dehumidifier: 10,
       power_strip: 11,
       heater: 12,
-      custom_2: 99,
-      custom_3: 100
+      custom2: 99,
+      custom3: 100
     }
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::UsersController
   class UsersController < Admin::AdminController
     before_action :authenticate_user!
     before_action :set_user
@@ -66,7 +67,7 @@ module Admin
         :id,
         :username,
         :email,
-        :is_admin,
+        :admin,
         :reset_password_token,
         :password,
         :password_confirmation,

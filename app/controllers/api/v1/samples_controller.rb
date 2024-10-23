@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # SamplesController for the API
     class SamplesController < ApiController
       before_action :set_sample, only: %i[show update destroy]
 
@@ -59,7 +60,7 @@ module Api
       api :POST, '/v1/samples', 'Create a new sample'
       param_group :sample
       # param :product_reference, String, desc: "The sensor product ID", required: true
-      # param :data_type_id, :number, desc: "The Data Type ID used to determine the nature of the acquired data", required: true
+      # param :data_type_id, :number, desc: "The Data Type ID used to determine acquired data", required: true
       # param :value, String, desc: "The value of the sample retreived from the sensor", required: true
       # param :unit, String, desc: "The data unit of the sample value", required: false
       def create

@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # DataTypesController for the API
     class DataTypesController < ApiController
       before_action :set_data_type, only: %i[show update destroy]
 
@@ -34,7 +35,6 @@ module Api
         @data_type = DataType.find(params[:id])
       end
 
-      # Only allow a trusted parameter "white list" through.
       def data_type_params
         params.require(:data_type).permit(:name)
       end

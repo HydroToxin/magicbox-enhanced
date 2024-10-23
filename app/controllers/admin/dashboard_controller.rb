@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::DashboardController
   class DashboardController < Admin::AdminController
     before_action :authenticate_user!
 
     add_breadcrumb 'Dashboard'
 
+    # rubocop:disable Metrics/MethodLength
     def gpio
       add_breadcrumb 'GPIO'
 
@@ -55,5 +57,6 @@ module Admin
         '40': { name: 'GPIO21', gpio: 21, plug: nil  	}
       }
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

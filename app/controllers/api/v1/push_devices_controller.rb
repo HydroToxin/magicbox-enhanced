@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # PushDevicesController for the API
     class PushDevicesController < ActionController::API
       before_action :set_user
 

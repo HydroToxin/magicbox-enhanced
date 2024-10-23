@@ -33,7 +33,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       # t.datetime :locked_at
       t.string :authentication_token
       t.string :username
-      t.boolean :is_admin, default: false
+      t.boolean :admin, default: false
       t.uuid :alert_uuid, null: false, default: -> { 'gen_random_uuid()' }
 
       t.timestamps null: false

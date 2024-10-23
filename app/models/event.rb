@@ -40,7 +40,6 @@ class Event < ApplicationRecord
     'lightblue'
   end
 
-  # rubocop:disable Metrics/AbcSize
   def eventable_link
     case eventable_type
     when 'Room'
@@ -57,7 +56,6 @@ class Event < ApplicationRecord
       # helpers.link_to(eventable.id, [:admin, eventable])
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   def url_helpers
     Rails.application.routes.url_helpers
@@ -67,7 +65,6 @@ class Event < ApplicationRecord
     ActionController::Base.helpers
   end
 
-  # rubocop:disable Metrics/AbcSize
   def self.search(params)
     scope = Event.all
 
@@ -79,7 +76,6 @@ class Event < ApplicationRecord
 
     scope
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
 

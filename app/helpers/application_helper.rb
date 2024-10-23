@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# ApplicationHelper
+# rubocop:disable Metrics/ModuleLength
 module ApplicationHelper
   def product_references
     {
@@ -44,6 +46,7 @@ module ApplicationHelper
     "#{amount || 0}#{Setting.units_currency}"
   end
 
+  # rubocop:disable Metrics/MethodLength
   def sidebar_item(path, text, options = {}, &block)
     raise ArgumentError, 'Options must be a Hash' unless options.is_a?(Hash)
 
@@ -72,27 +75,15 @@ module ApplicationHelper
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
-  def icon(i, c = nil, style = nil)
-    "<i class='bi-#{i} #{style}'>#{c}</i>".html_safe
+  # @param style [String, nil] optional CSS classes to style the icon element.
+  # @return [ActiveSupport::SafeBuffer] the HTML safe string for the icon element.
+  def icon(icon_name, text = nil, style = nil)
+    "<i class='bi-#{icon_name} #{style}'>#{text}</i>".html_safe
   end
 
-  def issue_icon(issue)
-    arrow = if issue.excess?
-              '-up'
-            else
-              '-down'
-            end
-
-    if issue.level1?
-      icon('bi', "arrow#{arrow}")
-    elsif issue.level2?
-      "#{icon('bi', "arrow#{arrow}")} #{icon('bi', "arrow#{arrow}")}"
-    elsif issue.level3?
-      "#{icon('bi', "arrow#{arrow}")} #{icon('bi', "arrow#{arrow}")} #{icon('bi', "arrow#{arrow}")}"
-    end
-  end
-
+  # rubocop:disable Metrics/MethodLength
   def time_zones
     [['Africa/Algiers', 'West Central Africa'],
      ['Africa/Cairo', 'Cairo'],
@@ -223,4 +214,22 @@ module ApplicationHelper
      ['Pacific/Port_Moresby', 'Port Moresby'],
      ['Pacific/Tongatapu', "Nuku'alofa"]]
   end
+  # rubocop:enable Metrics/MethodLength
+
+  def issue_icon(issue)
+    arrow = if issue.excess?
+              '-up'
+            else
+              '-down'
+            end
+
+    if issue.level1?
+      icon('bi', "arrow#{arrow}")
+    elsif issue.level2?
+      "#{icon('bi', "arrow#{arrow}")} #{icon('bi', "arrow#{arrow}")}"
+    elsif issue.level3?
+      "#{icon('bi', "arrow#{arrow}")} #{icon('bi', "arrow#{arrow}")} #{icon('bi', "arrow#{arrow}")}"
+    end
+  end
 end
+# rubocop:enable Metrics/ModuleLength

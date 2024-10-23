@@ -2,12 +2,14 @@
 
 module Api
   module V1
+    # DevicesController for the API
     class DevicesController < ApiController
       before_action :set_device, only: %i[show update destroy start stop]
 
       resource_description do
         short 'Active devices managed by MagixBox'
-        description 'Devices regroups all the active modules that interact with the MagicBox environment such as sensors, fans, pumps, etc.'
+        description 'Devices regroups all the active modules that
+                     can interact with the MagicBox environment such as sensors, fans, pumps, etc.'
         meta 'Device' => %w[id device_type device_state pin_number pin_type name product_reference
                             description last_start_date created_at updated_at]
         formats ['json']
@@ -20,7 +22,8 @@ module Api
       param :offset, :number, desc: 'Offset of devices'
       param :sort_direction, %w[asc desc], desc: 'The sort direction key'
       param :sort_column,
-            %w[id device_type device_state name pin_number pin_type product_reference description last_start_date created_at updated_at], desc: 'The sort column name'
+            %w[id device_type device_state name pin_number pin_type product_reference
+               description last_start_date created_at updated_at], desc: 'The sort column name'
       def index
         @devices = Device.all
 
@@ -75,7 +78,8 @@ module Api
       api :POST, '/v1/devices/:id/start', 'Start a device'
       def start
         if @device.off?
-          # result = `python scripts/arduino.py COMMAND:DIGITAL_WRITE:#{@device.pin_number}:1:#{@device.default_duration}`
+          # result = `python scripts/arduino.py
+          # COMMAND:DIGITAL_WRITE:#{@device.pin_number}:1:#{@device.default_duration}`
           # response = JSON.parse(result)
           # puts response
 
@@ -92,7 +96,8 @@ module Api
       api :POST, '/v1/devices/:id/stop', 'Stop a device'
       def stop
         if @device.on?
-          # result = `python scripts/arduino.py COMMAND:DIGITAL_WRITE:#{@device.pin_number}:0:#{@device.default_duration}`
+          # result = `python scripts/arduino.py
+          # COMMAND:DIGITAL_WRITE:#{@device.pin_number}:0:#{@device.default_duration}`
           # puts result
 
           # @device.device_state = :off
@@ -113,7 +118,6 @@ module Api
         @device = Device.find(params[:id])
       end
 
-      # Only allow a trusted parameter "white list" through.
       def device_params
         params.require(:device).permit(:device_type, :device_state, :pin_number, :default_duration, :pin_type, :name,
                                        :product_reference, :description, :last_start_date)

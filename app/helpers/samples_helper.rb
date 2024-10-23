@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# SamplesHelper
 module SamplesHelper
   def build_samples_path(target, filter)
     case target

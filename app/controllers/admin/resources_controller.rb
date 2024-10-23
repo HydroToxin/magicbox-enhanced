@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::ResourcesController
   class ResourcesController < Admin::AdminController
     before_action :set_resource, only: %i[show edit update destroy]
 
@@ -93,7 +94,6 @@ module Admin
       @resource = Resource.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def resource_params
       params.require(:resource).permit(:name, :shortname, :description, :category_id, choices: [], units: [])
     end

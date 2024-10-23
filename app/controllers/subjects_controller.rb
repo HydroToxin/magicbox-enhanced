@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# SubjectsController
 class SubjectsController < ApplicationController
   before_action :authenticate_user!
 

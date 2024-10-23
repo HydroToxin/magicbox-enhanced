@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::SettingsController
   class SettingsController < ApplicationController
     add_breadcrumb 'Settings'
 
@@ -17,6 +18,7 @@ module Admin
 
     private
 
+    # rubocop:disable Metrics/MethodLength
     def setting_params
       params.require(:setting).permit(
         :app_email,
@@ -37,5 +39,6 @@ module Admin
         :units_currency
       )
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

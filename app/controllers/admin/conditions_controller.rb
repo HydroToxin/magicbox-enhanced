@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::ConditionsController
   class ConditionsController < ApplicationController
     def new
       @condition_group = ConditionGroup.find(params[:condition_group_id])

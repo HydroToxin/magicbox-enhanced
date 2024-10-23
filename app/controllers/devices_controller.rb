@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Devices Controller
 class DevicesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_room, only: %i[index show query]
@@ -36,9 +37,9 @@ class DevicesController < ApplicationController
     add_breadcrumb @device.name, [@room, @device]
   end
 
-  # Only allow a trusted parameter "white list" through.
   def device_params
     params.require(:device).permit(:room_id, :device_type, :device_state, :pin_number, :pin_type, :default_duration,
-                                   :name, :product_reference, :description, :last_start_date, :use_duration, :watts, :volts, :amperes, :custom_identifier, :product_type)
+                                   :name, :product_reference, :description, :last_start_date, :use_duration, :watts,
+                                   :volts, :amperes, :custom_identifier, :product_type)
   end
 end

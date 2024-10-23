@@ -64,7 +64,7 @@ class Room < ApplicationRecord
     w.round(2)
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
   def kwh_day
     total_kwh = 0
 
@@ -88,7 +88,7 @@ class Room < ApplicationRecord
 
     total_kwh.round(2)
   end
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   private
 

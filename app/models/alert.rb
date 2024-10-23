@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Alert Model
 class Alert < ApplicationRecord
   include ActionView::Helpers::TextHelper
 
@@ -73,6 +74,7 @@ class Alert < ApplicationRecord
     MB_LOGGER.info('# End Trigger Alerts ##############')
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/CyclomaticComplexity
   def trigger
     return unless enabled?
 
@@ -85,23 +87,23 @@ class Alert < ApplicationRecord
 
       case operator.to_sym
       when :equal
-        triggered = last_sample.value.to_f == value
-        "#{last_sample.value.to_f} equal #{value}"
+        triggered = last_sample.value.to_d == value.to_d
+        "#{last_sample.value.to_d} equal #{value.to_d}"
       when :not_equal
-        triggered = last_sample.value.to_f != value
-        "#{last_sample.value.to_f} not_equal #{value}"
+        triggered = last_sample.value.to_d != value.to_d
+        "#{last_sample.value.to_d} not_equal #{value.to_d}"
       when :lesser
-        triggered = last_sample.value.to_f < value
-        "#{last_sample.value.to_f} lesser #{value}"
+        triggered = last_sample.value.to_d < value.to_d
+        "#{last_sample.value.to_d} lesser #{value.to_d}"
       when :greater
-        triggered = last_sample.value.to_f > value
-        "#{last_sample.value.to_f} greater #{value}"
+        triggered = last_sample.value.to_d > value.to_d
+        "#{last_sample.value.to_d} greater #{value.to_d}"
       when :lesser_or_equal
-        triggered = last_sample.value.to_f <= value
-        "#{last_sample.value.to_f} lesser_or_equal #{value}"
+        triggered = last_sample.value.to_d <= value.to_d
+        "#{last_sample.value.to_d} lesser_or_equal #{value.to_d}"
       when :greater_or_equal
-        triggered = last_sample.value.to_f >= value
-        "#{last_sample.value.to_f} greater_or_equal #{value}"
+        triggered = last_sample.value.to_d >= value.to_d
+        "#{last_sample.value.to_d} greater_or_equal #{value.to_d}"
         # when :like
         #   triggered = false
         #   info = "false"
@@ -132,6 +134,7 @@ class Alert < ApplicationRecord
       last_data = ResourceData.where(resource_id: resource.id).order('created_at').last
       context_object = last_data.observation
     end
+    # rubocop:enable Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/CyclomaticComplexity
 
     return unless triggered
 

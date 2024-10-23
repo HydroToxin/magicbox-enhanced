@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # ContextController for the API
     class ContextController < ApiController
       resource_description do
         short 'Context of the app'

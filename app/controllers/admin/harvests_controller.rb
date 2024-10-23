@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::HarvestsController
   class HarvestsController < Admin::AdminController
     before_action :set_harvest, only: %i[show edit update destroy]
     before_action :set_grow, only: %i[new create show edit update destroy]

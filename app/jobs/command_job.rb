@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# CommandJob
 class CommandJob < ApplicationJob
   def perform(device_id, command, event_type = :cron)
     @device = Device.find(device_id)

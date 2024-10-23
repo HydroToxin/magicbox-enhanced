@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # SubjectsController for the API
     class SubjectsController < ApiController
       before_action :set_subject, only: %i[show edit update destroy]
 
@@ -102,7 +103,6 @@ module Api
         @subject = Subject.find(params[:id])
       end
 
-      # Never trust parameters from the scary internet, only allow the white list through.
       def subject_params
         params.require(:subject).permit(:name)
       end

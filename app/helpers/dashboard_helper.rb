@@ -2,6 +2,7 @@
 
 require 'os'
 
+# DashboardHelper
 module DashboardHelper
   def cpu_temp
     last = Sample.where(product_reference: 'System',
@@ -68,23 +69,29 @@ module DashboardHelper
   end
 
   def weather_temp
-    last = Sample.where(product_reference: 'Openweather2',
-                        data_type_id: DataType.find_by(name: 'weather_temperature').id).order(created_at: :asc).limit(1).first
+    last = Sample.where(
+      product_reference: 'Openweather2',
+      data_type: DataType.find_by(name: 'weather_temperature')
+    ).order(created_at: :asc).limit(1).first
+
     return "#{last.value}#{last.unit}" if last
 
     '0°C'
   end
 
   def weather_humidity
-    last = Sample.where(product_reference: 'Openweather2',
-                        data_type_id: DataType.find_by(name: 'weather_humidity').id).order(created_at: :asc).limit(1).first
+    last = Sample.where(
+      product_reference: 'Openweather2',
+      data_type: DataType.find_by(name: 'weather_humidity')
+    ).order(created_at: :asc).limit(1).first
+
     return "#{last.value}#{last.unit}" if last
 
     '0%'
   end
 
-  def kwh_cost_estimation(kWh)
-    (MagicboxEnhanced::Application::KWH_COST * kWh).round(2)
+  def kwh_cost_estimation(kwh)
+    (MagicboxEnhanced::Application::KWH_COST * kwh).round(2)
   end
 
   def total_watts

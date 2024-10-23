@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Calendar Controller
 class CalendarController < ApplicationController
   add_breadcrumb 'Calendar'
 

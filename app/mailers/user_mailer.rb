@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Mailer for all user related emails
 class UserMailer < ApplicationMailer
   helper ApplicationHelper
 

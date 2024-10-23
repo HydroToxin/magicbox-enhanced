@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # EventsController for the API
     class EventsController < ApiController
       def index
         @events = Event.all

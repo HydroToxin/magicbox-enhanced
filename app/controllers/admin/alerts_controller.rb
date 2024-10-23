@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::AlertsController
   class AlertsController < Admin::AdminController
     before_action :set_alert, only: %i[show edit update destroy test clear trigger]
 
@@ -83,7 +84,6 @@ module Admin
       @alert = Alert.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def alert_params
       params.require(:alert).permit(
         :alert_type,

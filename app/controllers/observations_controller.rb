@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# ObservationsController
 class ObservationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_grow, only: %i[index new show edit create update destroy]
@@ -40,6 +41,7 @@ class ObservationsController < ApplicationController
 
   # POST /observations
   # POST /observations.json
+  # rubocop:disable Metrics/MethodLength
   def create
     @observation = Observation.new(observation_params)
 
@@ -64,6 +66,7 @@ class ObservationsController < ApplicationController
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   # PATCH/PUT /observations/1
   # PATCH/PUT /observations/1.json
@@ -119,7 +122,7 @@ class ObservationsController < ApplicationController
     @observation = Observation.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # rubocop:disable Metrics/MethodLength
   def observation_params
     params.require(:observation).permit(
       :user_id,
@@ -152,4 +155,5 @@ class ObservationsController < ApplicationController
       ]
     )
   end
+  # rubocop:enable Metrics/MethodLength
 end

@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # RoomsController for the API
     class RoomsController < ApiController
       before_action :set_room, only: [:show]
 

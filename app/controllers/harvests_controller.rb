@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# HarvestsController
 class HarvestsController < ApplicationController
   before_action :set_grow, only: [:index]
   before_action :set_harvest, only: [:index]

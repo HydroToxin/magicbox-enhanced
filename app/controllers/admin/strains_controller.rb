@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::StrainsController
   class StrainsController < Admin::AdminController
     before_action :set_strain, only: %i[show edit update destroy]
 

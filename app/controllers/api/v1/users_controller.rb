@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # UsersController for the API
     class UsersController < ApiController
       def index
         if params.key? :email

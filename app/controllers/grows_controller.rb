@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# GrowsController
 class GrowsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_grow, only: %i[show print_qr]
@@ -39,7 +40,6 @@ class GrowsController < ApplicationController
     add_breadcrumb "Grow ##{@grow.id}"
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def grow_params
     params.require(:grow).permit(
       :grow_status,

@@ -27,7 +27,7 @@ class Scenario < ApplicationRecord
     end
   end
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def run(room)
     return MB_LOGGER.info "Scenario #{name} skipped: disabled" unless enabled
 
@@ -50,7 +50,7 @@ class Scenario < ApplicationRecord
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def self.run_scenarios
     MB_LOGGER.info '########################'

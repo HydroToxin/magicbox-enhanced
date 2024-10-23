@@ -430,7 +430,7 @@ ActiveRecord::Schema[7.1].define(version: 20_241_005_001_758) do
     t.datetime 'remember_created_at', precision: nil
     t.string 'authentication_token'
     t.string 'username'
-    t.boolean 'is_admin', default: false
+    t.boolean 'admin', default: false
     t.uuid 'alert_uuid', default: -> { 'gen_random_uuid()' }, null: false
     t.datetime 'created_at', precision: nil, null: false
     t.datetime 'updated_at', precision: nil, null: false

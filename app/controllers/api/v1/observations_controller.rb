@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # ObservationsController for the API
     class ObservationsController < ApiController
       before_action :set_observation, only: [:update]
 
@@ -68,6 +69,7 @@ module Api
         @observation = Observation.find(params[:id])
       end
 
+      # rubocop:disable Metrics/MethodLength
       def observation_params
         params.require(:observation).permit(
           :user_id,
@@ -101,6 +103,7 @@ module Api
           ]
         )
       end
+      # rubocop:enable Metrics/MethodLength
     end
   end
 end

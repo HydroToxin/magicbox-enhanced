@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # ConditionsController for the API
     class ConditionsController < ApiController
       before_action :set_condition, only: %i[show edit update destroy]
 
@@ -72,7 +73,6 @@ module Api
         @condition = Condition.find(params[:id])
       end
 
-      # Never trust parameters from the scary internet, only allow the white list through.
       def condition_params
         params.require(:condition).permit(:name, :data_type_id, :predicate, :target_value, :start_time, :end_time)
       end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::BatchesController
   class BatchesController < Admin::AdminController
     before_action :set_batch, only: %i[show edit update destroy]
     before_action :set_grow, only: %i[show edit update destroy]
@@ -74,7 +75,6 @@ module Admin
       @batch = Batch.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def batch_params
       params.require(:batch).permit(
         :grow_id,

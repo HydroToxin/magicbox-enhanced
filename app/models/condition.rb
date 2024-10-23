@@ -2,6 +2,7 @@
 
 require 'dotiw'
 
+# Condition
 class Condition < ApplicationRecord
   include ApplicationHelper
   include ActionView::Helpers::DateHelper
@@ -34,18 +35,19 @@ class Condition < ApplicationRecord
     end
   end
 
-  def self.condition_type_text(c)
-    return 'Time Range' if c == :date
+  def self.condition_type_text(text)
+    return 'Time Range' if text == :date
 
     c.to_s.titleize
   end
 
-  def self.logic_text(l)
-    return 'AND' if l == :and_operator
+  def self.logic_text(text)
+    return 'AND' if text == :and_operator
 
     'OR'
   end
 
+  # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def check_condition(room)
     if date?
       now = Time.now
@@ -65,15 +67,16 @@ class Condition < ApplicationRecord
       end
     elsif data_type?
       return true if check_data_type_for_room(room)
-
     end
 
     false
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def condition_text
     if date?
-      return "<b>current time (#{ftime(Time.now)})</b> is between <b>#{ftime(start_time)}</b> and <b>#{ftime(end_time)}</b>"
+      return "<b>current time (#{ftime(Time.now)})</b> is between <b>#{ftime(start_time)}" \
+             "</b> and <b>#{ftime(end_time)}</b>"
     elsif data_type?
       return "<b>#{data_type.name}</b> is <b>#{[['>=', 0], ['<=', 1]][predicate].first}</b> to <b>#{target_value}</b>"
     elsif time_duration?
@@ -101,7 +104,7 @@ class Condition < ApplicationRecord
     false
   end
 
-  def is_yesterday(now)
+  def yesterday?(now)
     return false if start_time.hour < end_time.hour
 
     return true if now.hour < end_time.hour
@@ -113,13 +116,10 @@ class Condition < ApplicationRecord
     false
   end
 
-  def is_tomorrow
+  def tomorrow?
     return true if start_time.hour > end_time.hour
-
     return false if start_time.hour < end_time.hour
-
     return true if start_time.min > end_time.min
-
     return false if start_time.min < end_time.min
 
     true
@@ -127,17 +127,16 @@ class Condition < ApplicationRecord
 
   def cron_between_is_valid(now)
     return true if !start_time || !end_time
-
     return true if start_time == end_time
 
     start_date  = now.change({ hour: start_time.hour, min: start_time.min, sec: start_time.sec })
     end_date    = now.change({ hour: end_time.hour, min: end_time.min, sec: end_time.sec })
 
-    start_is_yesterday = is_yesterday(now)
+    start_is_yesterday = yesterday?(now)
 
     if start_is_yesterday
       start_date -= 1.day
-    elsif is_tomorrow
+    elsif tomorrow?
       end_date += 1.day
     end
 
@@ -152,7 +151,7 @@ class Condition < ApplicationRecord
     true
   end
 
-  def has_valid_period(now)
+  def valid_period?(now)
     # return true if !last_exec_time
 
     # logger.info last_exec_time

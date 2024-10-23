@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Notifications controller
 class NotificationsController < ApplicationController
   before_action :authenticate_user!
 

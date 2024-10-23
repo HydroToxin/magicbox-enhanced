@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# BatchesController
 class BatchesController < ApplicationController
   before_action :set_batch, only: %i[show edit update destroy]
 

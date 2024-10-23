@@ -61,7 +61,7 @@ gem 'will_paginate-bootstrap4'
 # gem 'hardware_information'
 # gem 'open-weather'
 
-install_if -> { RUBY_PLATFORM =~ /linux/ } do
+install_if -> { RUBY_PLATFORM.include?(linux) } do
   gem 'dht11'
   gem 'dht-sensor-ffi'
   gem 'rpi-dht'

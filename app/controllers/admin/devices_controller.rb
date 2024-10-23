@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::DevicesController
   class DevicesController < Admin::AdminController
     before_action :authenticate_user!
     before_action :set_room, only: %i[new show edit create update destroy start stop samples query]
@@ -37,8 +38,6 @@ module Admin
     end
 
     def edit; end
-
-    def destroy; end
 
     # POST /devices
     def create
@@ -105,10 +104,10 @@ module Admin
       add_breadcrumb @device.name, [:admin, @room, @device]
     end
 
-    # Only allow a trusted parameter "white list" through.
     def device_params
       params.require(:device).permit(:room_id, :device_type, :device_state, :pin_number, :pin_type, :default_duration,
-                                     :name, :product_reference, :description, :last_start_date, :use_duration, :watts, :volts, :amperes, :custom_identifier, :product_type)
+                                     :name, :product_reference, :description, :last_start_date, :use_duration,
+                                     :watts, :volts, :amperes, :custom_identifier, :product_type)
     end
   end
 end

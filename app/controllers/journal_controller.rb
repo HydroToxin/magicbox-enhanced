@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Journal Controller
 class JournalController < ApplicationController
   add_breadcrumb 'Journal'
 

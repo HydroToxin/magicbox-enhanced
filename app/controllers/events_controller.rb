@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Events Controller
 class EventsController < ApplicationController
   before_action :authenticate_user!
 
@@ -78,7 +79,6 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def event_params
     params.require(:event).permit(:event_type, :message, :data)
   end

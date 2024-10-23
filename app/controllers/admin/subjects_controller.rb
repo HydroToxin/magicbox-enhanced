@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin::SubjectsController
   class SubjectsController < Admin::AdminController
     before_action :authenticate_user!
 
