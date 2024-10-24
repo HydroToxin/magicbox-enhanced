@@ -1,0 +1,31 @@
+<%= form_with(model: condition_group, local: true) do |form| %>
+  <% if condition_group.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(condition_group.errors.count, "error") %> prohibited this condition from being saved:</h2>
+      <ul>
+        <% condition_group.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :enabled, class: 'form-label' %>
+    <%= form.check_box :data_type_id, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :scenario, class: 'form-label' %>
+    <%= form.select :scenario_id, options_from_collection_for_select(Scenario.all, "id", "name", form.object.id), { include_blank: 'None' }, class: "form-select", data: { style: "btn-white", live_search: true, size: 10, title: "None" }, id: "grow-select" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

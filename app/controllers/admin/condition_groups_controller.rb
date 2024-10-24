@@ -7,8 +7,8 @@ module Admin
       @condition_group = ConditionGroup.new
 
       respond_to do |format|
-        format.html # falls du eine volle Seitenantwort benötigst
-        format.turbo_stream # Bereite Turbo Stream Antwort vor
+        format.html
+        format.turbo_stream
       end
     end
 

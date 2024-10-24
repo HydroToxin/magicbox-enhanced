@@ -37,6 +37,7 @@ class Alert < ApplicationRecord
 
   validates :value, presence: true
   validates :message, presence: true
+  validates :alert_type, presence: true
 
   def title
     'Alert'

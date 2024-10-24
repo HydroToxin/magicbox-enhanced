@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Notification
+# Notification Model
 class Notification < ApplicationRecord
   default_scope { order(created_at: :desc) }
 

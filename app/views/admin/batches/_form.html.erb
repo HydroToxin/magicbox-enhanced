@@ -37,7 +37,7 @@
   </div>
   <div class="form-group">
     <%= form.label :harvest %>
-    <%= form.select :harvest_id, options_from_collection_for_select(Harvest.all, "id", "description", form.object.id), { include_blank: 'None' }, class: "form-select", data: { style: "btn-white", live_search: true, size: 10, title: "None" }, id: "grow-select" %>
+    <%= form.select :harvest_id, options_from_collection_for_select(Harvest.all, "id", "name", form.object.id), { include_blank: 'None' }, class: "form-select", data: { style: "btn-white", live_search: true, size: 10, title: "None" }, id: "grow-select" %>
   </div>
 
   <hr>

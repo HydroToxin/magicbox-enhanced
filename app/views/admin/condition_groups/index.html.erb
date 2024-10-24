@@ -1,0 +1,28 @@
+<h1>Condition Groupss</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Enabled</th>
+      <th>Scenario</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @condition_groups.each do |condition_group| %>
+      <tr>
+        <td><%= condition_group.name %></td>
+        <td><%= condition_group.enabled %></td>
+        <td><%= condition_group.scenario.name %></td>
+        <td><%= link_to 'Show', condition_group %></td>
+        <td><%= link_to 'Edit', edit_condition_group_path(condition_group) %></td>
+        <td><%= button_to 'Destroy', condition_group, method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Condition', new_condition_group_path %>

@@ -112,8 +112,9 @@ Rails.application.routes.draw do
     resources :devices, only: [:index]
     resources :strains
     resources :data_types
-    resources :batches, except: %i[edit update]
-    resources :harvests, only: %i[index new]
+    resources :batches
+
+    resources :harvests
 
     resources :scenarios do
       resources :condition_groups, only: %i[new create destroy] do

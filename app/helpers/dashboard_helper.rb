@@ -91,7 +91,7 @@ module DashboardHelper
   end
 
   def kwh_cost_estimation(kwh)
-    (MagicboxEnhanced::Application::KWH_COST * kwh).round(2)
+    (Magicbox::Application::KWH_COST * kwh).round(2)
   end
 
   def total_watts

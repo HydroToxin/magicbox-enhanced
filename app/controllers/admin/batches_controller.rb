@@ -4,9 +4,8 @@ module Admin
   # Admin::BatchesController
   class BatchesController < Admin::AdminController
     before_action :set_batch, only: %i[show edit update destroy]
-    before_action :set_grow, only: %i[show edit update destroy]
-    # before_action :set_harvest, only: [:show, :edit, :update, :destroy]
 
+    def index; end
     def show; end
 
     # GET /batches/new
@@ -25,7 +24,7 @@ module Admin
 
       respond_to do |format|
         if @batch.save
-          format.html { redirect_to [@grow, @harvest], notice: 'Batch was successfully created.' }
+          format.html { redirect_to [@batch.grow, @batch.harvest], notice: 'Batch was successfully created.' }
           format.json { render :show, status: :created, location: @batch }
         else
           format.html { render :new }
@@ -39,7 +38,7 @@ module Admin
     def update
       respond_to do |format|
         if @batch.update(batch_params)
-          format.html { redirect_to [@grow, @harvest], notice: 'Batch was successfully updated.' }
+          format.html { redirect_to [@batch.grow, @batch.harvest], notice: 'Batch was successfully updated.' }
           format.json { render :show, status: :ok, location: @batch }
         else
           format.html { render :edit }
@@ -53,22 +52,12 @@ module Admin
     def destroy
       @batch.destroy
       respond_to do |format|
-        format.html { redirect_to [@grow, @harvest], notice: 'Batch was successfully destroyed.' }
+        format.html { redirect_to [@batch.grow, @batch.harvest], notice: 'Batch was successfully destroyed.' }
         format.json { head :no_content }
       end
     end
 
     private
-
-    def set_grow
-      @grow = Grow.find(params[:grow_id])
-      add_breadcrumb "Grow ##{@grow.id}"
-    end
-
-    def set_harvest
-      @harvest = Harvest.find(params[:harvest_id])
-      add_breadcrumb 'Harvest'
-    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_batch

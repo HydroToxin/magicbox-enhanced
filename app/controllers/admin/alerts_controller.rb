@@ -68,13 +68,21 @@ module Admin
     def test
       @alert.test_alert
 
-      redirect_to request.referrer, notice: 'Alert was successfully tested.'
+      if request.referrer.present?
+        redirect_to request.referrer, notice: 'Alert was successfully tested.'
+      else
+        redirect_to admin_alerts_url, notice: 'Alert was successfully tested.'
+      end
     end
 
     def trigger
       @alert.trigger
 
-      redirect_to request.referrer, notice: 'Alert was successfully triggered.'
+      if request.referrer.present?
+        redirect_to request.referrer, notice: 'Alert was successfully tested.'
+      else
+        redirect_to admin_alerts_url, notice: 'Alert was successfully tested.'
+      end
     end
 
     private

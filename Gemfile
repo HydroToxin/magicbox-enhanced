@@ -61,7 +61,7 @@ gem 'will_paginate-bootstrap4'
 # gem 'hardware_information'
 # gem 'open-weather'
 
-install_if -> { RUBY_PLATFORM.include?(linux) } do
+install_if -> { RUBY_PLATFORM.include?('linux') } do
   gem 'dht11'
   gem 'dht-sensor-ffi'
   gem 'rpi-dht'
@@ -78,15 +78,21 @@ group :development, :test do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
-  gem 'spring'
-  gem 'spring-watcher-listen'
+
+  gem 'byebug', platform: :mri
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'database_cleaner'
+  gem 'pry-byebug'
+  gem 'pry-rails'
+  gem 'faker'
+  gem 'rails-controller-testing'
 end
 
 group :development do
-  gem 'pry-byebug'
-  gem 'pry-rails'
   gem 'web-console'
-  # gem "spring"
+  gem 'spring'
+  gem 'spring-watcher-listen'
 end
 
 group :test do
