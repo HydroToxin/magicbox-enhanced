@@ -14,7 +14,7 @@ User.create(username: 'Admin', email: 'admin@example.com', password: 'changeme',
 strains_csv = Rails.root.join('db', 'samples', 'strains-kushy_api.2017-11-14.csv')
 CSV.parse(File.new(strains_csv), col_sep: ',', headers: false) do |row|
   Strain.create!(
-    name: row[3] && (row[3] != 'NULL') ? row[3] : nil,
+    name: (row[3].present? ? row[3] : 'Unknown'),
     description: row[6] && (row[6] != 'NULL') ? row[6] : nil,
     strain_type: row[7] && (row[7] != 'type') ? row[7].downcase.to_sym : nil,
     crosses: row[8] && (row[8] != 'NULL') ? row[8] : nil,
@@ -167,7 +167,7 @@ watering_scenario = Scenario.import('db/samples/Watering.json', 'Watering')
 r.scenarios << [growing_scenario, climat_scenario, watering_scenario]
 r.save!
 
-Grow.create! description: 'Test', start_date: Time.now, flowering: 1, grow_status: :seedling
+Grow.create! description: 'Test', start_date: Time.now, flowering: 1, grow_status: :seedling, birth_type: 'from_seed'
 Observation.create! user: User.first, grow: Grow.first, body: 'Observation Test', water: true, nutrients: 10, room: r
 
 s = Sample.create(

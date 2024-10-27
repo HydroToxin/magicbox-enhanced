@@ -59,8 +59,6 @@ module Admin
     def update
       respond_to do |format|
         if @resource.update(resource_params)
-          @resource.choices = resource_params[:choices][0].split(', ')
-          @resource.units = resource_params[:units][0].split(', ')
           @resource.save
 
           format.html do

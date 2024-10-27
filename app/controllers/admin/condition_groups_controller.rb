@@ -2,26 +2,25 @@
 
 module Admin
   # Admin::ConditionGroupsController
-  class ConditionGroupsController < ApplicationController
+  class ConditionGroupsController < Admin::AdminController
     def new
       @condition_group = ConditionGroup.new
-
-      respond_to do |format|
-        format.html
-        format.turbo_stream
-      end
     end
 
     def create
-      @scenario = Scenario.find(params[:scenario_id])
-      @condition_group = @scenario.condition_groups.build(condition_group_params)
+      @condition_group = ConditionGroup.build(condition_group_params)
       if @condition_group.save
         respond_to do |format|
           format.turbo_stream
-          format.html { redirect_to admin_scenario_path(@scenario) } # Fallback
+          format.html { redirect_to admin_condition_groups_url, notice: 'Condition group was successfully created.' }
+          format.json { render :show, status: :created, location: @condition_group }
         end
       else
-        render :new
+        respond_to do |format|
+          format.turbo_stream
+          format.html { render :new }
+          format.json { render json: @condition_group.errors, status: :unprocessable_entity }
+        end
       end
     end
 
@@ -30,14 +29,14 @@ module Admin
       @condition_group.destroy
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to admin_scenario_path(@condition_group.scenario) }
+        format.html { redirect_to admin_condition_groups_url }
       end
     end
 
     private
 
     def condition_group_params
-      params.require(:condition_group).permit(:name, :enabled)
+      params.require(:condition_group).permit(:name, :enabled, :scenario_id)
     end
   end
 end

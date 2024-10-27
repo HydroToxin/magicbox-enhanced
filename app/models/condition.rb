@@ -38,7 +38,7 @@ class Condition < ApplicationRecord
   def self.condition_type_text(text)
     return 'Time Range' if text == :date
 
-    c.to_s.titleize
+    text.to_s.titleize
   end
 
   def self.logic_text(text)

@@ -4,7 +4,7 @@
 class Scenario < ApplicationRecord
   attr_accessor :json_file
 
-  belongs_to :subject
+  belongs_to :subject, optional: true
   has_many :room_scenarios, dependent: :destroy
   has_many :rooms, through: :room_scenarios
 

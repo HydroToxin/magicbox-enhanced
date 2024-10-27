@@ -80,7 +80,7 @@ RSpec.describe Admin::BatchesController, type: :controller do
 
   describe 'DELETE #destroy' do
     it 'destroys the requested batch' do
-      batch # Ensure the batch is created before trying to delete it
+      batch
       expect {
         delete :destroy, params: { id: batch.to_param }
       }.to change(Batch, :count).by(-1)

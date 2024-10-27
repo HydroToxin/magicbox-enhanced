@@ -117,6 +117,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.integer "condition_type", default: 0
     t.integer "logic", default: 0
     t.integer "duration"
+    t.integer "time_duration_hours"
+    t.integer "time_duration_minutes"
     t.time "start_time"
     t.time "end_time"
     t.datetime "last_duration_checked_at", precision: nil
@@ -189,13 +191,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.integer "substrate"
     t.integer "flowering"
     t.integer "grow_status", null: false
-    t.integer "number_of_subjects"
-    t.integer "seedling_weeks"
-    t.integer "vegging_weeks"
-    t.integer "flowering_weeks"
-    t.integer "flushing_weeks"
-    t.integer "drying_weeks"
-    t.integer "curing_weeks"
+    t.integer "number_of_subjects", default: 0
+    t.integer "seedling_weeks", default: 0
+    t.integer "vegging_weeks", default: 0
+    t.integer "flowering_weeks", default: 0
+    t.integer "flushing_weeks", default: 0
+    t.integer "drying_weeks", default: 0
+    t.integer "curing_weeks", default: 0
     t.integer "birth_type"
     t.boolean "auto_update_status", default: true
     t.float "estimated_weight_by_square_meter", default: 0.0
@@ -253,12 +255,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.bigint "user_id"
     t.bigint "grow_id"
     t.bigint "room_id"
-    t.bigint "subject_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["grow_id"], name: "index_observations_on_grow_id"
     t.index ["room_id"], name: "index_observations_on_room_id"
-    t.index ["subject_id"], name: "index_observations_on_subject_id"
     t.index ["user_id"], name: "index_observations_on_user_id"
   end
 
@@ -471,7 +471,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
   add_foreign_key "notifications", "users"
   add_foreign_key "observations", "grows"
   add_foreign_key "observations", "rooms"
-  add_foreign_key "observations", "subjects"
   add_foreign_key "observations", "users"
   add_foreign_key "observations_subjects", "observations"
   add_foreign_key "observations_subjects", "subjects"

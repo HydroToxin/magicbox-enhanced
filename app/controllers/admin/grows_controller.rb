@@ -3,7 +3,6 @@
 module Admin
   # Admin::GrowsController
   class GrowsController < Admin::AdminController
-    before_action :authenticate_user!
     before_action :set_grow, only: %i[edit update destroy]
 
     # GET /grows/new

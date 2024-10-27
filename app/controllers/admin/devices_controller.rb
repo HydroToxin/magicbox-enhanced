@@ -3,7 +3,6 @@
 module Admin
   # Admin::DevicesController
   class DevicesController < Admin::AdminController
-    before_action :authenticate_user!
     before_action :set_room, only: %i[new show edit create update destroy start stop samples query]
     before_action :set_device, only: %i[show edit update destroy start stop query]
 
@@ -30,8 +29,6 @@ module Admin
     end
 
     def show; end
-
-    def query; end
 
     def new
       @device = Device.new
@@ -84,11 +81,11 @@ module Admin
       end
     end
 
+    private
+
     def samples
       @devices = @room.devices
     end
-
-    private
 
     def set_room
       return unless params[:room_id].present?

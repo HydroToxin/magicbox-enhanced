@@ -30,20 +30,21 @@ class Grow < ApplicationRecord
   has_many :events, as: :eventable, dependent: :destroy
   has_one :harvest
 
+  validates :birth_type, presence: true
   validates :description, presence: true
   validates :grow_status, presence: true
   validate :validate_number_of_subjects
   validate :validate_birth_type_and_mother
 
   def validate_number_of_subjects
-    return unless birth_type == 'from_clone' && mother_id.present?
+    return unless birth_type == 'from_clone'
     return unless number_of_subjects.blank?
 
-    errors.add(:number_of_subjects, "can't be blank when birth type is 'from clone' and mother is selected.")
+    errors.add(:number_of_subjects, "can't be blank when birth type is 'from clone'.")
   end
 
   def validate_birth_type_and_mother
-    return unless birth_type == 'from_clone' && mother_id.blank?
+    return unless birth_type == 'from_clone'
 
     errors.add(:mother_id, "must be selected when birth type is 'from clone'.")
   end
@@ -61,7 +62,7 @@ class Grow < ApplicationRecord
   end
 
   def nb_weeks
-    start_date.step(end_date, 7).count
+    (end_date - start_date).to_i / 7
   end
 
   def status_badge_class
@@ -92,7 +93,7 @@ class Grow < ApplicationRecord
 
     %i[seedling vegging flowering flushing drying curing].each do |type|
       send(:"#{type}_weeks").times do
-        generate_week_with_type(type, week_index, current_date, end_date)
+        generate_weeks_with_type(type, week_index, current_date, end_date)
         current_date += 7.days
         end_date = current_date + 7.days
         week_index += 1
@@ -102,12 +103,6 @@ class Grow < ApplicationRecord
 
   def generate_weeks_with_type(type, index, start_date, end_date)
     Week.create(grow_id: id, week_type: type, week_number: index + 1, start_date:, end_date:)
-  end
-
-  def end_date
-    return weeks.first.end_date if weeks.first
-
-    start_date
   end
 
   def current_week

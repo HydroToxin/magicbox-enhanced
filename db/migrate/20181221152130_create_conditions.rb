@@ -9,6 +9,8 @@ class CreateConditions < ActiveRecord::Migration[5.2]
       t.integer :condition_type, default: 0
       t.integer :logic, default: 0
       t.integer :duration
+      t.integer :time_duration_hours
+      t.integer :time_duration_minutes
       t.time :start_time
       t.time :end_time
       t.datetime :last_duration_checked_at

@@ -10,10 +10,6 @@ module Admin
       add_breadcrumb 'Users'
     end
 
-    def show
-      respond_to(&:html)
-    end
-
     def new
       @user = User.new
     end

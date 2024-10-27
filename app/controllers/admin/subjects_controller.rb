@@ -16,10 +16,6 @@ module Admin
       @subjects = @grow.subjects.all
     end
 
-    # GET /subjects/1
-    # GET /subjects/1.json
-    def show; end
-
     # GET /subjects/new
     def new
       @subject = Subject.new
@@ -68,7 +64,7 @@ module Admin
       @subject.destroy
       respond_to do |format|
         format.html do
-          redirect_to admin_subjects_url, notice: 'Subject was successfully destroyed.'
+          redirect_to grow_subject_path(@subject.grow, @subject), notice: 'Subject was successfully destroyed.'
         end
         format.json { head :no_content }
       end
@@ -77,26 +73,18 @@ module Admin
     def move_to
       if params[:to_room_id].present?
         room = Room.find(params[:to_room_id])
-
         old_room = @subject.room
-
         @subject.update(room_id: params[:to_room_id])
-
         message = "Subject <b>#{@subject.name}</b> moved from room <b>#{old_room.name}</b> to room <b>#{room.name}</b>"
-
         Event.create!(event_type: :action, message:, eventable: @subject, user_id: current_user.id)
 
         redirect_to room_path(@subject.room), notice: message
 
       elsif params[:to_grow_id].present?
         grow = Grow.find(params[:to_grow_id])
-
         old_grow = @subject.grow
-
         @subject.update(grow_id: params[:to_grow_id])
-
         message = "Subject <b>#{@subject.name}</b> moved from grow <b>#{old_grow.name}</b> to grow <b>#{grow.name}</b>"
-
         Event.create!(event_type: :action, message:, eventable: @subject, user_id: current_user.id)
 
         redirect_to room_path(@subject.room), notice: message

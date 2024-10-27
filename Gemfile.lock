@@ -157,6 +157,7 @@ GEM
     dht11 (0.1.0)
       rpi_gpio
     diff-lcs (1.5.1)
+    docile (1.4.1)
     dotenv (3.1.4)
     dotenv-rails (3.1.4)
       dotenv (= 3.1.4)
@@ -430,6 +431,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    shoulda-matchers (6.4.0)
+      activesupport (>= 5.2.0)
     sidekiq (7.3.4)
       connection_pool (>= 2.3.0)
       logger
@@ -441,6 +444,12 @@ GEM
       actionmailer (>= 3.2.6, < 8)
       actionpack (>= 3.2.6, < 8)
       devise (>= 3.2, < 6)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.13.1)
+    simplecov_json_formatter (0.1.4)
     spring (4.2.1)
     spring-watcher-listen (2.1.0)
       listen (>= 2.7, < 4.0)
@@ -572,9 +581,11 @@ DEPENDENCIES
   sassc-rails
   seed_dump
   selenium-webdriver
+  shoulda-matchers
   sidekiq (>= 6.2.1)
   simple_calendar
   simple_token_authentication (~> 1.0)
+  simplecov
   spring
   spring-watcher-listen
   sprockets-rails

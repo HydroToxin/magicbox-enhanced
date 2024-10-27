@@ -32,9 +32,11 @@ module Admin
 
       respond_to do |format|
         if @alert.save
+          format.turbo_stream
           format.html { redirect_to admin_alerts_url, notice: 'Alert was successfully created.' }
           format.json { render :show, status: :created, location: @alert }
         else
+          format.turbo_stream
           format.html { render :new }
           format.json { render json: @alert.errors, status: :unprocessable_entity }
         end
@@ -46,9 +48,11 @@ module Admin
     def update
       respond_to do |format|
         if @alert.update(alert_params)
+          format.turbo_stream
           format.html { redirect_to admin_alerts_url, notice: 'Alert was successfully updated.' }
           format.json { render :show, status: :ok, location: @alert }
         else
+          format.turbo_stream
           format.html { render :edit, status: :unprocessable_entity }
           format.json { render json: @alert.errors, status: :unprocessable_entity }
         end
@@ -60,6 +64,7 @@ module Admin
     def destroy
       @alert.destroy
       respond_to do |format|
+        format.turbo_stream
         format.html { redirect_to admin_alerts_url, notice: 'Alert was successfully destroyed.' }
         format.json { head :no_content }
       end

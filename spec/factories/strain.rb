@@ -10,7 +10,7 @@ FactoryBot.define do
     effects { [] }
     ailments { [] }
     flavors { [] }
-    strain_type { 1 }
-    crosses { 1 }
+    strain_type { 'hybrid' }
+    crosses { 'Blueberry x Haze' }
   end
 end

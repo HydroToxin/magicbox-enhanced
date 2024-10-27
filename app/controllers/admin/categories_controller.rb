@@ -2,7 +2,7 @@
 
 module Admin
   # Admin::CategoriesController
-  class CategoriesController < ApplicationController
+  class CategoriesController < Admin::AdminController
     before_action :set_category, only: %i[show edit update destroy]
 
     def show; end

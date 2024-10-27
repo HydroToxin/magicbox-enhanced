@@ -17,12 +17,18 @@ class NotificationsController < ApplicationController
 
     @notification.destroy
 
-    redirect_to admin_notifications_url, notice: 'Notification was successfully destroyed.'
+    redirect_to notifications_path, notice: 'Notification was successfully destroyed.'
   end
 
   def clear_all
     Notification.all.each(&:destroy)
 
-    redirect_to request.referrer, notice: 'All notifications successfully deleted.'
+    if request.referrer.present?
+      redirect_to request.referrer, notice: 'All notifications successfully deleted.'
+    else
+      redirect_to notifications_path, notice: 'All notifications successfully deleted.'
+    end
+
+
   end
 end

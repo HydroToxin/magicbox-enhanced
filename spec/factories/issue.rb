@@ -5,8 +5,8 @@ FactoryBot.define do
     severity { 1 }
     issue_type { 1 }
     issue_status { 1 }
-    association :resource
     association :subject
+    association :resource
     association :observation
   end
 end

@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Admin::ConditionGroupsController, type: :controller do
-  let(:scenario) { create(:scenario) }
-  let(:condition_group) { create(:condition_group, scenario: scenario) }
 
   before do
     # Assuming you have authentication in place
@@ -20,39 +18,43 @@ RSpec.describe Admin::ConditionGroupsController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid params' do
-      let(:valid_attributes) { attributes_for(:condition_group) }
+      let(:valid_attributes) { attributes_for(:condition_group, name: 'test', scenario_id: create(:scenario).id) }
 
       it 'creates a new ConditionGroup' do
         expect {
-          post :create, params: { scenario_id: scenario.id, condition_group: valid_attributes }, format: :turbo_stream
+          post :create, params: { condition_group: valid_attributes }
         }.to change(ConditionGroup, :count).by(1)
       end
 
-      it 'redirects to the scenario path on HTML format' do
-        post :create, params: { scenario_id: scenario.id, condition_group: valid_attributes }, format: :html
-        expect(response).to redirect_to(admin_scenario_path(scenario))
+      it 'redirects to the condition_groups list on HTML format' do
+        post :create, params: { condition_group: valid_attributes }
+        expect(response).to redirect_to(admin_condition_groups_path)
       end
     end
 
     context 'with invalid params' do
+      let(:invalid_attributes) { attributes_for(:condition_group, data_type: nil) }
       it 'renders the new template' do
-        post :create, params: { scenario_id: scenario.id, condition_group: { name: nil } }, format: :html
+        post :create, params: { condition_group: invalid_attributes }
         expect(response).to render_template('new')
       end
     end
   end
 
   describe 'DELETE #destroy' do
+    before do
+      @condition_group = create(:condition_group)
+    end
+
     it 'destroys the requested condition group' do
-      condition_group # Ensure the condition group is created before trying to delete it
       expect {
-        delete :destroy, params: { id: condition_group.to_param }, format: :turbo_stream
+        delete :destroy, params: { id: @condition_group.to_param }, format: :turbo_stream
       }.to change(ConditionGroup, :count).by(-1)
     end
 
-    it 'redirects to the scenario path on HTML format' do
-      delete :destroy, params: { id: condition_group.to_param }, format: :html
-      expect(response).to redirect_to(admin_scenario_path(condition_group.scenario))
+    it 'redirects to the contions list on HTML format' do
+      delete :destroy, params: { id: @condition_group.to_param }, format: :html
+      expect(response).to redirect_to admin_condition_groups_path
     end
   end
 end

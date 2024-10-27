@@ -4,8 +4,8 @@ FactoryBot.define do
   factory :resource do
     name { "Resource Name" }
     shortname { "Shortname" }
-    choices { [] }
-    units { [] }
+    choices {['Tap water', 'Mineral water', 'Purified water', 'Distiled water (reverse osmosis)'] }
+    units { ['pH']}
     description { "Resource Description" }
     association :category
   end

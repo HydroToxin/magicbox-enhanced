@@ -10,6 +10,5 @@ FactoryBot.define do
     association :user
     association :grow
     association :room
-    association :subject
   end
 end

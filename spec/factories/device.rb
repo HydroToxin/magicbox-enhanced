@@ -2,10 +2,10 @@
 
 FactoryBot.define do
   factory :device do
-    device_type { 1 }
-    device_state { 1 }
-    pin_type { 0 }
-    pin_number { 0 }
+    device_type { 'sensor' }
+    device_state { 'on' }
+    pin_type { 'digital' }
+    pin_number { 1 }
     default_duration { 1 }
     name { "Device Name" }
     product_reference { "Product Ref" }

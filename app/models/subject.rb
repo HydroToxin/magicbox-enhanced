@@ -18,6 +18,8 @@ class Subject < ApplicationRecord
   belongs_to :mother, optional: true, class_name: 'Subject', dependent: :destroy
   has_many :clones, class_name: 'Subject'
 
+  validates :name, presence: true
+
   def name_with_grow
     "#{fullname} [Grow##{grow_id}]"
   end

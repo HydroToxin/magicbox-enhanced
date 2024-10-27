@@ -33,7 +33,7 @@ class Event < ApplicationRecord
   end
 
   def end_date
-    start_date + 1.hour
+    start_date + 1.hour if start_date.present?
   end
 
   def color
@@ -43,7 +43,7 @@ class Event < ApplicationRecord
   def eventable_link
     case eventable_type
     when 'Room'
-      helpers.link_to(eventable.name, room_path(eventable))
+      helpers.link_to(eventable.name, url_helpers.room_path(eventable.id))
     when 'Device'
       raise 'Room not assigned' unless eventable.room
 

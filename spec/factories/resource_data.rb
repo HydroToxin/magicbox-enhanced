@@ -6,6 +6,6 @@ FactoryBot.define do
     unit { "Unit" }
     association :resource
     association :observation
-    association :subject
+    # association :subject
   end
 end

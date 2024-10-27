@@ -80,6 +80,6 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:event_type, :message, :data)
+    params.require(:event).permit(:event_type, :message, :data, :eventable_type, :eventable_id, :device_id, :room_id, :user_id)
   end
 end

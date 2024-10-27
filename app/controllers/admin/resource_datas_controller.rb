@@ -10,12 +10,6 @@ module Admin
       @resource_data = ResourceData.new
     end
 
-    def show; end
-
-    def edit; end
-
-    def update; end
-
     def destroy
       @resource_data.destroy
       respond_to do |format|
@@ -32,6 +26,8 @@ module Admin
       params.require(:resource_data).permit
     end
 
-    def set_resource_data; end
+    def set_resource_data
+      @resource_data = ResourceData.find(params[:id])
+    end
   end
 end

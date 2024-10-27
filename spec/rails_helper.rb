@@ -5,12 +5,22 @@ require 'database_cleaner'
 ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../config/environment', __dir__)
+#Dir[Rails.root.join('spec', '**', '*_spec.rb')].each { |f| require f }
 
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'factory_bot_rails'
+require 'simplecov'
+SimpleCov.start
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -50,7 +60,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = false
+  config.use_transactional_fixtures = true
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -80,19 +90,8 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each, type: :feature) do
-    # :rack_test driver's Rack app under test shares database connection
-    # with the specs, so we can use transaction strategy for speed.
-    driver_shares_db_connection_with_specs = Capybara.current_driver == :rack_test
-
-    if driver_shares_db_connection_with_specs
-      DatabaseCleaner.strategy = :transaction
-    else
-      # Non-:rack_test driver is probably a driver for a JavaScript browser
-      # with a Rack app under test that does *not* share a database
-      # connection with the specs, so we must use truncation strategy.
-      DatabaseCleaner.strategy = :truncation
-    end
+  config.before(:each, :js => true) do
+    DatabaseCleaner.strategy = :truncation
   end
 
   config.before(:each) do
@@ -101,5 +100,13 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
+  end
+end
+
+def redirect_back(fallback_location:, **args)
+  if referer = request.headers["Referer"]
+    redirect_to referer, **args
+  else
+    redirect_to fallback_location, **args
   end
 end

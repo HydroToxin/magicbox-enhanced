@@ -80,7 +80,7 @@ RSpec.describe Admin::CategoriesController, type: :controller do
 
   describe 'DELETE #destroy' do
     it 'destroys the requested category' do
-      category # Ensure the category is created before trying to delete it
+      category
       expect {
         delete :destroy, params: { id: category.to_param }
       }.to change(Category, :count).by(-1)

@@ -5,13 +5,11 @@ class Issue < ApplicationRecord
   attr_accessor :category_id
 
   belongs_to :resource
-  # belongs_to :subject, optional: true
+  belongs_to :subject, optional: true
   belongs_to :observation
 
   enum severity: { level1: 0, level2: 1, level3: 2 }
-
   enum issue_status: { open: 0, closed: 1 }
-
   enum issue_type: { excess: 0, deficiency: 1 }
 
   def url

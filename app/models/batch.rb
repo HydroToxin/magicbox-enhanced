@@ -10,7 +10,6 @@ class Batch < ApplicationRecord
   enum batch_type: { trim: 0, bud:	1 }
 
   # validate :remaining_harvest_weight
-
   # validate :weight_count_multiplier
 
   def total_price
