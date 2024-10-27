@@ -27,7 +27,7 @@ class Observation < ApplicationRecord
   end
 
   def end_date
-    created_at + 1.hour
+    created_at + 1.hour if created_at.present?
   end
 
   def text

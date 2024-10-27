@@ -22,6 +22,9 @@ Rails.application.routes.draw do
 
   # Standard routes
   resources :users, only: [:show]
+  resources :batches
+  resources :observations
+  resources :devices, only: [:index]
 
   # Static page controllers
   get '/dashboard', to: 'dashboard#index'
@@ -50,9 +53,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :observations
-
-  resources :batches, only: %i[index show]
 
   # Nested resources for grows
   resources :grows, except: %i[edit update new create] do
@@ -109,11 +109,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :devices, only: [:index]
     resources :strains
     resources :data_types
-    resources :batches, except: %i[edit update]
-    resources :harvests, only: %i[index new]
+    resources :batches
+    resources :harvests
+    resources :weeks
 
     resources :scenarios do
       resources :condition_groups, only: %i[new create destroy] do
@@ -159,7 +159,7 @@ Rails.application.routes.draw do
     resources :categories
     resources :resources
     resources :resource_datas
-    resources :issues, only: [:new]
+    resources :issues, only: [:new, :destroy]
 
     resource :settings
 

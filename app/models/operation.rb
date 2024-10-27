@@ -6,6 +6,8 @@ class Operation < ApplicationRecord
 
   belongs_to :condition_group
 
+  validates :command, presence: true
+
   def execute_operation(room)
     device = room.devices.find_by(device_type:)
 

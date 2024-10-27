@@ -31,7 +31,7 @@ class TodosController < ApplicationController
 
     respond_to do |format|
       if @todo.save
-        format.html { redirect_to todos_url, notice: 'Todo was successfully created.' }
+        format.html { redirect_to todos_path, notice: 'Todo was successfully created.' }
         format.json { render :show, status: :created, location: @todo }
       else
         format.html { render :new }
@@ -45,7 +45,7 @@ class TodosController < ApplicationController
   def update
     respond_to do |format|
       if @todo.update(todo_params)
-        format.html { redirect_to todos_url, notice: 'Todo was successfully updated.' }
+        format.html { redirect_to todos_path, notice: 'Todo was successfully updated.' }
         format.json { render :show, status: :ok, location: @todo }
       else
         format.html { render :edit }

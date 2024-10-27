@@ -62,10 +62,6 @@ module Admin
       end
     end
 
-    def run; end
-
-    def export; end
-
     private
 
     def process_condition_durations(_scenario)

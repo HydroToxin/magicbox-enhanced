@@ -2,22 +2,26 @@
 
 module Admin
   # Admin::ConditionsController
-  class ConditionsController < ApplicationController
+  class ConditionsController < Admin::AdminController
     def new
-      @condition_group = ConditionGroup.find(params[:condition_group_id])
       @condition = Condition.new
     end
 
     def create
-      @condition_group = ConditionGroup.find(params[:condition_group_id])
-      @condition = @condition_group.conditions.build(condition_params)
+      @condition = Condition.build(condition_params)
+
       if @condition.save
         respond_to do |format|
           format.turbo_stream
-          format.html { redirect_to admin_scenario_path(@condition_group.scenario) }
+          format.html { redirect_to admin_conditions_url, notice: 'Condition was successfully created.' }
+          format.json { render :show, status: :created, location: @condition }
         end
       else
-        render :new
+        respond_to do |format|
+          format.turbo_stream
+          format.html { render :new }
+          format.json { render json: @condition.errors, status: :unprocessable_entity }
+        end
       end
     end
 
@@ -26,7 +30,7 @@ module Admin
       @condition.destroy
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to admin_scenario_path(@condition.condition_group.scenario) }
+        format.html { redirect_to admin_conditions_url }
       end
     end
 
@@ -34,7 +38,8 @@ module Admin
 
     def condition_params
       params.require(:condition).permit(:logic, :condition_type, :start_time, :end_time, :time_duration_hours,
-                                        :time_duration_minutes, :data_type_id, :predicate, :target_value)
+                                        :time_duration_minutes, :data_type_id, :predicate, :target_value,
+                                        :condition_group_id)
     end
   end
 end

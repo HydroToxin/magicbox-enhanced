@@ -3,8 +3,6 @@
 # ObservationsController
 class ObservationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_grow, only: %i[index new show edit create update destroy]
-  before_action :set_subject, only: %i[index new show edit create update destroy]
   before_action :set_observation, only: %i[show edit update destroy]
 
   # GET /observations
@@ -44,6 +42,7 @@ class ObservationsController < ApplicationController
   # rubocop:disable Metrics/MethodLength
   def create
     @observation = Observation.new(observation_params)
+    @grow = @observation.grow
 
     respond_to do |format|
       if @observation.save
@@ -51,14 +50,7 @@ class ObservationsController < ApplicationController
 
         Event.create!(event_type: :action, message:, eventable: @observation, user_id: current_user.id)
 
-        if @subject
-          format.html do
-            redirect_to [@grow, @subject], notice: 'Observation was successfully created.'
-          end
-        else
-          format.html { redirect_to @grow, notice: 'Observation was successfully created.' }
-        end
-
+        format.html { redirect_to @grow, notice: 'Observation was successfully created.' }
         format.json { render :show, status: :created, location: @observation }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -74,7 +66,7 @@ class ObservationsController < ApplicationController
     respond_to do |format|
       if @observation.update(observation_params)
         format.html do
-          redirect_to [@grow, @subject], notice: 'Observation was successfully updated.'
+          redirect_to [@grow, @observation], notice: 'Observation was successfully updated.'
         end
         format.json { render :show, status: :ok, location: @observation }
       else
@@ -96,30 +88,11 @@ class ObservationsController < ApplicationController
 
   private
 
-  def set_grow
-    if params[:grow_id].present?
-      @grow = Grow.find(params[:grow_id])
-
-      add_breadcrumb "Grow ##{@grow.id}", @grow
-
-    elsif params[:observation] && observation_params[:grow_id].present?
-      @grow = Grow.find(observation_params[:grow_id])
-
-      add_breadcrumb "Grow ##{@grow.id}", @grow
-    end
-  end
-
-  def set_subject
-    return unless params[:subject_id].present?
-
-    @subject = Subject.find(params[:subject_id])
-
-    add_breadcrumb @subject.name.to_s, [@grow, @subject]
-  end
-
   # Use callbacks to share common setup or constraints between actions.
   def set_observation
     @observation = Observation.find(params[:id])
+    @grow = @observation.grow
+    add_breadcrumb "Grow ##{@grow.id}", @grow
   end
 
   # rubocop:disable Metrics/MethodLength

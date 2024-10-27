@@ -17,17 +17,10 @@ module Admin
       @room = Room.new
     end
 
-    # GET /rooms/1/edit
-    def edit; end
-
-    # GET /rooms/1/show
-    def show; end
-
     # POST /rooms
     # POST /rooms.json
     def create
       @room = Room.new(room_params)
-
       respond_to do |format|
         if @room.save
           # if room_params[:scenario_id]

@@ -4,6 +4,8 @@
 class Strain < ApplicationRecord
   enum strain_type: { indica: 0, sativa: 1, hybrid: 2, ruderalis: 3, unknow: 10 }
 
+  validates :name, presence: true
+
   # rubocop:disable Metrics/CyclomaticComplexity
   def self.search(params)
     strains = Strain.all

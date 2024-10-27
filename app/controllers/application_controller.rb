@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Application Controller
 class ApplicationController < ActionController::Base
   include ApplicationHelper
   layout 'application'
@@ -13,7 +12,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
 
-  add_breadcrumb '<i class="fa fa-home"></i>'.html_safe, :root_path
+  #add_breadcrumb '<i class="fa fa-home"></i>'.html_safe, :root_path
 
   def after_sign_in_path_for(_resource)
     dashboard_path

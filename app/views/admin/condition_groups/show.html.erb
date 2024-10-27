@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @condition_group.name %>
+</p>
+
+<p>
+  <strong>Enabled:</strong>
+  <%= @condition_group.enabled %>
+</p>
+
+<p>
+  <strong>Scenario:</strong>
+  <%= @condition_group.scenario.name %>
+</p>
+
+<%= link_to 'Edit', edit_condition_group_path(@condition_group) %> |
+<%= link_to 'Back', condition_groups_path %>

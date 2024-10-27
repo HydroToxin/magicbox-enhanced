@@ -28,7 +28,7 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 .env
-
+magicbox-enhanced.code-workspace
 /apns
 /public/packs
 /public/packs-test
@@ -48,3 +48,4 @@ magicbox-enhanced.code-workspace
 
 /public/assets
 /app/assets/builds
+coverage

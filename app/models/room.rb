@@ -90,6 +90,13 @@ class Room < ApplicationRecord
   end
   # rubocop:enable Metrics/CyclomaticComplexity
 
+  def kwh_month
+    kd = kwh_day
+    return (kd * 30).round(2) if kd.positive?
+
+    0
+  end
+
   private
 
   def calculate_running_time(condition_group)
@@ -100,13 +107,6 @@ class Room < ApplicationRecord
     end
 
     running_time
-  end
-
-  def kwh_month
-    kd = kwh_day
-    return (kd * 30).round(2) if kd.positive?
-
-    0
   end
 
   # def take_camshot

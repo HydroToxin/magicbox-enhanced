@@ -8,6 +8,8 @@ class Week < ApplicationRecord
 
   enum week_type: { seedling: 0, vegging: 1, flowering: 2, flushing: 3, drying: 4, curing: 5 }
 
+  validates :week_number, :week_type, presence: true
+
   def text
     "#{grow.description} - Week ##{week_number} (#{week_type})"
   end

@@ -10,7 +10,7 @@ class HarvestsController < ApplicationController
   def set_grow
     @grow = Grow.find(params[:grow_id])
 
-    add_breadcrumb "Grow ##{@grow.id}", @grow
+    add_breadcrumb "Grow ##{@grow.id}"
   end
 
   # Use callbacks to share common setup or constraints between actions.

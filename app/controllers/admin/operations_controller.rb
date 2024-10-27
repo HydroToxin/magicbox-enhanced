@@ -31,7 +31,7 @@ module Admin
 
       respond_to do |format|
         if @operation.save
-          format.html { redirect_to @operation, notice: 'Operation was successfully created.' }
+          format.html { redirect_to admin_operations_path, notice: 'Operation was successfully created.' }
           format.json { render :show, status: :created, location: @operation }
         else
           format.html { render :new }
@@ -45,7 +45,7 @@ module Admin
     def update
       respond_to do |format|
         if @operation.update(operation_params)
-          format.html { redirect_to @operation, notice: 'Operation was successfully updated.' }
+          format.html { redirect_to admin_operations_path, notice: 'Operation was successfully updated.' }
           format.json { render :show, status: :ok, location: @operation }
         else
           format.html { render :edit }
@@ -59,7 +59,7 @@ module Admin
     def destroy
       @operation.destroy
       respond_to do |format|
-        format.html { redirect_to operations_url, notice: 'Operation was successfully destroyed.' }
+        format.html { redirect_to admin_operations_path, notice: 'Operation was successfully destroyed.' }
         format.json { head :no_content }
       end
     end
@@ -72,7 +72,7 @@ module Admin
     end
 
     def operation_params
-      params.require(:operation).permit(:command, :delay, :retries, :device_id, :description, :condition_id)
+      params.require(:operation).permit(:command, :delay, :retries, :device_id, :description, :condition_group_id)
     end
   end
 end

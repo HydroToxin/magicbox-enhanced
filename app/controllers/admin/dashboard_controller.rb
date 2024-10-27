@@ -3,7 +3,6 @@
 module Admin
   # Admin::DashboardController
   class DashboardController < Admin::AdminController
-    before_action :authenticate_user!
 
     add_breadcrumb 'Dashboard'
 

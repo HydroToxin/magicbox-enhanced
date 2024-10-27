@@ -14,7 +14,7 @@ class SamplesController < ApplicationController
   def general
     @data_types_samples = {}
 
-    Sample.unscoped.distinct.where.not(product_reference: 'dht22').pluck(:product_reference).each do |product_reference|
+    Sample.select(:product_reference).all.pluck(:product_reference).uniq.each do |product_reference|
       data = DataType.all.filter_map do |data_type|
         samples = filtered_samples(data_type.samples).where(product_reference:).order(created_at: :desc)
         next unless samples.first
@@ -67,13 +67,13 @@ class SamplesController < ApplicationController
   private
 
   def date_filter
-    @date_filter = sample_params[:date_filter] ? sample_params[:date_filter].present? : 'today'
+    @date_filter = sample_params[:date_filter].present? ? sample_params[:date_filter] : 'today'
   end
 
   def filtered_samples(samples)
     case @date_filter.to_s
     when 'today'
-      todayk(samples)
+      today(samples)
     when 'last_week'
       last_week(samples)
     when 'last_month'

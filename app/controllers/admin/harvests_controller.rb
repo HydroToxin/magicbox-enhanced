@@ -6,23 +6,10 @@ module Admin
     before_action :set_harvest, only: %i[show edit update destroy]
     before_action :set_grow, only: %i[new create show edit update destroy]
 
-    # GET /harvests
-    # GET /harvests.json
-    def index
-      @harvests = Harvest.all
-    end
-
-    # GET /harvests/1
-    # GET /harvests/1.json
-    def show; end
-
     # GET /harvests/new
     def new
       @harvest = Harvest.new
     end
-
-    # GET /harvests/1/edit
-    def edit; end
 
     # POST /harvests
     # POST /harvests.json
@@ -31,7 +18,7 @@ module Admin
 
       respond_to do |format|
         if @harvest.save
-          format.html { redirect_to [@grow, @harvest], notice: 'Harvest was successfully created.' }
+          format.html { redirect_to admin_grow_harvests_path, notice: 'Harvest was successfully created.' }
           format.json { render :show, status: :created, location: @harvest }
         else
           format.html { render :new }
@@ -45,7 +32,7 @@ module Admin
     def update
       respond_to do |format|
         if @harvest.update(harvest_params)
-          format.html { redirect_to [@grow, @harvest], notice: 'Harvest was successfully updated.' }
+          format.html { redirect_to admin_grow_harvests_path, notice: 'Harvest was successfully updated.' }
           format.json { render :show, status: :ok, location: @harvest }
         else
           format.html { render :edit }
@@ -57,6 +44,7 @@ module Admin
     # DELETE /harvests/1
     # DELETE /harvests/1.json
     def destroy
+      @grow = @harvest.grow
       @harvest.destroy
       respond_to do |format|
         format.html { redirect_to @grow, notice: 'Harvest was successfully destroyed.' }

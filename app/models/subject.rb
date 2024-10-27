@@ -7,7 +7,8 @@ class Subject < ApplicationRecord
   belongs_to :grow
   belongs_to :room, optional: true
 
-  has_many :observations
+  has_many :observation_subjects
+  has_many :observations, through: :observation_subjects
   has_many :resource_datas, through: :observations
   has_many :issues, through: :observations
   has_many :scenarios, dependent: :destroy
@@ -16,7 +17,9 @@ class Subject < ApplicationRecord
   belongs_to :strain, optional: true
 
   belongs_to :mother, optional: true, class_name: 'Subject', dependent: :destroy
-  has_many :clones, class_name: 'Subject'
+  has_many :clones, class_name: 'Subject', through: :mother, dependent: :destroy
+
+  validates :name, presence: true
 
   def name_with_grow
     "#{fullname} [Grow##{grow_id}]"
