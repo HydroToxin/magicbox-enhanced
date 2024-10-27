@@ -18,13 +18,18 @@ class Scenario < ApplicationRecord
 
   def as_json(*args)
     super.tap do |hash|
+      # Ensure condition_groups is initialized as an array if nil
+      hash['condition_groups'] ||= []
+
       hash['condition_groups'].each do |groups|
         groups.tap do |h|
           h['conditions_attributes'] = h.delete('conditions')
           h['operations_attributes'] = h.delete('operations')
         end
       end
-      hash['condition_groups_attributes'] = hash.delete 'condition_groups'
+
+      # Rename condition_groups to condition_groups_attributes
+      hash['condition_groups_attributes'] = hash.delete('condition_groups')
     end
   end
 

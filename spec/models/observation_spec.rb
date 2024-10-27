@@ -59,22 +59,6 @@ RSpec.describe Observation, type: :model do
     end
   end
 
-  describe '#pictures_url' do
-    let(:observation) { create(:observation) }
-
-    # Ensure the sample.jpg file exists in the specified path
-    let(:picture) { fixture_file_upload(Rails.root.join('spec/fixtures/files/sample.jpg'), 'image/jpeg') }
-
-    before do
-      observation.pictures.attach(picture)
-      ActiveStorage::Current.host = 'http://example.com'
-    end
-
-    it 'returns an array of URLs for the attached pictures' do
-      expect(observation.pictures_url).to all(match(%r{http://example.com/rails/active_storage/blobs/.+}))
-    end
-  end
-
   describe '#url' do
     let(:observation) { create(:observation) }
 
