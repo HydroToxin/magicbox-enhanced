@@ -7,8 +7,8 @@ class Subject < ApplicationRecord
   belongs_to :grow
   belongs_to :room, optional: true
 
-  has_many :observation_subjects
-  has_many :observations, through: :observation_subjects
+  has_many :observations_subjects
+	has_many :observations, through: :observations_subjects, dependent: :delete_all
   has_many :resource_datas, through: :observations
   has_many :issues, through: :observations
   has_many :scenarios, dependent: :destroy

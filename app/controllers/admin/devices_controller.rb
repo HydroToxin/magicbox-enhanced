@@ -3,13 +3,13 @@
 module Admin
   # Admin::DevicesController
   class DevicesController < Admin::AdminController
-    before_action :set_room, only: %i[new show edit create update destroy start stop samples query]
     before_action :set_device, only: %i[show edit update destroy start stop query]
+    before_action :set_room
 
     def index
       add_breadcrumb 'Devices'
 
-      @devices = @room ? @room.devices : Device.all
+      @devices = Device.all
 
       @devices = if params.key?(:sort_direction) && params.key?(:sort_column)
                    @devices.order("#{params[:sort_column]} #{params[:sort_direction]}")
@@ -41,7 +41,7 @@ module Admin
       @device = Device.new(device_params)
 
       if @device.save
-        redirect_to room_device_path(@device.room, @device), notice: 'Device created with success.'
+        redirect_to admin_device_path(@device), notice: 'Device created with success.'
       else
         render :new
       end
@@ -50,7 +50,7 @@ module Admin
     # PATCH/PUT /devices/1
     def update
       if @device.update(device_params)
-        redirect_to room_device_path(@device.room, @device), notice: 'Device updated with success.'
+        redirect_to admin_device_path(@device), notice: 'Device updated with success.'
       else
         render :edit
       end
@@ -65,9 +65,9 @@ module Admin
       result = @device.start
 
       if result == true
-        redirect_back fallback_location: room_path(@room), notice: 'Device started'
+        redirect_back fallback_location: admin_device_path(@device), notice: 'Device started'
       else
-        redirect_back fallback_location: room_path(@room), alert: "Device error: #{result}"
+        redirect_back fallback_location: admin_device_path(@device), alert: "Device error: #{result}"
       end
     end
 
@@ -75,25 +75,13 @@ module Admin
       result = @device.stop
 
       if result == true
-        redirect_back fallback_location: room_path(@room), notice: 'Device stopped'
+        redirect_back fallback_location: admin_device_path(@device), notice: 'Device stopped'
       else
-        redirect_back fallback_location: room_path(@room), alert: "Device error: #{result}"
+        redirect_back fallback_location: admin_device_path(@device), alert: "Device error: #{result}"
       end
     end
 
     private
-
-    def samples
-      @devices = @room.devices
-    end
-
-    def set_room
-      return unless params[:room_id].present?
-
-      @room = Room.find(params[:room_id])
-
-      add_breadcrumb @room.name, [:admin, @room]
-    end
 
     def set_device
       @device = Device.find(params[:id])
@@ -101,10 +89,16 @@ module Admin
       add_breadcrumb @device.name, [:admin, @room, @device]
     end
 
+    def set_room
+      return unless params[:room_id].present?
+
+      @room = Room.find(params[:room_id])
+    end
+
     def device_params
-      params.require(:device).permit(:room_id, :device_type, :device_state, :pin_number, :pin_type, :default_duration,
+      params.require(:device).permit(:device_type, :device_state, :pin_number, :pin_type, :default_duration,
                                      :name, :product_reference, :description, :last_start_date, :use_duration,
-                                     :watts, :volts, :amperes, :custom_identifier, :product_type)
+                                     :watts, :volts, :amperes, :custom_identifier, :product_type, :room_id)
     end
   end
 end

@@ -38,6 +38,9 @@ function init_views() {
 document.addEventListener('turbo:load', () => {
   console.log('Turbo ist geladen über addEventListener');
   init_views();
+  if (window.history.state && window.history.state.turbo) {
+    window.addEventListener("popstate", function () { location.reload(true); });
+  }
 });
 
 document.addEventListener('DOMContentLoaded', function () {

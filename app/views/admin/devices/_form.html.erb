@@ -7,9 +7,9 @@
 		<% end %>
 
 		<div class="actions float-end">
-      <%= link_to 'Cancel', :back, class: "btn btn-light border" %>
+      <%= link_to 'Cancel', admin_devices_path, class: "btn btn-light border" %>
       <% unless device.new_record? %>
-				<%= button_to 'Destroy', admin_room_device_path(device.room, device), method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
+				<%= link_to 'Destroy', admin_device_path(device), data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-outline-danger" %>
       <% end %>
       <%= f.submit "Save", class: "btn btn-primary" %>
     </div>

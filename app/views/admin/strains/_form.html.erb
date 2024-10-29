@@ -6,7 +6,7 @@
       Edit
 
       <div class="float-end">
-        <%= button_to 'Destroy', [:admin, strain], method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
+        <%= link_to 'Destroy', [:admin, strain], data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-outline-danger" %>
       </div>
     <% end %>
   </h1>

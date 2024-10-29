@@ -2,9 +2,7 @@
   <h1>
     <%= batch.new_record? ? "New Batch" : "Editing Batch" %>
     <div class="float-right">
-      <% if !batch.new_record?  %>
-        <%= button_to 'Destroy', [:admin, @grow, @harvest, batch], method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
-      <% end %>
+      <%= link_to 'Destroy', [:admin, @grow, @harvest, batch], data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-outline-danger" %>
       <%= form.submit "Save", class: "btn btn-primary" %>
     </div>
   </h1>

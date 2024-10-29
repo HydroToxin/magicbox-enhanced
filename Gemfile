@@ -54,6 +54,7 @@ gem 'uglifier'
 gem 'whenever', require: false
 gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap4'
+gem "view_component"
 
 # gem "kredis"
 # gem "bcrypt", "~> 3.1.7"

@@ -4,7 +4,18 @@ require 'os'
 
 # DashboardHelper
 module DashboardHelper
+
+  def last_sample(name:)
+    return 0 if DataType.find_by(name: name).nil?
+
+    last = Sample.where(product_reference: 'System',
+                        data_type_id: DataType.find_by(name: name).id).order(created_at: :desc).limit(1).first
+    return "#{last.value}#{last.unit}" if last
+  end
+
   def cpu_temp
+    return 0 if DataType.find_by(name: 'cpu_temp').nil?
+
     last = Sample.where(product_reference: 'System',
                         data_type_id: DataType.find_by(name: 'cpu_temp').id).order(created_at: :desc).limit(1).first
     return "#{last.value}#{last.unit}" if last
@@ -13,6 +24,8 @@ module DashboardHelper
   end
 
   def cpu_usage
+    return 0 if DataType.find_by(name: 'cpu_usage').nil?
+
     last = Sample.where(product_reference: 'System',
                         data_type_id: DataType.find_by(name: 'cpu_usage').id).order(created_at: :desc).limit(1).first
     return "#{last.value}#{last.unit}" if last
@@ -21,6 +34,8 @@ module DashboardHelper
   end
 
   def used_memory
+    return 0 if DataType.find_by(name: 'memory_used').nil?
+
     last = Sample.where(product_reference: 'System',
                         data_type_id: DataType.find_by(name: 'memory_used').id).order(created_at: :desc).limit(1).first
     return "#{last.value}#{last.unit}" if last
@@ -29,6 +44,8 @@ module DashboardHelper
   end
 
   def free_memory
+    return 0 if DataType.find_by(name: 'memory_free').nil?
+
     last = Sample.where(product_reference: 'System',
                         data_type_id: DataType.find_by(name: 'memory_free').id).order(created_at: :desc).limit(1).first
     return "#{last.value}#{last.unit}" if last
@@ -37,6 +54,8 @@ module DashboardHelper
   end
 
   def voltage
+    return 0 if DataType.find_by(name: 'cpu_voltage').nil?
+
     last = Sample.where(product_reference: 'System',
                         data_type_id: DataType.find_by(name: 'cpu_voltage').id).order(created_at: :desc).limit(1).first
     return "#{last.value}#{last.unit}" if last
@@ -69,6 +88,8 @@ module DashboardHelper
   end
 
   def weather_temp
+    return 0 if DataType.find_by(name: 'weather_temperature').nil?
+
     last = Sample.where(
       product_reference: 'Openweather2',
       data_type: DataType.find_by(name: 'weather_temperature')
@@ -80,6 +101,8 @@ module DashboardHelper
   end
 
   def weather_humidity
+    return 0 if DataType.find_by(name: 'weather_humidity').nil?
+
     last = Sample.where(
       product_reference: 'Openweather2',
       data_type: DataType.find_by(name: 'weather_humidity')

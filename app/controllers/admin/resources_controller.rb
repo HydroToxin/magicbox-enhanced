@@ -80,7 +80,6 @@ module Admin
         format.html do
           redirect_to admin_resources_url, notice: 'Resource was successfully destroyed.'
         end
-        format.turbo_stream { head :no_content }
         format.json { head :no_content }
       end
     end

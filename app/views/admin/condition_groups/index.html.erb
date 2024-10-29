@@ -17,7 +17,7 @@
         <td><%= condition_group.scenario.name %></td>
         <td><%= link_to 'Show', condition_group %></td>
         <td><%= link_to 'Edit', edit_condition_group_path(condition_group) %></td>
-        <td><%= button_to 'Destroy', condition_group, method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %></td>
+        <td><%= link_to 'Destroy', condition_group(condition_group), data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-outline-danger" %></td>
       </tr>
     <% end %>
   </tbody>

@@ -2,5 +2,5 @@
   <%= f.select :device_type, options_for_select(Device.device_types.keys.map { |e| [e.titleize, e] }, f.object.device_type), {}, class: "form-control me-2" %>
   <%= f.select :command, options_for_select(["start", "stop"], f.object.command), {}, class: "form-control me-2" %>
   <%= f.number_field :duration, value: f.object.duration, placeholder: "Duration (sec)", class: "form-control me-2" %>
-  <%= button_to 'Destroy', operation, method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
+  <%= link_to 'Destroy', operation, data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-outline-danger" %>
 </div>

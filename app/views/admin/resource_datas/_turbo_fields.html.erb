@@ -20,7 +20,7 @@ end %>
                   },
                   id: "resource-select"
                 } %>
-                      </div>
+          </div>
           <div class="col-12 col-lg-3">
             <%= ff.label "Unit", class: "form-label" %>
             <%= ff.select :unit, [], {}, {
@@ -35,6 +35,16 @@ end %>
           <div class="col-12 col-lg-3">
             <%= ff.label "Value", class: "form-label" %>
             <%= ff.text_field :value, value: ff.object.value, class: "form-control" %>
+          </div>
+          <div class="col-12 col-lg-3">
+            <%= ff.label "Subject", class: "form-label" %>
+            <%= ff.select :subject_id, options_from_collection_for_select(
+              @grow.subjects, "id", "name", ff.object.subject_id),
+              {},
+              {
+                class: "form-select mb-2",
+                id: "subject-select"
+              } %>
           </div>
           <div class="col-2 col-lg-1">
             <%= ff.label " ", class: "form-label" %>

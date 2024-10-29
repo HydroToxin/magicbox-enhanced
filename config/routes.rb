@@ -114,6 +114,10 @@ Rails.application.routes.draw do
     resources :batches
     resources :harvests
     resources :weeks
+    resources :devices do
+      post :start, on: :member
+      post :stop, on: :member
+    end
 
     resources :scenarios do
       resources :condition_groups, only: %i[new create destroy] do

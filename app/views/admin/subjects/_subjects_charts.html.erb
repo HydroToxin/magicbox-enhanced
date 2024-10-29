@@ -1,7 +1,7 @@
 <div class="row mb-4">
   <div class="col-12">
     <h6>Resources</h6>
-    <% data = Resource.where(choices: '{}').map do |resource|
+    <% data = Resource.all.map do |resource|
       {
         name: resource.name,
         data: ResourceData.joins(:subject, :resource)

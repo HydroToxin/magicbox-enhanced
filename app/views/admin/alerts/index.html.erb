@@ -47,9 +47,7 @@
         <td>
           <%= link_to 'Edit', edit_admin_alert_path(alert), class: "btn btn-sm btn-outline-success" %>
           <%= link_to 'Test', test_admin_alert_path(alert), method: :post, class: "btn btn-sm btn-outline-warning" %>
-          <%= form_with(url: [:admin, alert], method: :post, data: { turbo_confirm: 'Are you sure?' }, class: "d-inline") do %>
-            <%= submit_tag 'Destroy', class: "btn btn-sm btn-outline-danger" %>
-          <% end %>
+          <%= link_to 'Destroy',  [:admin, alert], data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-outline-danger" %>
         </td>
       </tr>
     <% end %>

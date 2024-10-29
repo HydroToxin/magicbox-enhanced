@@ -28,7 +28,7 @@ module Magicbox
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.time_zone = 'Europe/Berlin'
-    config.active_record.default_timezone = :local
+    config.active_record.default_timezone = :utc
     config.load_defaults 7.0
     # config.action_view.preload_links_header = false
     # config.assets.enabled = true

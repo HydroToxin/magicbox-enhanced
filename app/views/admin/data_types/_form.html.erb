@@ -3,7 +3,7 @@
     <%= @data_type.new_record? ? "New DataType" : "Editing DataType" %>
     <div class="float-end">
       <% unless @data_type.new_record? %>
-        <%= button_to 'Destroy', [:admin, data_type], method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
+        <%= link_to 'Destroy',  [:admin, data_type], data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-outline-danger" %>
       <% end %>
     </div>
   </div>

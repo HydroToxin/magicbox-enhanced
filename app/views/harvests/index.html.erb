@@ -27,22 +27,30 @@
   </thead>
 
   <tbody>
-    <% @harvests.each do |harvest| %>
+    <% if @harvests.count > 0 %>
+      <% @harvests.each do |harvest| %>
+        <tr>
+          <td><%= link_to harvest.grow.name, harvest.grow %></td>
+          <td class="text-info font-monospace"><%= harvest.harvested_trim_weight %></td>
+          <td class="text-info font-monospace"><%= harvest.harvested_waste_weight %></td>
+          <td class="text-info font-monospace"><%= harvest.harvested_bud_weight %></td>
+          <td class="text-warning font-monospace"><%= harvest.dry_trim_weight %></td>
+          <td class="text-warning font-monospace"><%= harvest.dry_bud_weight %></td>
+          <td class="text-success font-monospace"><%= harvest.trim_batched %> / <%= weight_with_unit harvest.dry_trim_weight %></td>
+          <td class="text-success font-monospace"><%= harvest.bud_batched %> / <%= weight_with_unit harvest.dry_bud_weight %></td>
+          <td><small><%= fdatetime harvest.created_at %></small></td>
+          <td><%= link_to 'Show', [harvest.grow, harvest] %></td>
+        </tr>
+      <% end %>
+    <% else %>
       <tr>
-        <td><%= link_to harvest.grow.name, harvest.grow %></td>
-        <td class="text-info font-monospace"><%= harvest.harvested_trim_weight %></td>
-        <td class="text-info font-monospace"><%= harvest.harvested_waste_weight %></td>
-        <td class="text-info font-monospace"><%= harvest.harvested_bud_weight %></td>
-        <td class="text-warning font-monospace"><%= harvest.dry_trim_weight %></td>
-        <td class="text-warning font-monospace"><%= harvest.dry_bud_weight %></td>
-        <td class="text-success font-monospace"><%= harvest.trim_batched %> / <%= weight_with_unit harvest.dry_trim_weight %></td>
-        <td class="text-success font-monospace"><%= harvest.bud_batched %> / <%= weight_with_unit harvest.dry_bud_weight %></td>
-        <td><small><%= fdatetime harvest.created_at %></small></td>
-        <td><%= link_to 'Show', [harvest.grow, harvest] %></td>
+        <td colspan="9">
+          <div class="card-body text-center">
+            <p style="color: black"><b>No harvests yet.</b></p>
+          </div>
+        </td>
       </tr>
     <% end %>
-
-    <%= link_to 'New Harvest', new_admin_harvest_path %>
 
   </tbody>
 </table>

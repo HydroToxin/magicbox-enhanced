@@ -2,8 +2,9 @@
 	<%= @device.name %>
 
 	<div class="float-end">
+		<%= link_to "Back", room_path(@device.room), class: "btn btn-outline-secondary" %>
 		<% unless @device.sensor? %>
-			<%= link_to "Stop", stop_admin_room_device_path(@device.room, @device), method: :post, class: "btn btn-danger" %>
+			<%= link_to "Stop", stop_admin_room_device_path(@device.room, @device), method: :post, class: "btn btn-success" %>
 			<%= link_to "Start", start_admin_room_device_path(@device.room, @device), method: :post, class: "btn btn-info" %>
 		<% else %>
 			<%= link_to "Query", query_room_device_path(@device.room, @device), method: :post, class: "btn btn-info" %>

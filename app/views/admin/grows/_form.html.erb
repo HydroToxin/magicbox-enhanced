@@ -1,9 +1,9 @@
-<%= form_with(model: [:admin, grow], local: true, class: "col-md-12 col-lg-8 mx-auto") do |form| %>
+<%= form_with(model: [:admin, grow], data: { turbo: :false }, local: true, class: "col-md-12 col-lg-8 mx-auto") do |form| %>
   <h1>
     <%= grow.new_record? ? "New Grow" : "Editing Grow" %>
     <div class="float-end">
       <% unless grow.new_record? %>
-        <%= button_to 'Destroy', admin_grow_path(grow), method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
+        <%= link_to 'Destroy', admin_grow_path(grow), data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-outline-danger" %>
       <% end %>
       <%= form.submit "Save", class: "btn btn-primary" %>
     </div>
