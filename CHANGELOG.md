@@ -88,3 +88,6 @@
 ## 2024-10-29
 
 - a24cd15 fixes some isues
+## 2024-10-30
+
+- 5d20865 Refactored many parts. Much more stable now. Scenarios still broken, last refactoring task.
