@@ -1,4 +1,4 @@
-<div id="observation-container">
+<div id="observation-container" data-controller="observation">
   <% form_path = subject ? [grow, subject, observation] : [grow, observation] %>
   <%= form_with model: observation, url: form_path, html: { class: "col-md-12 col-lg-8 mx-auto" }, data: { turbo: true } do |form| %>
     <h1>
@@ -26,14 +26,49 @@
     <div class="mb-3 row">
       <%= form.label "Grow", class: "col-sm-2 col-form-label" %>
       <div class="col-sm-10">
-        <%= form.select :grow_id, options_from_collection_for_select(Grow.where.not(grow_status: [:done, :aborted]), "id", "name", params[:grow_id]), { prompt: "None" }, class: "form-control grows_select", data: { turbo_frame: "grows_select_frame" } %>
+        <% if params.key? 'grow_id' %>
+          <input class="form-control" type="text" value="<%= @grow.name %>" aria-label="<%= @grow.name %>" disabled readonly>
+          <%= form.hidden_field :grow_id, value: @grow.id %>
+        <% else %>
+          <%= form.select :grow_id, options_from_collection_for_select(
+            Grow.where.not(grow_status: [:done, :aborted]), "id", "name", params[:grow_id]),
+            {
+              prompt: "None"
+            },
+            class: "form-control grows-select",
+            data: {
+              action: "change->observation#changeGrow",
+              observation_target: "growSelect"
+            },
+            id: "grow-select"
+          %>
+        <% end %>
       </div>
     </div>
 
     <div class="mb-3 row">
       <%= form.label "Subject", class: "col-sm-2 col-form-label" %>
       <div class="col-sm-10">
-        <%= form.select :subject_ids, options_from_collection_for_select(Subject.joins(:grow).where.not('grows.grow_status': [:done, :aborted]), "id", "fullname", observation.subjects.map(&:id).presence || @subject&.id || params[:subject_ids]), {}, multiple: true, class: "form-control" %>
+        <% if @grow.subjects.empty? %>
+          <input class="form-control" type="text" value="No subjects defined." aria-label="No subjects defined." disabled readonly>
+        <% else %>
+          <%= form.select :subject_ids,
+            options_from_collection_for_select(
+              Subject.joins(:grow).where.not(
+                'grows.grow_status': [:done, :aborted]
+              ).where(
+                grow_id: @grow.id
+              ),
+              "id",
+              "fullname", observation.subjects.map(&:id).presence || @subject&.id || params[:subject_ids]
+            ),
+            {},
+            multiple: true,
+            class: "form-control",
+            data: { observation_target: "subjectSelect" },
+            id: "subject-select"
+          %>
+        <% end %>
       </div>
     </div>
 
@@ -47,18 +82,18 @@
       <%= form.text_area :body, class: "form-control", rows: 6, placeholder: "Add a comment here…" %>
     </div>
     <hr>
-    <h4>Resource Datas</h4>
+    <h4>Observation Resources</h4>
     <% if Resource.where.not(units: []).count > 0 %>
-      <!-- Resource Data Section -->
-      <turbo-frame id="resource_data">
-        <div id="resource-data-container">
-          <%= form.fields_for :resource_datas do |ff| %>
-            <%= render partial: 'admin/resource_datas/turbo_fields', locals: { ff: ff } %>
+      <!-- ObservationResource Section -->
+      <turbo-frame id="observation_resource">
+        <div id="observation-resource-container">
+          <%= form.fields_for :observation_resources do |ff| %>
+            <%= render partial: 'admin/observation_resources/turbo_fields', locals: { ff: ff } %>
           <% end %>
         </div>
       </turbo-frame>
       <div class="mt-3">
-        <%= button_tag "Add Resource Data", formaction: new_admin_resource_data_path, formmethod: :get, data: {turbo_stream: true}, class: 'btn btn-sm btn-success' %>
+        <%= button_tag "Add Observation Resource", formaction: new_admin_observation_resource_path, formmethod: :get, data: {turbo_stream: true}, class: 'btn btn-sm btn-success' %>
       </div>
     <% else %>
       <div class="card mb-3">

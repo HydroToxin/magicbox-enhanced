@@ -1,14 +1,16 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["unitSelect", "resourceSelect"]  // Diese Target-Namen müssen gleich sein
+  static targets = ["unitSelect", "choiceSelect", "resourceSelect"]  // Diese Target-Namen müssen gleich sein
 
   connect() {
-    console.log('ResoureDataController controller connected');
+    console.log('ObservationResourceController connected');
+    this.updateChoiceSelect();
     this.updateUnitSelect();
   }
 
   changeResource(event) {
+    this.updateChoiceSelect();
     this.updateUnitSelect();
   }
 
@@ -29,6 +31,20 @@ export default class extends Controller {
       option.value = unit;
       option.textContent = unit;
       this.unitSelectTarget.appendChild(option);
+    });
+  }
+  updateChoiceSelect() {
+    const resourceId = this.resourceSelectTarget.value;
+    const resourceChoicesMap = JSON.parse(this.choiceSelectTarget.dataset.choicesMap);
+
+    const choices = resourceChoicesMap[resourceId] || [];
+    this.choiceSelectTarget.innerHTML = '';
+
+    choices.forEach(choice => {
+      const option = document.createElement("option");
+      option.value = choice;
+      option.textContent = choice;
+      this.choiceSelectTarget.appendChild(option);
     });
   }
 }

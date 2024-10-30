@@ -1,13 +1,17 @@
 <%= form_for [:admin, room, device], data: { turbo: false }, html: {role: "form", class: "col-md-12 col-lg-8 mx-auto" } do |f| %>
-	<h1>
 		<% if device.new_record? %>
+	<h1>
 			New device
 		<% else %>
 			Edit device
 		<% end %>
 
 		<div class="actions float-end">
-      <%= link_to 'Cancel', admin_devices_path, class: "btn btn-light border" %>
+			<% if @room.present? %>
+	      <%= link_to 'Cancel', room_path(@room), class: "btn btn-light border" %>
+			<% else %>
+	      <%= link_to 'Cancel', admin_devices_path, class: "btn btn-light border" %>
+			<% end %>
       <% unless device.new_record? %>
 				<%= link_to 'Destroy', admin_device_path(device), data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-outline-danger" %>
       <% end %>
@@ -30,10 +34,17 @@
 
 	<div class="row">
 		<div class="col-6">
-			<div class="mb-3">
-				<%= f.label "Room", class: 'form-label' %>
-				<%= f.select :room_id, options_from_collection_for_select(Room.all, "id", "name", room.id), {}, class: "form-control" %>
-			</div>
+			<% unless @room.present? %>
+				<div class="mb-3">
+					<%= f.label "Room", class: 'form-label' %>
+					<%= f.select :room_id, options_from_collection_for_select(Room.all, "id", "name", device.room_id), {}, class: "form-control" %>
+				</div>
+			<% else %>
+				<div class="mb-3">
+          <input class="form-control" type="text" value="<%= @room.name %>" aria-label="<%= @room.name %>" disabled readonly>
+          <%= f.hidden_field :room_id, value: @room.id %>
+				</div>
+			<% end %>
 		</div>
 		<div class="col-6"></div>
 	</div>

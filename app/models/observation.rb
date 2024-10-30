@@ -8,19 +8,19 @@ class Observation < ApplicationRecord
 
   has_many :events, as: :eventable, dependent: :destroy
   has_many :observations_subjects, dependent: :destroy
-  has_many :resource_datas, class_name: 'ResourceData'
+  has_many :observation_resources, class_name: 'ObservationResource'
   has_many :subjects, through: :observations_subjects, dependent: :destroy
+  has_many :issues
 
-  accepts_nested_attributes_for :resource_datas, allow_destroy: true, reject_if: proc { |attributes|
+  accepts_nested_attributes_for :observation_resources, allow_destroy: true, reject_if: proc { |attributes|
     attributes['value'].blank?
   }
-
-  has_many :issues
-  accepts_nested_attributes_for :issues, allow_destroy: true
+  accepts_nested_attributes_for :issues
 
   has_many_attached :pictures
 
   validates :body, presence: true
+  validates :subject_ids, presence: true
 
   def start_date
     created_at

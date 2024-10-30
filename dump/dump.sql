@@ -988,10 +988,10 @@ ALTER SEQUENCE public.push_devices_id_seq OWNED BY public.push_devices.id;
 
 
 --
--- Name: resource_datas; Type: TABLE; Schema: public; Owner: magicbox
+-- Name: observation_resources; Type: TABLE; Schema: public; Owner: magicbox
 --
 
-CREATE TABLE public.resource_datas (
+CREATE TABLE public.observation_resources (
     id bigint NOT NULL,
     resource_id integer,
     observation_id integer,
@@ -1003,13 +1003,13 @@ CREATE TABLE public.resource_datas (
 );
 
 
-ALTER TABLE public.resource_datas OWNER TO magicbox;
+ALTER TABLE public.observation_resources OWNER TO magicbox;
 
 --
--- Name: resource_datas_id_seq; Type: SEQUENCE; Schema: public; Owner: magicbox
+-- Name: observation_resources_id_seq; Type: SEQUENCE; Schema: public; Owner: magicbox
 --
 
-CREATE SEQUENCE public.resource_datas_id_seq
+CREATE SEQUENCE public.observation_resources_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1017,13 +1017,13 @@ CREATE SEQUENCE public.resource_datas_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.resource_datas_id_seq OWNER TO magicbox;
+ALTER TABLE public.observation_resources_id_seq OWNER TO magicbox;
 
 --
--- Name: resource_datas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: magicbox
+-- Name: observation_resources_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: magicbox
 --
 
-ALTER SEQUENCE public.resource_datas_id_seq OWNED BY public.resource_datas.id;
+ALTER SEQUENCE public.observation_resources_id_seq OWNED BY public.observation_resources.id;
 
 
 --
@@ -1594,10 +1594,10 @@ ALTER TABLE ONLY public.push_devices ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
--- Name: resource_datas id; Type: DEFAULT; Schema: public; Owner: magicbox
+-- Name: observation_resources id; Type: DEFAULT; Schema: public; Owner: magicbox
 --
 
-ALTER TABLE ONLY public.resource_datas ALTER COLUMN id SET DEFAULT nextval('public.resource_datas_id_seq'::regclass);
+ALTER TABLE ONLY public.observation_resources ALTER COLUMN id SET DEFAULT nextval('public.observation_resources_id_seq'::regclass);
 
 
 --
@@ -1948,10 +1948,10 @@ COPY public.push_devices (id, device_id, user_id, created_at, updated_at) FROM s
 
 
 --
--- Data for Name: resource_datas; Type: TABLE DATA; Schema: public; Owner: magicbox
+-- Data for Name: observation_resources; Type: TABLE DATA; Schema: public; Owner: magicbox
 --
 
-COPY public.resource_datas (id, resource_id, observation_id, subject_id, value, unit, created_at, updated_at) FROM stdin;
+COPY public.observation_resources (id, resource_id, observation_id, subject_id, value, unit, created_at, updated_at) FROM stdin;
 \.
 
 
@@ -12322,10 +12322,10 @@ SELECT pg_catalog.setval('public.push_devices_id_seq', 1, false);
 
 
 --
--- Name: resource_datas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: magicbox
+-- Name: observation_resources_id_seq; Type: SEQUENCE SET; Schema: public; Owner: magicbox
 --
 
-SELECT pg_catalog.setval('public.resource_datas_id_seq', 1, false);
+SELECT pg_catalog.setval('public.observation_resources_id_seq', 1, false);
 
 
 --
@@ -12592,11 +12592,11 @@ ALTER TABLE ONLY public.push_devices
 
 
 --
--- Name: resource_datas resource_datas_pkey; Type: CONSTRAINT; Schema: public; Owner: magicbox
+-- Name: observation_resources observation_resources_pkey; Type: CONSTRAINT; Schema: public; Owner: magicbox
 --
 
-ALTER TABLE ONLY public.resource_datas
-    ADD CONSTRAINT resource_datas_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.observation_resources
+    ADD CONSTRAINT observation_resources_pkey PRIMARY KEY (id);
 
 
 --
@@ -12948,24 +12948,24 @@ CREATE INDEX index_push_devices_on_user_id ON public.push_devices USING btree (u
 
 
 --
--- Name: index_resource_datas_on_observation_id; Type: INDEX; Schema: public; Owner: magicbox
+-- Name: index_observation_resources_on_observation_id; Type: INDEX; Schema: public; Owner: magicbox
 --
 
-CREATE INDEX index_resource_datas_on_observation_id ON public.resource_datas USING btree (observation_id);
-
-
---
--- Name: index_resource_datas_on_resource_id; Type: INDEX; Schema: public; Owner: magicbox
---
-
-CREATE INDEX index_resource_datas_on_resource_id ON public.resource_datas USING btree (resource_id);
+CREATE INDEX index_observation_resources_on_observation_id ON public.observation_resources USING btree (observation_id);
 
 
 --
--- Name: index_resource_datas_on_subject_id; Type: INDEX; Schema: public; Owner: magicbox
+-- Name: index_observation_resources_on_resource_id; Type: INDEX; Schema: public; Owner: magicbox
 --
 
-CREATE INDEX index_resource_datas_on_subject_id ON public.resource_datas USING btree (subject_id);
+CREATE INDEX index_observation_resources_on_resource_id ON public.observation_resources USING btree (resource_id);
+
+
+--
+-- Name: index_observation_resources_on_subject_id; Type: INDEX; Schema: public; Owner: magicbox
+--
+
+CREATE INDEX index_observation_resources_on_subject_id ON public.observation_resources USING btree (subject_id);
 
 
 --

@@ -1,4 +1,4 @@
-<%= form_with [:admin, @scenario], local: true do |scenario_form| %>
+<%= form_with(model: [:admin, scenario], data: { turbo: false }, local: true, class: "col-md-12 col-lg-12 mx-auto") do |form| %>
   <% if @scenario.errors.any? %>
     <div class="alert alert-danger" id="error_explanation">
       <h4><%= pluralize(@scenario.errors.count, "error") %> prohibited this scenario from being saved:</h4>
@@ -13,34 +13,33 @@
   <fieldset>
     <!-- Scenario Fields -->
     <div class="field mb-3">
-      <%= scenario_form.label :name, class: 'form-label' %>
-      <%= scenario_form.text_field :name, class: "form-control" %>
+      <%= form.label :name, class: 'form-label' %>
+      <%= form.text_field :name, class: "form-control" %>
     </div>
 
     <div class="field mb-3">
-      <%= scenario_form.label :description, class: 'form-label' %>
-      <%= scenario_form.text_area :description, class: "form-control" %>
+      <%= form.label :description, class: 'form-label' %>
+      <%= form.text_area :description, class: "form-control" %>
     </div>
 
     <div class="field mb-3">
-      <%= scenario_form.label :enabled, class: 'form-label' %>
-      <%= scenario_form.check_box :enabled %>
+      <%= form.label :enabled, class: 'form-label' %>
+      <%= form.check_box :enabled %>
     </div>
     <hr>
   </fieldset>
 
   <h3>Condition Groups</h3>
   <div id="condition_groups" class="mb-2">
-    <%= scenario_form.fields_for :condition_groups do |ff| %>
+    <%= form.fields_for :condition_groups do |ff| %>
       <%= render "condition_group_fields", :f => ff %>
     <% end %>
   </div>
-  <%= link_to "Add Group +", "condition_group_fields", class: "btn", data: {turbo_stream: true} %>
-  <%= button_tag "Add Question", formaction: new_admin_condition_group_path, formmethod: :get, data: {turbo_stream: true} %>
-  <%= button_tag "Add Question", formaction: new_admin_scenario_condition_group_path, formmethod: :get, data: {turbo_stream: true} %>
+  <%= link_to "Add Group", "condition_group_fields", class: "btn", data: {turbo_stream: true} %>
+  <%= link_to "Add Question", formaction: new_admin_condition_group_path, formmethod: :get, data: {turbo_stream: true} %>
 
   <!-- Submit Button -->
   <div class="actions">
-    <%= scenario_form.submit "Save", class: "btn btn-primary" %>
+    <%= form.submit "Save", class: "btn btn-primary" %>
   </div>
 <% end %>

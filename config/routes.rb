@@ -162,7 +162,7 @@ Rails.application.routes.draw do
     end
     resources :categories
     resources :resources
-    resources :resource_datas
+    resources :observation_resources
     resources :issues, only: [:new, :destroy]
 
     resource :settings
@@ -186,7 +186,9 @@ Rails.application.routes.draw do
       end
 
       resources :rooms
-      resources :grows
+      resources :grows do
+        resources :subjects
+      end
       resources :subjects do
         resources :observations
       end

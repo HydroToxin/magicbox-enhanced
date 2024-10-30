@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Observations::ResourceDataComponent < ViewComponent::Base
+class Observations::ObservationResourceComponent < ViewComponent::Base
   def initialize(title:, content:)
     @title = title
     @content = content

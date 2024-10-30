@@ -85,3 +85,6 @@
 
 - 4df1365 migration to rspec completed
 - 47ab7d6 further progress rspec tests
+## 2024-10-29
+
+- a24cd15 fixes some isues

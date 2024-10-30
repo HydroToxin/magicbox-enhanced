@@ -94,12 +94,13 @@ nutrients_category = Category.create(name: 'Nutrients',
 Category.create(name: 'Air', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit')
 Category.create(name: 'Light', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit')
 
+
 Resource.create(
   name: 'Water quantity',
   shortname: 'H2O',
   description: 'Amount of liquid water',
   category_id: water_category.id,
-  choices: [],
+  choices: ['Spring water', 'Well water', 'Rainwater', 'Filtered water'],
   units: %w[l dl cl ml]
 )
 
@@ -109,15 +110,16 @@ Resource.create(
   description: 'Type of water used for watering your grows',
   category_id: water_category.id,
   choices: ['Tap water', 'Mineral water', 'Purified water', 'Distiled water (reverse osmosis)'],
-  units: []
+  units: %w[l dl cl ml]
 )
+
 
 Resource.create(
   name: 'pH',
   shortname: 'pH',
   description: 'Scale used to specify the acidity or basicity of an aqueous solution',
   category_id: water_category.id,
-  choices: [],
+  choices: ['Acidic', 'Neutral', 'Alkaline'],
   units: ['pH']
 )
 
@@ -126,8 +128,8 @@ Resource.create(
   shortname: 'EC',
   description: "Electrical conductivity is the measure of a material's ability to allow the transport of an electric charge",
   category_id: water_category.id,
-  choices: [],
-  units: ['EC']
+  choices: ['Conductivity'],
+  units: ['µS/cm', 'mS/cm']
 )
 
 # NUTRIENTS
@@ -136,8 +138,8 @@ Resource.create(
   shortname: 'N',
   description: 'Nitrogen is a nonmetal chemical element essential for plant grow',
   category_id: nutrients_category.id,
-  choices: [],
-  units: %w[l dl cl ml]
+  choices: ['Ammonium', 'Nitrate', 'Urea'],
+  units: ['ppm', 'mg/L']
 )
 
 Resource.create(
@@ -145,8 +147,8 @@ Resource.create(
   shortname: 'P',
   description: 'Phosphates are required for the biosynthesis of genetic material as well as ATP, essential for life.',
   category_id: nutrients_category.id,
-  choices: [],
-  units: %w[l dl cl ml]
+  choices: ['Orthophosphate', 'Total Phosphate'],
+  units: ['ppm', 'mg/L']
 )
 
 Resource.create(
@@ -154,8 +156,8 @@ Resource.create(
   shortname: 'K',
   description: 'Potatium provides the ionic environment for metabolic processes in the cytosol, and as such functions as a regulator of various processes including growth regulation.',
   category_id: nutrients_category.id,
-  choices: [],
-  units: %w[l dl cl ml]
+  choices: ['Soluble', 'Potash'],
+  units: ['ppm', 'mg/L']
 )
 
 # create default scenario
@@ -168,7 +170,10 @@ r.scenarios << [growing_scenario, climat_scenario, watering_scenario]
 r.save!
 
 Grow.create! description: 'Test', start_date: Time.now, flowering: 1, grow_status: :seedling, birth_type: 'from_seed'
-Observation.create! user: User.first, grow: Grow.first, body: 'Observation Test', water: true, nutrients: 10, room: r
+
+s = Subject.create! name: 'Test Subject', grow: Grow.first, room: Room.last
+
+Observation.create! user: User.first, grow: Grow.first, body: 'Observation Test', water: true, nutrients: 10, room: r, subject_ids: [s.id]
 
 s = Sample.create(
   product_reference: 'System',

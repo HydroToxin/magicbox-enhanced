@@ -82,7 +82,7 @@
 	</div>
 </div>
 
-<% if @device.idle? %>
+<% if @device.idle? && @samples.present? %>
 	<hr>
 
 	<% data = @device.data_types.map { |data_type| {

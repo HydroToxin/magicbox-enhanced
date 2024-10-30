@@ -4,6 +4,7 @@
 class ObservationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_observation, only: %i[show edit update destroy]
+  before_action :set_grow, only: %i[new create show edit update destroy]
 
   # GET /observations
   # GET /observations.json
@@ -23,8 +24,8 @@ class ObservationsController < ApplicationController
 
     return unless current_user.observations.last
 
-    current_user.observations.last.resource_datas.each do |rd|
-      @observation.resource_datas.build(
+    current_user.observations.last.observation_resources.each do |rd|
+      @observation.observation_resources.build(
         resource_id: rd.resource_id,
         observation_id: rd.observation_id,
         value: rd.value,
@@ -39,7 +40,6 @@ class ObservationsController < ApplicationController
 
   # POST /observations
   # POST /observations.json
-  # rubocop:disable Metrics/MethodLength
   def create
     @observation = Observation.new(observation_params)
     @grow = @observation.grow
@@ -48,7 +48,7 @@ class ObservationsController < ApplicationController
       if @observation.save
         message = "New observation has been created by <b>#{current_user.username}</b>"
 
-        Event.create!(event_type: :action, message:, eventable: @observation, user_id: current_user.id)
+        Event.create! event_type: :action, message: message, eventable: @observation, user_id: current_user.id
 
         format.html { redirect_to @grow, notice: 'Observation was successfully created.' }
         format.json { render :show, status: :created, location: @observation }
@@ -58,7 +58,6 @@ class ObservationsController < ApplicationController
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   # PATCH/PUT /observations/1
   # PATCH/PUT /observations/1.json
@@ -70,7 +69,7 @@ class ObservationsController < ApplicationController
         end
         format.json { render :show, status: :ok, location: @observation }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @observation.errors, status: :unprocessable_entity }
       end
     end
@@ -91,10 +90,14 @@ class ObservationsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_observation
     @observation = Observation.find(params[:id])
-    @grow = @observation.grow
-    add_breadcrumb "Grow ##{@grow.id}", @grow
   end
 
+  def set_grow
+    return if params[:grow_id].nil?
+
+    @grow = Grow.find(params[:grow_id])
+    add_breadcrumb "Grow ##{@grow.id}", @grow
+  end
   # rubocop:disable Metrics/MethodLength
   def observation_params
     params.require(:observation).permit(
@@ -107,7 +110,7 @@ class ObservationsController < ApplicationController
       :nutrients,
       subject_ids: [],
       pictures: [],
-      resource_datas_attributes: %i[
+      observation_resources_attributes: %i[
         id
         subject_id
         observation_id

@@ -1,9 +1,9 @@
 import { StreamActions } from "@hotwired/turbo"
 
-function initAdminResourceDataForm() {
+function initAdminObservationResourceForm() {
   // Check if the form with the specific ID is present in the DOM
-  const adminResourcedataForm = document.getElementById("admin-resource-data-form") as HTMLFormElement | null;
-  if (!adminResourcedataForm) {
+  const adminObservationResourceForm = document.getElementById("admin-observation-resource-form") as HTMLFormElement | null;
+  if (!adminObservationResourceForm) {
     return; // Exit the function if the form is not present
   }
 
@@ -52,19 +52,19 @@ function initAdminResourceDataForm() {
 }
 
 // Initialize the function with different events
-document.addEventListener('turbo:render', initAdminResourceDataForm);
-document.addEventListener('turbo:frame-load', initAdminResourceDataForm);
+document.addEventListener('turbo:render', initAdminObservationResourceForm);
+document.addEventListener('turbo:frame-load', initAdminObservationResourceForm);
 
 document.addEventListener("turbo:frame-render", (event) => {
-  if ((event.target as any).id === "resource_data") {
+  if ((event.target as any).id === "observation_resource") {
     console.log("Turbo-Frame geladen:", event);
-    initAdminResourceDataForm();
+    initAdminObservationResourceForm();
   }
 });
 
 document.addEventListener('turbo:load', () => {
   console.log('Turbo:load triggered.');
-  initAdminResourceDataForm();
+  initAdminObservationResourceForm();
 });
 
 document.addEventListener("turbo:before-stream-render", ((event) => {

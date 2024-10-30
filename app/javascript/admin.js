@@ -4,4 +4,4 @@ import './views/admin/grows/weeks';
 import './views/admin/grows/form';
 import './views/admin/todos/form';
 //import './views/admin/scenarions/form';
-import './views/admin/resource_data/form';
+import './views/admin/observation_resource/form';

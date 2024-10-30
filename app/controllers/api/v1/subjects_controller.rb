@@ -29,7 +29,11 @@ module Api
       param :sort_direction, %w[asc desc], desc: 'The sort direction key'
       param :sort_column, %w[id name created_at updated_at], desc: 'The sort column name'
       def index
-        @items = Subject.all
+        if params.key? :grow_id
+          @items = Grow.find(params[:grow_id]).subjects
+        else
+          @items = Subject.all
+        end
 
         @items = if params.key?(:sort_direction) && params.key?(:sort_column)
                    @items.order("#{params[:sort_column]} #{params[:sort_direction]}")

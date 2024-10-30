@@ -224,13 +224,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.integer "issue_type"
     t.integer "issue_status"
     t.bigint "resource_id"
-    t.bigint "subject_id"
     t.bigint "observation_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["observation_id"], name: "index_issues_on_observation_id"
     t.index ["resource_id"], name: "index_issues_on_resource_id"
-    t.index ["subject_id"], name: "index_issues_on_subject_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -244,6 +242,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "observation_resources", force: :cascade do |t|
+    t.string "value"
+    t.string "choice"
+    t.string "unit"
+    t.bigint "resource_id"
+    t.bigint "observation_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["observation_id"], name: "index_observation_resources_on_observation_id"
+    t.index ["resource_id"], name: "index_observation_resources_on_resource_id"
   end
 
   create_table "observations", force: :cascade do |t|
@@ -291,19 +301,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["device_id"], name: "index_push_devices_on_device_id"
     t.index ["user_id"], name: "index_push_devices_on_user_id"
-  end
-
-  create_table "resource_datas", force: :cascade do |t|
-    t.string "value"
-    t.string "unit"
-    t.bigint "resource_id"
-    t.bigint "observation_id"
-    t.bigint "subject_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["observation_id"], name: "index_resource_datas_on_observation_id"
-    t.index ["resource_id"], name: "index_resource_datas_on_resource_id"
-    t.index ["subject_id"], name: "index_resource_datas_on_subject_id"
   end
 
   create_table "resources", force: :cascade do |t|
@@ -467,8 +464,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
   add_foreign_key "harvests", "grows"
   add_foreign_key "issues", "observations"
   add_foreign_key "issues", "resources"
-  add_foreign_key "issues", "subjects"
   add_foreign_key "notifications", "users"
+  add_foreign_key "observation_resources", "observations"
+  add_foreign_key "observation_resources", "resources"
   add_foreign_key "observations", "grows"
   add_foreign_key "observations", "rooms"
   add_foreign_key "observations", "users"
@@ -477,9 +475,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
   add_foreign_key "operations", "condition_groups"
   add_foreign_key "push_devices", "devices"
   add_foreign_key "push_devices", "users"
-  add_foreign_key "resource_datas", "observations"
-  add_foreign_key "resource_datas", "resources"
-  add_foreign_key "resource_datas", "subjects"
   add_foreign_key "resources", "categories"
   add_foreign_key "room_scenarios", "rooms"
   add_foreign_key "room_scenarios", "scenarios"

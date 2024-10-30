@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-# ResourceData
-class ResourceData < ApplicationRecord
-  self.table_name = 'resource_datas'
+# ObservationResource
+class ObservationResource < ApplicationRecord
+  self.table_name = 'observation_resources'
   belongs_to :resource
-  belongs_to :subject
   belongs_to :observation
 
   attr_accessor :category_id
