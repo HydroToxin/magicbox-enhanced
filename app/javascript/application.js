@@ -2,7 +2,8 @@
 // Entry point for the build script in your package.json
 
 // Import Turbo
-import "@hotwired/turbo-rails"
+import { Turbo } from "@hotwired/turbo-rails"
+Turbo.session.drive = false
 
 // Import Stimulus
 import { Application } from "@hotwired/stimulus"
@@ -19,6 +20,7 @@ import Chartkick from 'chartkick';
 import Chart from 'chart.js/auto';
 import highchartsMore from 'highcharts/highcharts-more';
 import highchartsAccessibility from 'highcharts/modules/accessibility';
+import 'bootstrap5-toggle/js/bootstrap5-toggle.ecmas.min.js';
 
 highchartsMore(Highcharts);
 highchartsAccessibility(Highcharts);
@@ -26,22 +28,8 @@ highchartsAccessibility(Highcharts);
 Chartkick.use(Highcharts);
 window.createPopper = createPopper;
 import './admin';
-import './views/calendar/calendar'
-import './views/grows/weeks'
+
 const application = Application.start()
-
-
-function init_views() {
-  console.log("init_views");
-
-}
-document.addEventListener('turbo:load', () => {
-  console.log('Turbo ist geladen über addEventListener');
-  init_views();
-  if (window.history.state && window.history.state.turbo) {
-    window.addEventListener("popstate", function () { location.reload(true); });
-  }
-});
 
 document.addEventListener('DOMContentLoaded', function () {
   console.log('DOMContentLoaded');
@@ -57,3 +45,4 @@ document.addEventListener('DOMContentLoaded', function () {
     proceed.apply(this, Array.prototype.slice.call(arguments, 1));
   });*/
 });
+

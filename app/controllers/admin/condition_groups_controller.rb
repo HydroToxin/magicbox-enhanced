@@ -3,6 +3,7 @@
 module Admin
   # Admin::ConditionGroupsController
   class ConditionGroupsController < Admin::AdminController
+
     def new
       @condition_group = ConditionGroup.new
     end

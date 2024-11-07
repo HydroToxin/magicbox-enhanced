@@ -1,9 +1,2 @@
-<main class="container">
-  <%= link_to sanitize("&larr; Back to Scenarios"), admin_scenarios_path %>
-
-  <div class="header">
-    <h1>New Scenario</h1>
-  </div>
-
-  <%= render 'form', scenario: @scenario %>
-</main>
+<%= link_to sanitize("&larr; Back to Scenarios"), admin_scenarios_path %>
+<%= render 'form', scenario: @scenario %>

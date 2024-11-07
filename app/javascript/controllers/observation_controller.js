@@ -8,7 +8,7 @@ export default class extends Controller {
   }
 
   async changeGrow(event) {
-    const growId = this.growSelectTarget.value;
+    const growId = this.growSelectTarget.value;x
     if (growId) {
       try {
         const response = await fetch(`/api/v1/grows/${growId}`);

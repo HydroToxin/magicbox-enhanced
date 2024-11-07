@@ -114,6 +114,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
   create_table "conditions", force: :cascade do |t|
     t.integer "predicate"
     t.integer "target_value"
+    t.integer "device_state"
     t.integer "condition_type", default: 0
     t.integer "logic", default: 0
     t.integer "duration"
@@ -123,11 +124,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.time "end_time"
     t.datetime "last_duration_checked_at", precision: nil
     t.bigint "data_type_id"
+    t.bigint "device_id"
     t.bigint "condition_group_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["condition_group_id"], name: "index_conditions_on_condition_group_id"
     t.index ["data_type_id"], name: "index_conditions_on_data_type_id"
+    t.index ["device_id"], name: "index_conditions_on_device_id"
   end
 
   create_table "data_types", force: :cascade do |t|
@@ -455,6 +458,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
   add_foreign_key "condition_groups", "scenarios"
   add_foreign_key "conditions", "condition_groups"
   add_foreign_key "conditions", "data_types"
+  add_foreign_key "conditions", "devices"
   add_foreign_key "devices", "rooms"
   add_foreign_key "devices_data_types", "data_types"
   add_foreign_key "devices_data_types", "devices"

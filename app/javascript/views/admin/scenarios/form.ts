@@ -12,11 +12,9 @@ function initAdminScenariosConditionfields() {
   document.addEventListener('click', function(event) {
     const target = event.target;
 
-    // Überprüfen Sie, ob das Ziel ein Element ist und das Attribut data-remove-field enthält
     if (target instanceof HTMLElement && target.hasAttribute('data-remove-field')) {
       event.preventDefault();
 
-      // Suche das übergeordnete '.card'-Element
       let fieldContainer = target.closest('.card');
 
       if (fieldContainer) {

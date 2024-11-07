@@ -1,34 +1,67 @@
-<div class="card p-4 mb-3 condition-fields" id="<%= dom_id(f.object) %>">
-  <div class="d-inline-flex pb-2 w-100" style="position: relative">
-    <%= f.select :logic, options_for_select(Condition.logics.keys.map { |e| [Condition.logic_text(e.to_sym), e] }, f.object.logic), {}, class: "form-control me-2" %>
+<div class="card p-4 mb-3 condition-form-fields">
+  <div class="form-inline pb-2 d-flex" style="position: relative" data-controller="condition-form-fields" data-new-record="<%= f.object.new_record? %>" >
+    <%= f.select :logic,
+      options_for_select(
+        Condition.logics.keys.map { |e| [Condition.logic_text(e.to_sym), e] },
+        f.object.logic
+      ),
+      {},
+      class: "form-select me-2 w-auto"
+    %>
 
-    <%= f.select :condition_type, options_for_select(Condition.condition_types.keys.map { |e| [Condition.condition_type_text(e.to_sym), e] }, f.object.condition_type), {}, class: "form-control me-2 condition_type" %>
+    <%= f.select :condition_type,
+      options_for_select(
+        Condition.condition_types.keys.map { |e|
+          [Condition.condition_type_text(e.to_sym), e]
+        },
+        f.object.condition_type
+      ),
+      {},
+      class: "form-select me-2 w-auto ml-2",
+      data: {
+        "condition-form-fields-target": "conditionType",
+        action: "change->condition-form-fields#changeConditionType"
+      }
+    %>
 
-    <div class="condition_form condition_type_date">
-      <span>Between:&nbsp;</span>
-      <%= f.text_field :start_time, value: f.object.start_time, class: "form-control me-2", placeholder: "TT.MM.JJJJ" %>
-
-      <span>And:&nbsp;</span>
-      <%= f.text_field :end_time, value: f.object.end_time, class: "form-control me-2", placeholder: "HH:MM" %>
+    <%# Date Fields %>
+    <div data-condition-form-fields-target="dateFields" class="condition-form__field--hidden d-flex">
+      <span class="me-2 mt-2">Between</span>
+      <%= f.text_field :start_time, value: ftime(f.object.start_time), class: "form-control me-2 select-time" %>
+      <span class="me-2 mt-2">And</span>
+      <%= f.text_field :end_time, value: ftime(f.object.end_time), class: "form-control me-2 select-time" %>
     </div>
 
-    <div class="condition_form condition_type_time_duration">
-      <span>Every:&nbsp;</span>
-      <%= f.number_field :time_duration_hours, value: f.object.time_duration_hours, placeholder: "Hours", class: "form-control me-2" %> hour(s) and
-      <%= f.number_field :time_duration_minutes, value: f.object.time_duration_minutes, placeholder: "Minutes", class: "form-control me-2", max: 59, step: 5 %> minutes
+    <%# Duration Fields %>
+    <div data-condition-form-fields-target="durationFields" class="condition-form__field--hidden d-flex">
+      <span class="me-2 mt-2">Every</span>
+      <%= f.number_field :time_duration_hours, value: f.object.time_duration_hours, placeholder: "Hours", class: "form-control me-2" %>
+      <span class="me-2 mt-2">hour(s)&nbspand</span>
+      <%= f.number_field :time_duration_minutes, value: f.object.time_duration_minutes, placeholder: "Minutes", class: "form-control me-2", max: 59, step: 5 %>
+      <span class="me-2 mt-2">minutes</span>
 
-      <div class="d-inline-block mx-4">
-        <small class="text-muted">
-          Last check: <%= fdatetime f.object.last_duration_checked_at || f.object.created_at %>
-          Next check: <%= fdatetime ((f.object.last_duration_checked_at || f.object.created_at) + (f.object.duration * 60)) if f.object.duration %>
-        </small>
-      </div>
     </div>
 
-    <div class="d-inline-flex condition_form condition_type_data_type">
-      <%= f.select :data_type_id, options_from_collection_for_select(DataType.all, "id", "name", f.object.data_type_id), {}, class: "form-control me-2" %>
-      <%= f.select :predicate, options_for_select([[">=", 0], ["<=", 1]], f.object.predicate), {}, class: "form-control me-2" %>
+    <%# Data Type Select %>
+    <div data-condition-form-fields-target="dataTypeFields" class="condition-form__field--hidden d-flex">
+      <%= f.select :data_type_id, options_from_collection_for_select(DataType.all, "id", "name", f.object.data_type_id), {}, class: "form-select me-2 w-auto" %>
+    </div>
+
+    <%# Device Select %>
+    <div data-condition-form-fields-target="deviceFields" class="condition-form__field--hidden d-flex">
+      <%= f.select :device_id, options_from_collection_for_select(Device.all, "id", "name", f.object.device_id), {}, class: "form-select me-2 w-auto" %>
+    </div>
+
+    <%# Shared Fields %>
+    <div data-condition-form-fields-target="predicateField" class="condition-form__field--hidden d-flex">
+      <%= f.select :predicate, options_for_select([[">=", 0], ["<=", 1]], f.object.predicate), {}, class: "form-select me-2 w-auto" %>
+    </div>
+
+    <div data-condition-form-fields-target="targetValueField" class="condition-form__field--hidden d-flex">
       <%= f.number_field :target_value, placeholder: "Target value", class: "form-control me-2" %>
     </div>
+
+    <button type="button" data-action="condition-form-fields#remove" class="btn btn-danger">Remove</button>
+    <%= f.hidden_field :_destroy %>
   </div>
 </div>

@@ -105,7 +105,7 @@ Rails.application.routes.draw do
       resources :devices, only: %i[index edit update new create destroy] do
         post :start, on: :member
         post :stop, on: :member
-        resources :events # Hinzufügen von Events unter Devices im Admin-Bereich
+        resources :events
       end
     end
 
@@ -114,15 +114,23 @@ Rails.application.routes.draw do
     resources :batches
     resources :harvests
     resources :weeks
+    resources :conditions do
+      collection do
+        get 'update', to: 'conditions#update'
+      end
+    end
+
     resources :devices do
       post :start, on: :member
       post :stop, on: :member
     end
 
     resources :scenarios do
-      resources :condition_groups, only: %i[new create destroy] do
-        resources :conditions, only: %i[new create destroy]
-        resources :operations, only: %i[new create destroy]
+      member do
+        get :load_condition_type_form
+      end
+      member do
+        post 'run'
       end
       collection do
         get :export
@@ -130,30 +138,10 @@ Rails.application.routes.draw do
       end
     end
 
-    # resources :scenarios do
-    #  resources :condition_groups, only: [:new, :create, :destroy] do
-    #    resources :conditions, only: [:new, :create, :destroy]
-    #    resources :operations, only: [:new, :create, :destroy]
-    #  end
-    #  member do
-    #    post 'run'
-    #  end
-    #  collection do
-    #    get :export
-    #    post :import
-    #  end
-    # end
-
-    resources :scenarios do
-      resources :condition_groups, only: %i[new create destroy] do
-        resources :conditions, only: %i[new create destroy]
-        resources :operations, only: %i[new create destroy]
-      end
-    end
-
     resources :condition_groups
     resources :conditions
     resources :operations
+
     resources :alerts do
       member do
         post :test

@@ -14,7 +14,7 @@ class Condition < ApplicationRecord
   belongs_to :condition_group
   belongs_to :data_type
 
-  enum condition_type: { date: 0, time_duration: 4, data_type: 1, resource: 2, device_state: 3 }
+  enum condition_type: { date: 0, time_duration: 1, data_type: 2, device_state: 3 }
 
   enum logic: { and_operator: 0, or_operator: 1 }
 
@@ -80,6 +80,7 @@ class Condition < ApplicationRecord
     elsif data_type?
       return "<b>#{data_type.name}</b> is <b>#{[['>=', 0], ['<=', 1]][predicate].first}</b> to <b>#{target_value}</b>"
     elsif time_duration?
+      return if duration.nil?
       return "not ran since <b>#{distance_of_time_in_words(duration * 60)}</b>"
     end
 

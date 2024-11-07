@@ -1,6 +1,9 @@
-<div class="operation-fields d-flex align-items-center pb-2" id="<%= dom_id(f.object) %>">
-  <%= f.select :device_type, options_for_select(Device.device_types.keys.map { |e| [e.titleize, e] }, f.object.device_type), {}, class: "form-control me-2" %>
-  <%= f.select :command, options_for_select(["start", "stop"], f.object.command), {}, class: "form-control me-2" %>
-  <%= f.number_field :duration, value: f.object.duration, placeholder: "Duration (sec)", class: "form-control me-2" %>
-  <%= link_to 'Destroy', operation, data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-outline-danger" %>
+<div class="card p-4 mb-3">
+  <div class="form-inline pb-2 d-flex" style="position: relative">
+		<%= f.select :device_type, options_for_select(Device.device_types.keys.map { |e| [e.titleize, e]  }, f.object.device_type), {}, class: "form-select me-2 w-auto" %>
+		<%= f.select :command, options_for_select(["start", "stop"], f.object.command), {}, class: "form-select me-2 w-auto" %>
+		<%= f.number_field :duration, value: f.object.duration, placeholder: "Duration (sec)", class: "form-control me-2 w-auto" %>
+		<button type="button" data-action="operation-form#remove" class="btn btn-danger">Remove</button>
+		<%= f.hidden_field :_destroy %>
+	</div>
 </div>
