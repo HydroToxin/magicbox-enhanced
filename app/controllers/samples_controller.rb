@@ -67,7 +67,7 @@ class SamplesController < ApplicationController
   private
 
   def date_filter
-    @date_filter = sample_params[:date_filter].present? ? sample_params[:date_filter] : 'today'
+    @date_filter = sample_params && sample_params[:date_filter].present? ? sample_params[:date_filter] : 'today'
   end
 
   def filtered_samples(samples)
@@ -106,6 +106,7 @@ class SamplesController < ApplicationController
   end
 
   def sample_params
+    return if params[:sample].nil?
     params.require(:sample).permit(:product_reference, :data_type_id, :value, :unit, :date_filter)
   end
 end

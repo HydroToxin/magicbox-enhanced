@@ -44,9 +44,11 @@ module Admin
           end
           @grow.generate_weeks
 
+          format.turbo_stream
           format.html { redirect_to @grow, notice: 'Grow was successfully created.' }
           format.json { render :show, status: :created, location: @grow }
         else
+          format.turbo_stream
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @grow.errors, status: :unprocessable_entity }
         end

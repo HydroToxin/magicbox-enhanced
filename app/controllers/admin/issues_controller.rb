@@ -22,7 +22,7 @@ module Admin
     private
 
     def issue_params
-      params.require(:resource_data).permit
+      params.require(:observation_resource).permit
     end
 
     def set_issue

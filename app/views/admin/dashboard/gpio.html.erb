@@ -19,8 +19,8 @@
   		<tr>
   			<% device_left = Device.where(pin_number: array[:gpio]).first %>
   			<td class="text-center <%= device_left ? 'fw-bold' : '' %> text-<%= device_left ? device_left.state_color : '' %>">
-  				<%= device_left ? link_to(device_left.name, [:admin, device_left.room, device_left], class: "text-link") : "" %>
-  			</td>
+					<%= device_left ? link_to(device_left.name, admin_device_path(device_left), class: "text-link") : "" %>
+				</td>
 	  		<td class="text-center <%= device_left ? 'fw-bold' : '' %> text-<%= device_left ? device_left.state_color : '' %>"><%= array[:plug] %></td>
 	  		<td class="text-center <%= device_left ? 'fw-bold' : '' %>"><%= array[:name] %></td>
 				<td class="text-center <%= device_left ? 'fw-bold' : '' %>"><%= array[:gpio] %></td>
@@ -32,7 +32,7 @@
 				<td class="text-center <%= device_right ? 'fw-bold' : '' %>"><%= @gpio_right["#{i.to_s.to_i+1}".to_sym][:name] %></td>
 				<td class="text-center <%= device_right ? 'fw-bold' : '' %> text-<%= device_right ? device_right.state_color : '' %>"><%= @gpio_right["#{i.to_s.to_i+1}".to_sym][:plug] %></td>
 				<td class="text-center <%= device_right ? 'fw-bold' : '' %> text-<%= device_right ? device_right.state_color : '' %>">
-					<%= device_right ? link_to(device_right.name, [:admin, device_right.room, device_right], class: "text-link") : "" %>
+					<%= device_right ? link_to(device_right.name, admin_device_path(device_right), class: "text-link") : "" %>
 				</td>
 			</tr>
   	<% end %>

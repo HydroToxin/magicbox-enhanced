@@ -79,7 +79,7 @@
         </td>
         <td class="text-end d-flex">
           <%= link_to 'Edit', edit_admin_strain_path(strain), class: "btn btn-sm btn-outline-success pr-2" %>
-          <%= button_to 'Destroy', [:admin, strain], method: :delete, data: { turbo: :false }, class: "btn btn-sm btn-outline-danger", style: "margin-left: 0.5em" %>
+          <%= link_to 'Destroy', [:admin, strain], data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-sm btn-outline-danger" %>
         </td>
       </tr>
     <% end %>

@@ -23,9 +23,9 @@
         <td><%= condition.start_time %></td>
         <td><%= condition.end_time %></td>
         <td><%= link_to 'Show', condition %></td>
-        <td><%= link_to 'Edit', edit_condition_path(condition) %></td>
-        <td><%= button_to 'Destroy', condition, method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %></td>
-      </tr>
+        <td><%= link_to 'Edit', edit_admin_condition_group(condition) %></td>
+        <td><%= link_to 'Destroy',  admin_condition_path(condition), data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-outline-danger" %></td>
+       </tr>
     <% end %>
   </tbody>
 </table>

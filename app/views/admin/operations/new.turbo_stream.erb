@@ -1,0 +1,5 @@
+<%= turbo_stream.append "operation-fields" do %>
+  <%= fields_for 'scenario[condition_groups_attributes][][operations_attributes][]', Operation.new, index: Time.now.to_i.to_s + rand(1000).to_s do |form| %>
+    <%= render "turbo_fields", f: form %>
+  <% end %>
+<% end %>

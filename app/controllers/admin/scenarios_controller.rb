@@ -3,15 +3,26 @@
 module Admin
   # Admin::ScenariosController
   class ScenariosController < Admin::AdminController
+    include ApplicationHelper
+
     before_action :authenticate_user!
     before_action :set_scenario, only: %i[show edit update destroy run export]
+    before_action :set_room, only: %i[new show edit update destroy]
 
     # rubocop:disable Metrics/MethodLength
     def new
       @scenario = Scenario.new
-      @condition_group = @scenario.condition_groups.build
     end
 
+    def index
+      @scenarios = Scenario.all
+    end
+
+    def edit
+      @logics = Condition.logics.keys.map { |e| [Condition.logic_text(e.to_sym), e] }
+      @condition_types = Condition.condition_types.keys.map { |e| [Condition.condition_type_text(e.to_sym), e] }
+      @selected_condidion_type = 'date'
+    end
     def create
       @scenario = Scenario.new(scenario_params)
       process_condition_durations(@scenario)
@@ -19,15 +30,12 @@ module Admin
       respond_to do |format|
         if @scenario.save
           format.html do
-            redirect_to admin_scenario_path(@scenario), notice: 'Scenario was successfully created.'
+            redirect_to admin_scenarios_path, notice: 'Scenario was successfully created.'
+            format.turbo_stream
           end
-          format.turbo_stream
         else
-          format.html { render :new }
-          format.turbo_stream do
-            render turbo_stream: turbo_stream.replace(dom_id(@scenario, :form), partial: 'scenarios/form',
-                                                                                locals: { scenario: @scenario })
-          end
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @observation.errors, status: :unprocessable_entity }
         end
       end
     end
@@ -38,16 +46,10 @@ module Admin
 
       respond_to do |format|
         if @scenario.update(scenario_params)
-          format.html do
-            redirect_to admin_scenario_path(@scenario), notice: 'Scenario was successfully updated.'
-          end
-          format.turbo_stream
+          format.html { redirect_to admin_scenarios_path, notice: 'Scenario was successfully updated.' }
         else
-          format.html { render :edit }
-          format.turbo_stream do
-            render turbo_stream: turbo_stream.replace(dom_id(@scenario, :form), partial: 'scenarios/form',
-                                                                                locals: { scenario: @scenario })
-          end
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @scenario.errors, status: :unprocessable_entity }
         end
       end
     end
@@ -55,17 +57,27 @@ module Admin
     def destroy
       @scenario.destroy
       respond_to do |format|
-        format.html do
-          redirect_to admin_scenarios_url, notice: 'Scenario was successfully destroyed.'
-        end
-        format.turbo_stream { head :no_content }
+        format.html { redirect_to admin_scenarios_path, notice: 'Scenario was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    end
+
+    def load_condition_type_form
+      @scenario = Scenario.find(params[:id])
+      @condition_type = params[:type]
+
+      respond_to do |format|
+        format.html {
+          render partial: "admin/scenarios/condition_forms/#{@condition_type}",
+          locals: { f: view_context.form_for(@scenario) },
+          layout: false
+        }
       end
     end
 
     private
 
     def process_condition_durations(_scenario)
-      # Logik zur Umwandlung der Arbeitszeiten aus bedingten Zeitfeldern in Timestamps
       params[:scenario][:condition_groups_attributes]&.each_value do |group|
         group[:conditions_attributes]&.each_value do |condition|
           if Condition.condition_types[condition[:condition_type]] == Condition.condition_types[:time_duration]
@@ -123,6 +135,12 @@ module Admin
 
     def set_scenario
       @scenario = Scenario.find(params[:id])
+    end
+
+    def set_room
+      return unless params[:room_id].present?
+
+      @room = Room.find(params[:room_id])
     end
   end
 end

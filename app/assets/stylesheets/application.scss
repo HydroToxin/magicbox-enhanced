@@ -14,8 +14,9 @@
  *= require_self
  */
 @import 'bootstrap_custom';
-@import "dhtmlx-scheduler/codebase/dhtmlxscheduler";
+@import 'dhtmlx-scheduler/codebase/dhtmlxscheduler';
 @import 'flatpickr/dist/flatpickr.min';
+@import 'bootstrap5-toggle/css/bootstrap5-toggle.min';
 
 //@import "/Users/dirk.kramer/Projects/magicbox-enhanced/node_modules/dhtmlx-scheduler/codebase/dhtmlxscheduler.css";
  //@import "dhtmlxscheduler";
@@ -26,6 +27,7 @@
 
  @import "sidebar";
  @import "grows";
+ @import "scenarios";
 
 $grid-breakpoints: (
   xs: 0,

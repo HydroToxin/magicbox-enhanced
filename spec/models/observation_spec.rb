@@ -11,22 +11,22 @@ RSpec.describe Observation, type: :model do
     it { is_expected.to belong_to(:room).optional }
     it { is_expected.to have_many(:events).dependent(:destroy) }
     it { is_expected.to have_many(:observations_subjects).dependent(:destroy) }
-    it { is_expected.to have_many(:resource_datas).class_name('ResourceData') }
+    it { is_expected.to have_many(:observation_resources).class_name('ObservationResource') }
     it { is_expected.to have_many(:subjects).through(:observations_subjects).dependent(:destroy) }
     it { is_expected.to have_many(:issues) }
     it { is_expected.to have_many_attached(:pictures) }
   end
 
   describe 'nested attributes' do
-    it { is_expected.to accept_nested_attributes_for(:resource_datas).allow_destroy(true) }
+    it { is_expected.to accept_nested_attributes_for(:observation_resources).allow_destroy(true) }
     it { is_expected.to accept_nested_attributes_for(:issues).allow_destroy(true) }
 
-    context 'when resource_data value is blank' do
+    context 'when observation_resource value is blank' do
       let(:observation) { build(:observation) }
 
       it 'rejects the nested attributes' do
-        observation.resource_datas_attributes = [{ value: '' }]
-        expect(observation.resource_datas).to be_empty
+        observation.observation_resources_attributes = [{ value: '' }]
+        expect(observation.observation_resources).to be_empty
       end
     end
   end
@@ -63,7 +63,8 @@ RSpec.describe Observation, type: :model do
     let(:observation) { create(:observation) }
 
     it 'returns the URL for the grow observation path' do
-      expect(observation.url).to eq(Rails.application.routes.url_helpers.grow_observation_path(observation.grow, observation))
+      expect(observation.url).to eq(Rails.application.routes.url_helpers.grow_observation_path(observation.grow,
+observation))
     end
   end
 end

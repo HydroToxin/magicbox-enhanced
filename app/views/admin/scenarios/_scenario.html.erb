@@ -23,7 +23,6 @@
 
 								<% if operation.condition_group %>
 									<% operation.condition_group.conditions.each_with_index do |condition, i| %>
-										&rarr; <%= "<b>#{Condition.logic_text(condition.logic.to_sym)}</b>".html_safe if i != 0 %> <%= condition.condition_text.html_safe %><br>
 									<% end %>
 								<% end %>
 							</li>

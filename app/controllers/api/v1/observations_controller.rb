@@ -82,7 +82,7 @@ module Api
           :updated_at,
           subject_ids: [],
           pictures: [],
-          resource_datas_attributes: %i[
+          observation_resources_attributes: %i[
             id
             subject_id
             observation_id

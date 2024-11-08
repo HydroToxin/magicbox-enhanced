@@ -32,13 +32,11 @@ module Admin
 
       respond_to do |format|
         if @data_type.save
-          format.turbo_stream
           format.html do
             redirect_to admin_data_types_path, notice: 'DataType was successfully created.'
           end
           format.json { render :show, status: :created, location: @data_type }
         else
-          format.turbo_stream
           format.html { render :new }
           format.json { render json: @data_type.errors, status: :unprocessable_entity }
         end
@@ -50,13 +48,11 @@ module Admin
     def update
       respond_to do |format|
         if @data_type.update(data_type_params)
-          format.turbo_stream
           format.html do
             redirect_to admin_data_types_path, notice: 'DataType was successfully updated.'
           end
           format.json { render :show, status: :ok, location: @data_type }
         else
-          format.turbo_stream
           format.html { render :edit }
           format.json { render json: @data_type.errors, status: :unprocessable_entity }
         end
@@ -68,7 +64,6 @@ module Admin
     def destroy
       @data_type.destroy
       respond_to do |format|
-        format.turbo_stream
         format.html do
           redirect_to admin_data_types_path, notice: 'DataType was successfully destroyed.'
         end

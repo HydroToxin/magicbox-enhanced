@@ -49,11 +49,11 @@
       </li>
     <% end %>
 
-    <% observation.resource_datas.each do |resource_data| %>
+    <% observation.observation_resources.each do |observation_resource| %>
       <li class="list-group-item text-success">
-        <b><%= resource_data.resource.name %></b>
+        <b><%= observation_resource.resource.name %></b>
         <div class="float-end">
-          <%= resource_data.value %> <%= resource_data.unit %>
+          <%= observation_resource.value %> <%= observation_resource.unit %>
         </div>
       </li>
     <% end %>

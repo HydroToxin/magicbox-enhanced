@@ -5,11 +5,10 @@
     <% else %>
       Edit user
     <% end %>
-
     <div class="actions float-end">
       <%= link_to 'Cancel', :back, class: "btn btn-light border" %>
       <% unless user.new_record? %>
-        <%= button_to 'Destroy', admin_user_path(user), method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %>
+        <%= link_to 'Destroy', [:admin, user], data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-outline-danger" %>
       <% end %>
       <%= form.submit "Save", class: "btn btn-primary" %>
     </div>

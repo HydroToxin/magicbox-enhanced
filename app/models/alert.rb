@@ -132,7 +132,7 @@ class Alert < ApplicationRecord
       end
 
     elsif resource_alert?
-      last_data = ResourceData.where(resource_id: resource.id).order('created_at').last
+      last_data = ObservationResource.where(resource_id: resource.id).order('created_at').last
       context_object = last_data.observation
     end
     # rubocop:enable Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/CyclomaticComplexity

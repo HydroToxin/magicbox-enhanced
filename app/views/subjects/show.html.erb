@@ -71,14 +71,6 @@
 				<%= @subject.grow.name %>
 			<% end %>
 		</div>
-
-		<hr>
-		<h4>QR Code</h4>
-		<%= image_tag @subject.generate_qr(5), class: "img-fluid" %>
-
-		<hr>
-		<h4>Barcode</h4>
-		<%= image_tag @subject.generate_barcode, class: "img-fluid" %>
 	</div>
 
 	<div class="col-12 col-lg-9 mb-4">

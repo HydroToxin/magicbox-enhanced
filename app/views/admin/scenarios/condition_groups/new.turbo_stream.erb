@@ -1,6 +1,0 @@
-<%= turbo_stream.append "condition_group" do %>
-  <li data-controller="remove" data-remove-target="element">
-    <%= text_field_tag "scenario[condition_group][]", "", id: "", data: {controller: "focus", focus_focus_value: "now"} %>
-    <button data-action="remove#remove">Remove</button>
-  </li>
-<% end %>

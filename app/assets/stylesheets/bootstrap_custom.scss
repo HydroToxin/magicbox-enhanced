@@ -12,3 +12,9 @@ $enable-deprecation-messages: false;
 i {
 
 }
+
+#main-content a.btn-turbo,
+#main-content a.btn-turbo:hover,
+#main-content a.btn-turbo:focus {
+  color: white !important;
+}

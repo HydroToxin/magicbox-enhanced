@@ -1,8 +1,13 @@
-<% resource_units_map = Resource.all.each_with_object({}) do |resource, map|
+<% resources = Resource.all %>
+<% resource_units_map = resources.each_with_object({}) do |resource, map|
   map[resource.id] = resource.units
 end %>
 
-<div data-controller="resource-data">
+<% resource_choices_map = resources.each_with_object({}) do |resource, map|
+  map[resource.id] = resource.choices
+end %>
+
+<div data-controller="observation-resource">
   <div class="mb-3">
     <div class="card mb-3">
       <div class="card-body">
@@ -15,19 +20,30 @@ end %>
                 {
                   class: "form-select mb-2",
                   data: {
-                    action: "change->resource-data#changeResource",
-                    resource_data_target: "resourceSelect"
+                    action: "change->observation-resource#changeResource",
+                    observation_resource_target: "resourceSelect"
                   },
                   id: "resource-select"
                 } %>
-                      </div>
+          </div>
+          <div class="col-12 col-lg-3">
+            <%= ff.label "Choice", class: "form-label" %>
+            <%= ff.select :choice, [], {}, {
+                class: "form-select",
+                id: "choice-select",
+                data: {
+                  observation_resource_target: "choiceSelect",
+                  choices_map: resource_choices_map.to_json
+                }
+              } %>
+          </div>
           <div class="col-12 col-lg-3">
             <%= ff.label "Unit", class: "form-label" %>
             <%= ff.select :unit, [], {}, {
                 class: "form-select",
                 id: "unit-select",
                 data: {
-                  resource_data_target: "unitSelect",
+                  observation_resource_target: "unitSelect",
                   units_map: resource_units_map.to_json
                 }
               } %>
@@ -38,7 +54,7 @@ end %>
           </div>
           <div class="col-2 col-lg-1">
             <%= ff.label " ", class: "form-label" %>
-            <%= link_to '<i class="bi-trash h4"></i>'.html_safe, "#", class: "btn btn-sm btn-danger mt-2 d-block", data: { action: "click->resource-data#removeResource" } %>
+            <%= link_to '<i class="bi-trash h4"></i>'.html_safe, "#", class: "btn btn-sm btn-danger mt-2 d-block", data: { action: "click->observation-resource#removeResource" } %>
           </div>
         </div>
       </div>

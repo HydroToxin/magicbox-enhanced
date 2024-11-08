@@ -9,7 +9,6 @@ class CreateIssues < ActiveRecord::Migration[5.2]
       t.integer :issue_status
 
       t.references :resource, foreign_key: true
-      t.references :subject, foreign_key: true
       t.references :observation, foreign_key: true
 
       t.timestamps

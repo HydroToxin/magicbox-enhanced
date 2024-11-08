@@ -72,3 +72,22 @@
 ## 2024-10-21
 
 - 8d23b5b further progress rubocop fixes
+## 2024-10-23
+
+- 94aa4f8 Update README.md
+- cfe3297 Merge pull request #5 from HydroToxin/migrate/rubocop
+- 1e7f698 Rubocop integration success
+- 058339a fix rubocop offenses
+## 2024-10-24
+
+- b7767aa add new rspec tests
+## 2024-10-27
+
+- 4df1365 migration to rspec completed
+- 47ab7d6 further progress rspec tests
+## 2024-10-29
+
+- a24cd15 fixes some isues
+## 2024-10-30
+
+- 5d20865 Refactored many parts. Much more stable now. Scenarios still broken, last refactoring task.

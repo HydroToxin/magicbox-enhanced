@@ -9,13 +9,13 @@ RSpec.describe Subject, type: :model do
     it { is_expected.to belong_to(:grow) }
     it { is_expected.to belong_to(:room).optional }
     it { is_expected.to belong_to(:strain).optional }
-    #it { is_expected.to belong_to(:mother).optional.class_name('Subject').dependent(:destroy) }
-    #it { is_expected.to have_many(:clones).class_name('Subject') }
-    #it { is_expected.to have_many(:observations).through(:observation_subjects) }
-    #it { is_expected.to have_many(:resource_datas).through(:observations) }
-    #it { is_expected.to have_many(:issues).through(:observations) }
+    # it { is_expected.to belong_to(:mother).optional.class_name('Subject').dependent(:destroy) }
+    # it { is_expected.to have_many(:clones).class_name('Subject') }
+    # it { is_expected.to have_many(:observations).through(:observation_subjects) }
+    # it { is_expected.to have_many(:observation_resources).through(:observations) }
+    # it { is_expected.to have_many(:issues).through(:observations) }
     it { is_expected.to have_many(:scenarios).dependent(:destroy) }
-   #it { is_expected.to have_many(:events).as(:eventable).dependent(:destroy) }
+    # it { is_expected.to have_many(:events).as(:eventable).dependent(:destroy) }
   end
 
   describe 'validations' do

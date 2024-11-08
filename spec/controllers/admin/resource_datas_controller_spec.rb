@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-# spec/controllers/admin/resource_datas_controller_spec.rb
+# spec/controllers/admin/observation_resources_controller_spec.rb
 
 require 'rails_helper'
 
-RSpec.describe Admin::ResourceDatasController, type: :controller do
-  let(:resource_data) { create(:resource_data) }
+RSpec.describe Admin::ObservationResourcesController, type: :controller do
+  let(:observation_resource) { create(:observation_resource) }
   let(:user) { create(:user, admin: true) }
 
   before do
@@ -13,21 +13,20 @@ RSpec.describe Admin::ResourceDatasController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-
-    it 'destroys the requested resource_data' do
-      resource_data_to_delete = create(:resource_data)
-      expect {
-        delete :destroy, params: { id: resource_data_to_delete.to_param }
-      }.to change(ResourceData, :count).by(-1)
+    it 'destroys the requested observation_resource' do
+      observation_resource_to_delete = create(:observation_resource)
+      expect do
+        delete :destroy, params: { id: observation_resource_to_delete.to_param }
+      end.to change(ObservationResource, :count).by(-1)
     end
 
-    it 'redirects to the resource_datas list' do
-      delete :destroy, params: { id: resource_data.to_param }
-      expect(response).to redirect_to(admin_resource_datas_url)
+    it 'redirects to the observation_resources list' do
+      delete :destroy, params: { id: observation_resource.to_param }
+      expect(response).to redirect_to(admin_observation_resources_url)
     end
 
     it 'responds with no content for turbo stream format' do
-      delete :destroy, params: { id: resource_data.to_param }, format: :turbo_stream
+      delete :destroy, params: { id: observation_resource.to_param }, format: :turbo_stream
       expect(response).to have_http_status(:no_content)
     end
   end

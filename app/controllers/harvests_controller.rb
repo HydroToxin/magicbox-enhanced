@@ -2,8 +2,13 @@
 
 # HarvestsController
 class HarvestsController < ApplicationController
-  before_action :set_grow, only: [:index]
-  before_action :set_harvest, only: [:index]
+  #before_action :set_grow, only: [:index]
+  #before_action :set_harvest, only: [:index]
+
+  def index
+    add_breadcrumb 'Harvest'
+    @harvests = Harvest.all
+  end
 
   private
 
@@ -13,7 +18,6 @@ class HarvestsController < ApplicationController
     add_breadcrumb "Grow ##{@grow.id}"
   end
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_harvest
     @harvest = Harvest.find(params[:id])
 

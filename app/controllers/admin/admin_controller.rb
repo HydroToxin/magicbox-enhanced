@@ -8,6 +8,7 @@ module Admin
     layout 'application'
 
     def admin?
+      return if current_user.nil?
       redirect_back fallback_location: root_path, alert: "Admin only" if !current_user.admin?
     end
   end

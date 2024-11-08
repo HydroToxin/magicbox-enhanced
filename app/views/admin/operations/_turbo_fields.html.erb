@@ -1,0 +1,12 @@
+<div class="operation-fields-container">
+  <div class="operation-fields d-flex align-items-center pb-2" id="<%= dom_id(f.object) %>" data-controller="operation">
+    <%= f.select :device_type, options_for_select(Device.device_types.keys.map { |e| [e.titleize, e] }, f.object.device_type), {}, class: "form-control me-2", style: "width: auto" %>
+    <%= f.select :command, options_for_select(["start", "stop"], f.object.command), {}, class: "form-control me-2", style: "width: auto" %>
+    <%= f.number_field :duration, value: f.object.duration, placeholder: "Duration (sec)", class: "form-control me-2", style: "width: auto" %>
+    <% if f.object.id.nil? %>
+      <%= link_to "Remove", "#", class: "btn btn-danger d-block", data: { action: "click->operation#remove" } %>
+    <% else %>
+      <%= button_to "Remove", { id: dom_id(f.object) }, method: :delete %>
+    <% end %>
+ </div>
+</div>

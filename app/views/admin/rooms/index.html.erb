@@ -23,7 +23,7 @@
         <td><%= room.width %></td>
         <td><%= room.height %></td>
         <td><%= link_to 'Edit', edit_admin_room_path(room) %></td>
-        <td><%= button_to 'Destroy', admin_room_path(room), method: :delete, data: { turbo: :false }, class: "btn btn-outline-danger" %></td>
+        <td><%= link_to 'Destroy', admin_room_path(room), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
