@@ -25,6 +25,9 @@
 
 .byebug_history
 
+/coverage/*
+magicbox-enhanced.code-workspace
+
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 .env

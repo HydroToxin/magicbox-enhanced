@@ -8,6 +8,7 @@ Turbo.session.drive = false
 // Import Stimulus
 import { Application } from "@hotwired/stimulus"
 import "./controllers/application"
+import "./layout"
 
 import { createPopper } from '@popperjs/core';
 
@@ -45,4 +46,3 @@ document.addEventListener('DOMContentLoaded', function () {
     proceed.apply(this, Array.prototype.slice.call(arguments, 1));
   });*/
 });
-

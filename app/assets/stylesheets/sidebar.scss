@@ -1,107 +1,74 @@
-/* ---------------------------------------------------
-    SIDEBAR STYLES
------------------------------------------------------ */
-
-.wrapper {
-  display: flex;
-  width: 100%;
+.sidebar-wrapper {
+  min-height: 100vh;
+  background-color: #708090;
 }
 
-#sidebar {
-  width: 200px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  z-index: 999;
-  background: #708090;
-  color: #fff;
-  transition: all 0.3s;
+.sidebar .sidebar-header {
+  background-color: #657382;
 }
 
-#sidebar .sidebar-body {
-  overflow-y: auto;
-  max-height: calc(100vh - 70px);
-}
-
-#sidebar.active {
-  margin-left: -200px;
-}
-
-#sidebar .sidebar-header {
-  padding: 12px;
-  background: #657382;
-}
-
-#sidebar ul.components {
-  padding: 20px 0;
-  border-bottom: 1px solid #657382;
-}
-
-#sidebar ul p {
-  color: #fff;
-  padding: 10px;
-}
-
-#sidebar ul li a {
-  padding: 10px;
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  transition: margin-left 0.3s ease-in-out;
   font-size: 1.1em;
-  display: block;
+
+  .nav.flex-column a {
+    display: block;
+    top: 4px;
+    position: relative;
+  }
+  .nav-item {
+    .dropdown-toggle:after {
+      display: block;
+      position: relative;
+      float: inline-end;
+      margin-right: 25px;
+      margin-top: 10px;
+    }
+    a {
+      padding: 10px
+    }
+  }
+  .submenu .nav-item {
+    font-size: 0.9em;
+    a {
+      margin-left: 10px;
+    }
+   }
 }
 
-#sidebar ul li a:hover {
-  color: #657382;
-  background: #fff;
+.sidebar li.nav-item:hover {
+  background-color: #96a1ae;
 }
 
-#sidebar ul li.active>a,
-a[aria-expanded="true"] {
-  color: #fff;
-  background: #657382;
+.sidebar li.nav-item.active {
+  background-color: #96a1ae;
 }
 
-a[data-toggle="collapse"] {
-  position: relative;
+.main-wrapper {
+  min-height: 100vh;
 }
 
-.dropdown-toggle::after {
-  position: relative;
-  left: 25%;
-  transform: translateY(-50%);
-  margin-top: 1em;
-  display:inline-block;
+.content {
+  min-height: calc(100vh - 56px);
+  /* 56px is the default Bootstrap navbar height */
 }
 
-ul ul a {
-  font-size: 0.9em !important;
-  padding-left: 30px !important;
-  background: #657382;
+/* Sidebar collapsed state */
+.sidebar-collapsed .sidebar {
+  margin-left: -250px;
 }
 
-ul.CTAs {
-  padding: 20px;
-}
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    z-index: 1000;
+    margin-left: -250px;
+  }
 
-ul.CTAs a {
-  text-align: center;
-  font-size: 0.9em !important;
-  display: block;
-  border-radius: 5px;
-  margin-bottom: 5px;
-}
-
-a.download {
-  background: #fff;
-  color: #7386D5;
-}
-
-a.article,
-a.article:hover {
-  background: #6d7fcc !important;
-  color: #fff !important;
-}
-
-i {
-  top: 3px;
-  position: relative;
+  .sidebar.show {
+    margin-left: 0;
+  }
 }

@@ -119,6 +119,19 @@ Rails.application.routes.draw do
         get 'update', to: 'conditions#update'
       end
     end
+    resources :batches, only: [:index, :show, :new, :create, :update, :destroy]
+
+    resources :scenarios do
+      member do
+        get :load_condition_type_form
+      end
+      member do
+        post 'run'
+        get :export
+        post :import
+        get :import
+      end
+    end
 
     resources :devices do
       post :start, on: :member

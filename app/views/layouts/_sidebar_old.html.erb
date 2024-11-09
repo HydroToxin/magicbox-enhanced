@@ -1,0 +1,146 @@
+<nav id="sidebar" data-turbo-permanent data-controller="sidebar">
+  <div class="sidebar-header">
+    <h3 class="mt-1">
+      <%= link_to root_path do %>
+        <i class="bi-speedometer h4 text-success"></i>
+        MagicBox Enhanced
+      <% end %>
+    </h3>
+  </div>
+
+  <div class="sidebar-body" id="accordionSidebar">
+    <ul class="list-unstyled">
+      <%= sidebar_item dashboard_path, "Dashboard" do %>
+        <i class="bi-speedometer-alt h4 ms-1 me-2 pe-1"></i>
+      <% end %>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li>
+        <a href="#roomsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" data-bs-parent="#accordionSidebar">
+          <i class="bi-box ms-1 h4 me-2 pe-1"></i>
+          Rooms
+        </a>
+        <ul class="collapse list-unstyled" id="roomsSubmenu" data-bs-parent="#accordionSidebar">
+          <% Room.all.each do |room| %>
+            <%= sidebar_item(room_path(room), room.name) do %>
+              <i class="bi-box h4 ms-1 me-2 pe-1"></i>
+            <% end %>
+          <% end %>
+        </ul>
+      </li>
+      <%= sidebar_item(grows_path, "Grows") do %>
+        <i class="bi-flower3 h4 ms-1 me-2 pe-1"></i>
+      <% end %>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li>
+        <a href="#infoSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" data-bs-parent="#accordionSidebar">
+          <i class="bi-box ms-1 h4 me-2 pe-1"></i>
+          Info
+        </a>
+        <ul class="collapse list-unstyled" id="infoSubmenu" data-bs-parent="#accordionSidebar">
+          <%= sidebar_item(batches_path, "Batches") do %>
+            <i class="bi-box h4 ms-1 me-2 pe-1"></i>
+          <% end %>
+          <%= sidebar_item(calendar_path, "Calendar") do %>
+            <i class="bi-calendar h4 ms-1 me-2 pe-1"></i>
+          <% end %>
+
+          <%= sidebar_item(events_path, "Events") do %>
+            <i class="bi-exclamation-triangle h4 ms-1 me-2 pe-1"></i>
+          <% end %>
+
+          <%= sidebar_item(harvests_path, "Harvests") do %>
+            <i class="bi-box h4 ms-1 me-2 pe-1"></i>
+          <% end %>
+
+          <%= sidebar_item(journal_path, "Journal") do %>
+            <i class="bi-newspaper h4 ms-1 me-2 pe-1"></i>
+          <% end %>
+
+          <%= sidebar_item(notifications_path, "Notifications", badge_count: current_user.unread_notifications_count) do %>
+            <i class="bi-flag ms-1 h4 me-2 pe-1"></i>
+          <% end %>
+
+          <%= sidebar_item(rooms_samples_path, "Statistics") do %>
+            <i class="bi-graph-up h4 ms-1 me-2 pe-1"></i>
+          <% end %>
+
+          <%= sidebar_item(todos_path, "To do's", badge_count: current_user.todos_count) do %>
+            <i class="bi-clock h4 ms-1 me-2 pe-1"></i>
+          <% end %>
+        </ul>
+      </li>
+    </ul>
+
+    <% if current_user.admin? %>
+      <ul class="list-unstyled">
+        <li>
+          <a href="#adminSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" data-bs-parent="#accordionSidebar">
+            <i class="bi-tools ms-1 h4 me-2 pe-1"></i>
+            Data
+          </a>
+          <ul class="collapse list-unstyled" id="adminSubmenu" data-bs-parent="#accordionSidebar">
+            <%= sidebar_item(admin_alerts_path, "Alerts") do %>
+              <i class="bi-exclamation-triangle h4 ms-1 me-2 pe-1"></i>
+            <% end %>
+
+            <%= sidebar_item(admin_categories_path, "Categories") do %>
+              <i class="bi-box ms-1 h4 me-2 pe-1"></i>
+            <% end %>
+
+            <%= sidebar_item(admin_data_types_path, "Data-Types") do %>
+              <i class="bi-database h4 ms-1 me-2 pe-1"></i>
+            <% end %>
+
+            <%= sidebar_item(admin_devices_path, "Devices") do %>
+              <i class="bi-tools h4 ms-1 me-2 pe-1"></i>
+            <% end %>
+
+            <%= sidebar_item(admin_harvests_path, "Harvests") do %>
+              <i class="bi-box ms-1 h4 me-2 pe-1"></i>
+            <% end %>
+
+            <%= sidebar_item(admin_resources_path, "Resources") do %>
+              <i class="bi-box ms-1 h4 me-2 pe-1"></i>
+            <% end %>
+
+            <%= sidebar_item(admin_scenarios_path, "Scenarios") do %>
+              <i class="bi-clock h4 ms-1 me-2 pe-1"></i>
+            <% end %>
+
+            <%= sidebar_item(admin_strains_path, "Strains") do %>
+              <i class="bi-activity h4 ms-1 me-2 pe-1"></i>
+            <% end %>
+
+            <%= sidebar_item(admin_users_path, "Users") do %>
+              <i class="bi-people h4 ms-1 me-2 pe-1"></i>
+            <% end %>
+
+          </ul>
+        </li>
+      </ul>
+    <% end %>
+
+    <ul class="list-unstyled">
+      <li>
+        <% if current_user.admin? %>
+          <% if user_signed_in? %>
+            <%= sidebar_item(admin_settings_path, "Settings") do %>
+              <i class="bi-gear ms-1 h4 me-2 pe-1"></i>
+            <% end %>
+            <%= sidebar_item(current_user, current_user.username) do %>
+              <i class="bi-person ms-1 h4 me-2 pe-1"></i>
+            <% end %>
+          <% end %>
+        <% end %>
+        <%= link_to destroy_user_session_path, method: :delete, class: "nav-link" do %>
+          <i class="bi-box-arrow-right h4 ms-1 me-2 pe-1"></i>
+          Disconnect
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</nav>

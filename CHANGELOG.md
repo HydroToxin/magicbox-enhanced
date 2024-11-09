@@ -90,4 +90,12 @@
 - a24cd15 fixes some isues
 ## 2024-10-30
 
+<<<<<<< Updated upstream
 - 5d20865 Refactored many parts. Much more stable now. Scenarios still broken, last refactoring task.
+=======
+- d9343b9 update changelog
+- 5d20865 Refactored many parts. Much more stable now. Scenarios still broken, last refactoring task.
+## 2024-11-07
+
+- e5a7855 scenario completed refactored
+>>>>>>> Stashed changes
