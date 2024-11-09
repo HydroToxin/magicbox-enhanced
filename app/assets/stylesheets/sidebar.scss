@@ -46,6 +46,18 @@
   background-color: #96a1ae;
 }
 
+.sidebar .submenu li {
+  background-color: #3a4655;
+}
+
+.sidebar .submenu li.nav-item:hover {
+  background-color: #606a77 !important;
+}
+
+.sidebar .submenu li.nav-item.active {
+  background-color: #606a77 !important;
+}
+
 .main-wrapper {
   min-height: 100vh;
 }
