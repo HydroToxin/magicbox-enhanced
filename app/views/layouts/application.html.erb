@@ -16,19 +16,22 @@
 
   <body>
     <% if user_signed_in? %>
-      <div class="d-flex" id="wrapper">
+      <div class="d-flex">
         <!-- Sidebar  -->
-        <%= render 'layouts/sidebar' %>
+        <div class="sidebar-wrapper">
+          <%= render 'layouts/sidebar' %>
+        </div>
 
-        <turbo-frame id="main-content" target="_top">
-          <div id="content" class="flex-grow-1">
-            <%= render 'layouts/nav' %>
-            <div class="container-fluid">
-              <%= render 'layouts/messages' %>
+        <!-- Main Content -->
+        <%= turbo_frame_tag "main-content" do %>
+          <div class="main-wrapper flex-grow-1">
+            <%= render 'layouts/navbar' %>
+
+            <main class="content p-3">
               <%= yield %>
-            </div>
+            </main>
           </div>
-        </turbo-frame>
+        <% end %>
       </div>
 
       <!-- Dark Overlay element -->

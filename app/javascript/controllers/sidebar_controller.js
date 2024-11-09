@@ -1,36 +1,29 @@
-// app/javascript/controllers/sidebar_controller.js
-
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   connect() {
+    // Aktiviere den Link basierend auf der aktuellen URL beim Laden
+    this.activateLinkByCurrentUrl();
   }
 
-  disconnect() {
-  }
-
-  reconnect() {
-    console.log('reconnect');
+  activateLinkByCurrentUrl() {
+    const currentPath = window.location.pathname;
+    const links = this.element.querySelectorAll(".sidebar-content a");
+    links.forEach(link => {
+      if (link.getAttribute('href') === currentPath) {
+        link.parentElement.classList.add('active');
+      }
+    });
   }
 
   activateLink(event) {
-    console.log('activateLink');
-    const clickedLink = event.currentTarget; // currentTarget verweist auf das Element, das das Event ausgelöst hat.
-
-    // Entferne die "active" Klasse von anderen Links
+    const clickedLink = event.currentTarget;
     this.deactivateAllLinks();
-
-    // Setze die "active" Klasse auf den angeklickten Link
     clickedLink.parentElement.classList.add('active');
-
-    const url = clickedLink.getAttribute('href');
-    window.history.pushState({}, '', url);
   }
 
   deactivateAllLinks() {
-    console.log('deactivateLink');
-    // Entferne "active" von allen Link-Listenelementen
-    const sidebarLinks = this.element.querySelectorAll("#sidebar .sidebar-body a");
+    const sidebarLinks = this.element.querySelectorAll(".sidebar-content a");
     sidebarLinks.forEach(link => {
       link.parentElement.classList.remove('active');
     });

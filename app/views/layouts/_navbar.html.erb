@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <button class="btn btn-outline-secondary" id="sidebar-toggle">
+      <i class="bi bi-list"></i>
+    </button>
+    <% if user_signed_in? %>
+      <ol class="ms-2 breadcrumb p-0 m-0 bg-transparent">
+        <%= render_breadcrumbs tag: :li, separator: "<span class='mx-2'><i class='bi-chat-left-dots h4'></i></span>" %>
+      </ol>
+    <% end %>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to new_todo_path, class: "nav-link d-flex align-items-center" do %>
+              <i class="bi-plus my-1 h5"></i>
+              Todo
+            <% end %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to new_admin_grow_path, class: "nav-link d-flex align-items-center" do %>
+              <i class="bi-plus my-1 h5"></i>
+              Grow
+            <% end %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to new_admin_room_path, class: "nav-link d-flex align-items-center" do %>
+              <i class="bi-plus my-1 h5"></i>
+              Room
+            <% end %>
+          </li>
+        <% end %>
+
+        <li class="nav-item">
+          <%= link_to "/apidoc", class: "nav-link" do %>
+            <i class="bi-database h4"></i>
+            API
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

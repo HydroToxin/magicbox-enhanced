@@ -25,7 +25,8 @@
  //@import "bootstrap4-toggle";
  //@import "tempusdominus-bootstrap-4.css";
 
- @import "sidebar";
+@import "sidebar";
+ @import "layout";
  @import "grows";
  @import "scenarios";
 
@@ -61,19 +62,10 @@ $container-max-widths: (
   max-width: 400px;
 }
 
-
-
-/*
-    SIDEBAR
-*/
-
-
 body {
   font-family: 'Poppins', sans-serif;
-  background: #fafafa;
-}
-
-#wrapper {
+  overflow-x: hidden;
+  padding-right: 0 !important;
 }
 
 p {
@@ -92,20 +84,6 @@ a:focus {
   transition: all 0.3s;
 }
 
-.navbar {
-  padding: 15px 10px;
-  background: #fff;
-  border: none;
-  border-radius: 0;
-  margin-bottom: 40px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-btn {
-  box-shadow: none;
-  outline: none !important;
-  border: none;
-}
 
 .line {
   width: 100%;
@@ -122,16 +100,6 @@ span {
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
-
-#main-content {
-  padding: 0px;
-  min-height: 100vh;
-  transition: all 0.3s;
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 200px;
-}
 
 
 #content.active {
