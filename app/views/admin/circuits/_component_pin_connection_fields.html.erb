@@ -1,0 +1,55 @@
+<div class="component-pin-connection-fields" data-new-record="<%= f.object.new_record? %>">
+  <div class="card p-3 m-3">
+    <div class="row">
+      <div class="col-5">
+        <% source_control_pins = (
+            f.object.component_connection.present? ?
+            f.object.component_connection.source_component.control_pins :
+            {}
+          )
+        %>
+
+        <%= f.select :source_control_pin_id,
+          options_from_collection_for_select(
+            source_control_pins, "id", "name", f.object.source_control_pin_id
+          ),
+          { include_blank: 'Select Control Pin' },
+          class: "form-select me-2 w-100",
+          data: {
+            component_pin_connection_target: "sourceControlPin",
+          }
+        %>
+      </div>
+      <div class="col-5">
+        <% target_control_pins = (
+            f.object.component_connection.present? ?
+            f.object.component_connection.target_component.control_pins :
+            {}
+          )
+        %>
+
+        <%= f.select :target_control_pin_id,
+          options_from_collection_for_select(
+            target_control_pins, "id", "name", f.object.target_control_pin_id
+          ),
+          { include_blank: 'Select Control Pin' },
+          class: "form-select me-2 w-100",
+          data: {
+            component_pin_connection_target: "targetControlPin",
+          }
+        %>
+      </div>
+      <div class="col-1">
+        <%= f.hidden_field :_destroy %>
+        <button type="button"
+          data-action="component-pin-connection#remove"
+          data-component-pin-connection-target="removeButton"
+          class="btn btn-danger"
+          style="height: 40px"
+        >
+          <i class='bi-trash h4'></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

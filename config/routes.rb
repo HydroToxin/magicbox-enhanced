@@ -138,6 +138,9 @@ Rails.application.routes.draw do
       post :stop, on: :member
     end
 
+    resources :circuits
+    resources :components
+
     resources :scenarios do
       member do
         get :load_condition_type_form

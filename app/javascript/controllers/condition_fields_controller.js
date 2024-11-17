@@ -1,7 +1,7 @@
 import flatpickr from 'flatpickr';
-import BaseFormController from "./base_form_controller"
+import BaseNestedFormController from "./base_nested_form_controller"
 
-export default class extends BaseFormController {
+export default class extends BaseNestedFormController {
   static targets = [
     "conditionType",
     "dateFields",
@@ -14,7 +14,7 @@ export default class extends BaseFormController {
 
   connect() {
     super.connect()
-    console.log("ConditionFormFieldsController connected")
+    console.log("ConditionFieldsController connected")
 
     if (this.hasConditionTypeTarget) {
       if (!this.conditionTypeTarget.value) {
@@ -32,7 +32,7 @@ export default class extends BaseFormController {
 
   remove(event) {
     event.preventDefault();
-    let item = event.target.closest('.condition-form-fields');
+    let item = event.target.closest('.conditionm-fields');
     if (item.dataset.newRecord === 'true') {
       item.remove();
     } else {
@@ -57,8 +57,8 @@ export default class extends BaseFormController {
 
     displayConfig[type]?.forEach(targetName => {
       const target = this[`${targetName}Target`]
-      target.classList.remove('condition-form__field--hidden')
-      target.classList.add('condition-form__field--visible')
+      target.classList.remove('condition__field--hidden')
+      target.classList.add('condition__field--visible')
     })
   }
 
@@ -71,8 +71,8 @@ export default class extends BaseFormController {
       this.predicateFieldTarget,
       this.targetValueFieldTarget
     ].forEach(element => {
-      element.classList.add('condition-form__field--hidden')
-      element.classList.remove('condition-form__field--visible')
+      element.classList.add('condition__field--hidden')
+      element.classList.remove('condition__field--visible')
     })
   }
 }

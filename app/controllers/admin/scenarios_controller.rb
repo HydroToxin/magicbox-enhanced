@@ -5,7 +5,6 @@ module Admin
   class ScenariosController < Admin::AdminController
     include ApplicationHelper
 
-    before_action :authenticate_user!
     before_action :set_scenario, only: %i[show edit update destroy run export]
     before_action :set_room, only: %i[new show edit update destroy]
 
@@ -23,6 +22,7 @@ module Admin
       @condition_types = Condition.condition_types.keys.map { |e| [Condition.condition_type_text(e.to_sym), e] }
       @selected_condidion_type = 'date'
     end
+
     def create
       @scenario = Scenario.new(scenario_params)
       process_condition_durations(@scenario)
@@ -44,6 +44,7 @@ module Admin
     def update
       process_condition_durations(@scenario)
 
+      binding.pry
       respond_to do |format|
         if @scenario.update(scenario_params)
           format.html { redirect_to admin_scenarios_path, notice: 'Scenario was successfully updated.' }

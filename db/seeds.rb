@@ -186,3 +186,5 @@ s = Sample.create(
 
 d.samples << s
 d.save!
+
+Component.import_from_json

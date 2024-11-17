@@ -1,5 +1,5 @@
 import flatpickr from 'flatpickr';
-import BaseFormController from "./base_form_controller"
+import BaseFormController from "./base_nested_form_controller"
 
 export default class extends BaseFormController {
   static targets = []

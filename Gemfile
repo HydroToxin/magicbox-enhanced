@@ -74,7 +74,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'error_highlight', '>= 0.4.0', platforms: [:ruby]
   gem 'license_finder'
-  gem 'rails-erd'
+  #gem 'rails-erd'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false

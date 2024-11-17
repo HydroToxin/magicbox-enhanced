@@ -3,7 +3,7 @@
 		<%= f.select :device_type, options_for_select(Device.device_types.keys.map { |e| [e.titleize, e]  }, f.object.device_type), {}, class: "form-select me-2 w-auto" %>
 		<%= f.select :command, options_for_select(["start", "stop"], f.object.command), {}, class: "form-select me-2 w-auto" %>
 		<%= f.number_field :duration, value: f.object.duration, placeholder: "Duration (sec)", class: "form-control me-2 w-auto" %>
-		<button type="button" data-action="operation-form#remove" class="btn btn-danger">Remove</button>
+		<button type="button" data-action="operation#remove" class="btn btn-danger">Remove</button>
 		<%= f.hidden_field :_destroy %>
 	</div>
 </div>

@@ -1,0 +1,162 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-12 col-lg-8">
+      <%= form_with(model: [:admin, @control_pin], data: { turbo: false }, local: true, class: "text-start", id: "admin-control-pins-form") do |form| %>
+        <h1>
+          <%= @control_pin.new_record? ? "New Control Pin" : "Editing Control Pin" %>
+          <div>
+            <%= form.submit "Save", class: "btn btn-primary" %>
+          </div>
+        </h1>
+
+        <hr>
+
+        <% if @control_pin.errors.any? %>
+          <div id="error_explanation" class="alert alert-danger">
+            <h4><%= pluralize(@control_pin.errors.count, "error") %> prohibited this control pin from being saved:</h4>
+            <ul>
+            <% @control_pin.errors.messages.each do |attribute, messages| %>
+              <li><b><%= attribute.to_s.titleize %></b>: <%= messages.join(", ") %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :name, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.text_field :name, class: "form-control", required: true %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :pin_number, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.number_field :pin_number, class: "form-control", required: true %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :left, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <div class="form-check form-switch">
+              <%= form.check_box :left, class: "form-check-input", role: "switch" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :right, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <div class="form-check form-switch">
+              <%= form.check_box :right, class: "form-check-input", role: "switch" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :function, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.text_field :function, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label 'Communication Number', class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.number_field :com_number, class: "form-control", required: true %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :type, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.select :type,
+                ['Digital Input', 'Digital Output', 'Analog Input', 'Analog Output', 'PWM', 'Interrupt'],
+                { include_blank: 'Select Type' },
+                class: "form-select" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :mode, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.select :mode,
+                ['Input', 'Output', 'Input-Pullup', 'Input-Pulldown'],
+                { include_blank: 'Select Mode' },
+                class: "form-select" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :pull, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.select :pull,
+                ['None', 'Pull-Up', 'Pull-Down'],
+                { include_blank: 'Select Pull' },
+                class: "form-select" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :initial_state, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.select :initial_state,
+                ['Low', 'High'],
+                { include_blank: 'Select Initial State' },
+                class: "form-select" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :voltage, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.text_field :voltage, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :description, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.text_area :description, class: "form-control", rows: 3 %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :component_id, "Component", class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.collection_select :component_id, Component.all, :id, :name,
+                { include_blank: 'Select Component' },
+                class: "form-select" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

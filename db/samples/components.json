@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Raspberry Pi",
+    "component_type": "microcontroller",
+    "model": "4b",
+    "version": "",
+    "active": true,
+    "microcontroller": true,
+    "multiplexer": false,
+    "description": "",
+    "address": "",
+    "voltage": null,
+    "standby_ampere": null,
+    "max_ampere": null,
+    "watt": null,
+    "power": null,
+    "temperature": null,
+    "created_at": "2024-11-10T21:59:44.013+01:00",
+    "updated_at": "2024-11-10T21:59:44.013+01:00"
+  }
+]
