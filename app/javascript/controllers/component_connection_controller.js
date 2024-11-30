@@ -10,7 +10,9 @@ export default class extends NestedForm {
     "targetImage",
     "sourceReplacement",
     "targetReplacement",
-    "addButton"
+    "addButton",
+    "sourceComponentHidden",
+    "targetComponentHidden",
   ]
 
 
@@ -37,7 +39,6 @@ export default class extends NestedForm {
     if (destroyInput) {
       destroyInput.value = '1'
     }
-
     row.style.display = 'none'
   }
 
@@ -56,8 +57,10 @@ export default class extends NestedForm {
     const target = event.currentTarget;
     if (target === this.sourceComponentTarget) {
       this.updateSourceImage(event);
+      this.sourceComponentHiddenTarget.value = this.sourceComponentTarget.value; // Update hidden field
     } else if (target === this.targetComponentTarget) {
       this.updateTargetImage(event);
+      this.targetComponentHiddenTarget.value = this.targetComponentTarget.value; // Update hidden field
     }
 
     if (this.sourceComponentTarget.value && this.targetComponentTarget.value) {

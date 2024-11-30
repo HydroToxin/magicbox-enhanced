@@ -1,0 +1,39 @@
+<div class="device-data-type-fields nested-form-wrapper" data-controller="device" data-new-record="<%= ff.object.new_record? %>">
+  <div class="card p-3 m-3">
+    <div class="row">
+      <div class="col-5 me-1">
+        <%= ff.label "Name", class: "form-label" %>
+      </div>
+      <div class="col-1">
+        <%= ff.label "Unit", class: "form-label" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-5">
+        <%= ff.select :data_type_id,
+          options_from_collection_for_select(
+            DataType.all, "id", "name", ff.object.data_type_id
+          ),
+          { include_blank: 'Select Data Type' },
+          class: "form-select me-2 w-100",
+          data: {
+            data_type_target: "dataType",
+          }
+        %>
+      </div>
+      <div class="col-1">
+        <%= ff.text_field :unit, class: "form-control" %>
+      </div>
+      <div class="col-1">
+        <button type="button"
+          data-action="nested-form#remove"
+          class="btn btn-danger"
+          style="height: 40px"
+        >
+          <i class='bi-trash h4'></i>
+        </button>
+        <%= ff.hidden_field :_destroy %>
+      </div>
+    </div>
+  </div>
+</div>

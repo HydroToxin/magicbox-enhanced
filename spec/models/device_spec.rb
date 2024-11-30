@@ -27,7 +27,6 @@ RSpec.describe Device, type: :model do
 
   describe 'Enums' do
     it { is_expected.to define_enum_for(:device_state).with_values(off: 0, on: 1, idle: 2, starting: 3, stopping: 4) }
-    it { is_expected.to define_enum_for(:pin_type).with_values(digital: 0, analog: 1) }
   end
 
   describe '#last_sample' do

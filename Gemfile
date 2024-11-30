@@ -54,7 +54,7 @@ gem 'uglifier'
 gem 'whenever', require: false
 gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap4'
-gem "view_component"
+gem 'view_component'
 
 # gem "kredis"
 # gem "bcrypt", "~> 3.1.7"
@@ -88,6 +88,10 @@ group :development, :test do
   gem 'pry-rails'
   gem 'faker'
   gem 'rails-controller-testing'
+  gem 'capistrano', '~> 3.16'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-passenger'
 end
 
 group :development do

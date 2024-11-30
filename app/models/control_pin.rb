@@ -143,4 +143,9 @@ class ControlPin < ApplicationRecord
       high: 'Initial pin state set to high voltage level'
     }
   end
+
+  def pin_name
+    "#{name} (#{self.pin_function_before_type_cast})"
+  end
+
 end

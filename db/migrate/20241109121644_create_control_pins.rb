@@ -2,7 +2,6 @@ class CreateControlPins < ActiveRecord::Migration[7.1]
   def change
     create_table :control_pins do |t|
       t.string :name, null: false
-
       t.integer :pin_number, null: false
       t.string :pin_color
       t.boolean :left

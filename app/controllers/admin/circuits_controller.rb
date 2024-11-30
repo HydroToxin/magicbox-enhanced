@@ -15,7 +15,6 @@ module Admin
 
     def create
       @circuit = Circuit.new(circuit_params)
-
       respond_to do |format|
         if @circuit.save
           format.html do

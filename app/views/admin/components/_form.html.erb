@@ -28,13 +28,23 @@
 
           <div class="d-flex justify-content-center align-items-center" style="position: relative; height:200px; widht: 100%">
             <% if @component.image.attached? %>
-              <% @add_button_visible = 'none' %>
-              <%= image_tag @component.image, id: 'image-preview', data: { image_upload_target: "preview" }, class: 'img-thumbnail', style: 'object-fit: cover; cursor: pointer; height: 200px' %>
+              <% @image_attached = 'none' %>
+              <% @image_visible = 'block' %>
             <% else %>
-              <% @add_button_visible = 'block' %>
+              <% @image_attached = 'block' %>
+              <% @image_visible = 'none' %>
             <% end %>
+
+            <%= image_tag (
+              @component.image.present? ? @component.image : ''),
+              id: 'image-preview',
+              data: { image_upload_target: "preview" },
+              class: 'img-thumbnail',
+              style: "object-fit: cover; cursor: pointer; height: 200px; display: #{@image_visible}"
+            %>
+
             <i class="bi bi-plus-circle"
-              style="font-size: 3rem; color: white; cursor: pointer; position: absolute; display: <%= @add_button_visible %>"
+              style="font-size: 3rem; color: white; cursor: pointer; position: absolute; display: <%= @image_attached %>"
               data-image-upload-target="add"
               data-action = "click->image-upload#add">
             </i>

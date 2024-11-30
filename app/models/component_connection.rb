@@ -8,7 +8,7 @@ class ComponentConnection < ApplicationRecord
 
   has_many :component_pin_connections
 
-   accepts_nested_attributes_for :component_pin_connections,
+  accepts_nested_attributes_for :component_pin_connections,
     allow_destroy: true,
     reject_if: :all_blank
 

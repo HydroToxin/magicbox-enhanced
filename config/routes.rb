@@ -114,6 +114,7 @@ Rails.application.routes.draw do
     resources :batches
     resources :harvests
     resources :weeks
+
     resources :conditions do
       collection do
         get 'update', to: 'conditions#update'
@@ -136,10 +137,12 @@ Rails.application.routes.draw do
     resources :devices do
       post :start, on: :member
       post :stop, on: :member
+      post :query, on: :member
     end
 
     resources :circuits
     resources :components
+    resources :device_scripts
 
     resources :scenarios do
       member do

@@ -3,8 +3,17 @@
 # Component Model
 class Component < ApplicationRecord
   has_many :control_pins, dependent: :destroy
-  has_many :component_connections, foreign_key: "target_component_id", dependent: :destroy
-  has_many :connected_components, through: :component_connections, source: :target_component
+
+  has_many :outgoing_connections,
+    class_name: 'ComponentConnection',
+    foreign_key: 'source_component_id',
+    dependent: :destroy
+
+  has_many :incoming_connections,
+    class_name: 'ComponentConnection',
+    foreign_key: 'target_component_id',
+    dependent: :destroy
+
   has_one_attached :image
 
   validates :name, presence: true
@@ -23,7 +32,8 @@ class Component < ApplicationRecord
     power_electronics: 'Power Electonics',
     power_supply: 'Power Supply',
     multiplexer: 'Multiplexer',
-    demultiplexer: 'Demultiplexer'
+    demultiplexer: 'Demultiplexer',
+    consumer: 'Consumer'
   }
 
   def self.component_type_descriptions
@@ -36,7 +46,8 @@ class Component < ApplicationRecord
       power_electronics: 'Electronic systems and components used for switching, converting, and controlling electrical power',
       power_supply: 'Devices or systems that provide electrical energy to other electronic components',
       multiplexer: 'A device that selects one of several input signals and forwards it to a single output line',
-      demultiplexer: 'A device that takes a single input signal and routes it to one of several possible output lines'
+      demultiplexer: 'A device that takes a single input signal and routes it to one of several possible output lines',
+      consumer: 'Consumer" refers to a device that utilizes electrical energy to perform a function, similar to LEDs, lamps, or fans, converting electrical power into light or motion.'
     }
   end
 
@@ -93,5 +104,11 @@ class Component < ApplicationRecord
 
   def image_url
     Rails.application.routes.url_helpers.rails_blob_url(image, only_path: true) if image.attached?
+  end
+
+  def circuit
+    incoming_circuit = incoming_connections.includes(:circuit).first&.circuit
+    outgoing_circuit = outgoing_connections.includes(:circuit).first&.circuit
+    incoming_circuit || outgoing_circuit
   end
 end

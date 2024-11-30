@@ -50,7 +50,7 @@ module Admin
     # PATCH/PUT /devices/1
     def update
       if @device.update(device_params)
-        redirect_to admin_device_path(@device), notice: 'Device updated with success.'
+        redirect_to admin_devices_path, notice: 'Device updated with success.'
       else
         render :edit
       end
@@ -58,7 +58,7 @@ module Admin
 
     def destroy
       @device.destroy
-      redirect_to room_path(@room), notice: 'Device deleted with success.'
+      redirect_to admin_devices_path, notice: 'Device deleted with success.'
     end
 
     def start
@@ -81,6 +81,14 @@ module Admin
       end
     end
 
+    def query
+      return if @device.script.nil?
+
+      script = @device.script
+      script.query
+
+    end
+
     private
 
     def set_device
@@ -96,9 +104,10 @@ module Admin
     end
 
     def device_params
-      params.require(:device).permit(:device_type, :device_state, :pin_number, :pin_type, :default_duration,
+      params.require(:device).permit(:device_type, :device_state, :default_duration,
                                      :name, :product_reference, :description, :last_start_date, :use_duration,
-                                     :watts, :volts, :amperes, :custom_identifier, :product_type, :room_id)
+                                     :custom_identifier, :product_type, :room_id, :component_id, :device_script_id,
+                                     devices_data_types_attributes: [:id, :device_id, :data_type_id, :unit, :_destroy])
     end
   end
 end

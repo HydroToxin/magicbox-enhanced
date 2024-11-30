@@ -11,7 +11,7 @@
 
         <%= f.select :source_control_pin_id,
           options_from_collection_for_select(
-            source_control_pins, "id", "name", f.object.source_control_pin_id
+            source_control_pins, "id", "pin_name", f.object.source_control_pin_id
           ),
           { include_blank: 'Select Control Pin' },
           class: "form-select me-2 w-100",
@@ -30,7 +30,7 @@
 
         <%= f.select :target_control_pin_id,
           options_from_collection_for_select(
-            target_control_pins, "id", "name", f.object.target_control_pin_id
+            target_control_pins, "id", "pin_name", f.object.target_control_pin_id
           ),
           { include_blank: 'Select Control Pin' },
           class: "form-select me-2 w-100",

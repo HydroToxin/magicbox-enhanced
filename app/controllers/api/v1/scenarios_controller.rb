@@ -31,8 +31,7 @@ module Api
       param :limit, :number, desc: 'Limit number of items (default: 100, max: 1000)'
       param :offset, :number, desc: 'Offset of items'
       param :sort_direction, %w[asc desc], desc: 'The sort direction key'
-      param :sort_column, %w[id device_type device_state name pin_number
-                             pin_type product_reference description last_start_date
+      param :sort_column, %w[id device_type device_state name product_reference description last_start_date
                              created_at updated_at], desc: 'The sort column name'
       def index
         @items = Scenario.all

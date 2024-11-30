@@ -44,7 +44,6 @@ module Admin
     def update
       process_condition_durations(@scenario)
 
-      binding.pry
       respond_to do |format|
         if @scenario.update(scenario_params)
           format.html { redirect_to admin_scenarios_path, notice: 'Scenario was successfully updated.' }

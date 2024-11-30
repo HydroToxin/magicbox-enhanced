@@ -32,7 +32,7 @@ export default class extends BaseNestedFormController {
 
   remove(event) {
     event.preventDefault();
-    let item = event.target.closest('.conditionm-fields');
+    let item = event.target.closest('.condition-fields');
     if (item.dataset.newRecord === 'true') {
       item.remove();
     } else {

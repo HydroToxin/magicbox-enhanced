@@ -553,7 +553,6 @@ CREATE TABLE public.devices (
     default_duration integer DEFAULT 1,
     room_id integer,
     use_duration boolean DEFAULT false,
-    watts double precision DEFAULT 0.0,
     volts double precision DEFAULT 0.0,
     amperes double precision DEFAULT 0.0,
     custom_identifier character varying

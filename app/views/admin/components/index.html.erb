@@ -31,7 +31,11 @@
     <% @components.each do |component| %>
       <tr>
         <td class="text-cente">
-          <%= image_tag component.image, id: 'image', style: "height: 32px", class: "m-1" %>
+          <% if component.image.present? %>
+            <%= image_tag component.image, id: 'image', style: "height: 32px", class: "m-1" %>
+          <% else %>
+          &nbsp
+          <% end %>
         </td>
         <td class="align-middle text-start"><%= component.name %></td>
         <td class="align-middle text-start"><%= component.component_type %></td>

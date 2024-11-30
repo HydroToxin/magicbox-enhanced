@@ -60,10 +60,6 @@
 				<td width="200px" class="bg-light fw-bold">Device state</td>
 				<td><% if !@device.idle? %><span class="badge bg-<%= @device.state_color %>"><%= @device.device_state.titleize %></span><% end %></td>
 			</tr>
-			<tr>
-				<td width="200px" class="bg-light fw-bold">PIN type</td>
-				<td><span class="badge bg-<%= @device.pin_color %>"><%= @device.pin_type.titleize %></span></td>
-			</tr>
 		</table>
 	</div>
 	<div class="col-6">
@@ -76,10 +72,7 @@
 				<td width="200px" class="bg-light fw-bold">Data types</td>
 				<td><%= @device.data_types_string %></td>
 			</tr>
-			<tr>
-				<td width="200px" class="bg-light fw-bold">GPIO</td>
-				<td><%= @device.pin_number %></td>
-			</tr>
+
 		</table>
 	</div>
 </div>

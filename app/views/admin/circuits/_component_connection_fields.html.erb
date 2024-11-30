@@ -19,11 +19,12 @@
                     action: "change->component-connection#componentChanged"
                   }
                 %>
+                <%= f.hidden_field :source_component_id, value: f.object.source_component_id, data: { component_connection_target: "sourceComponentHidden" } %>
               </div>
             </div>
             <div class="row", style="height: 200px;">
               <div class="col m-2 p-4">
-                <% if f.object.source_component.nil? %>
+                <% if f.object.source_component.nil? || f.object.source_component.image_url.nil? %>
                   <% @replacement_visible = 'block' %>
                   <%= image_tag "", data: { component_connection_target: "sourceImage" }, style: "height: 150px" %>
                 <% else %>
@@ -54,11 +55,12 @@
                     action: "change->component-connection#componentChanged"
                   }
                 %>
+                <%= f.hidden_field :target_component_id, value: f.object.target_component_id, data: { component_connection_target: "targetComponentHidden" } %>
               </div>
             </div>
             <div class="row", style="height: 200px;">
               <div class="col m-2 p-4">
-                <% if f.object.target_component.nil? %>
+                <% if f.object.target_component.nil? || f.object.target_component.image_url.nil? %>
                   <% @replacement_visible = 'block' %>
                   <%= image_tag "", data: { component_connection_target: "targetImage" }, style: "height: 150px" %>
                 <% else %>
