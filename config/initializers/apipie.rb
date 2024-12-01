@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'apipie-rails'
 
 Apipie.configure do |config|
   config.app_name                = 'MagicBoxPi'
