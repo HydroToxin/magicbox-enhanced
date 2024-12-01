@@ -48,37 +48,37 @@ module ApplicationHelper
 
   # rubocop:disable Metrics/MethodLength
   def sidebar_item(path, text, options = {}, &block)
-  raise ArgumentError, 'Options must be a Hash' unless options.is_a?(Hash)
+    raise ArgumentError, 'Options must be a Hash' unless options.is_a?(Hash)
 
-  options[:data] ||= {}
-  options[:data][:turbo] = true
-  options[:data][:turbo_frame] = 'main-content'
-  options[:data][:action] = 'sidebar#activateLink'
+    options[:data] ||= {}
+    options[:data][:turbo] = true
+    options[:data][:turbo_frame] = 'main-content'
+    options[:data][:action] = 'sidebar#activateLink'
 
-  # Entferne class aus options, da diese jetzt im li verwendet wird
-  link_class = options.delete(:class)
+    # Entferne class aus options, da diese jetzt im li verwendet wird
+    link_class = options.delete(:class)
 
-  content_tag(:li, class: ["nav-item", current_page?(path) ? 'active' : ''].compact) do
-    if block_given?
-      link_to path, options do
-        concat capture(&block)
-        concat " #{text}"
+    content_tag(:li, class: ["nav-item", current_page?(path) ? 'active' : ''].compact) do
+      if block_given?
+        link_to path, options do
+          concat capture(&block)
+          concat " #{text}"
 
-        if options[:badge_count].present? && (options[:badge_count]).positive?
-          concat(
-            content_tag(:div, class: 'float-right') do
-              content_tag(:span, class: 'badge badge-light') do
-                concat(options[:badge_count])
+          if options[:badge_count].present? && (options[:badge_count]).positive?
+            concat(
+              content_tag(:div, class: 'float-right') do
+                content_tag(:span, class: 'badge badge-light') do
+                  concat(options[:badge_count])
+                end
               end
-            end
-          )
+            )
+          end
         end
+      else
+        link_to text, path, options
       end
-    else
-      link_to text, path, options
     end
   end
-end
   # rubocop:enable Metrics/MethodLength
 
   # @param style [String, nil] optional CSS classes to style the icon element.

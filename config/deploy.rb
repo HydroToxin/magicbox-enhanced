@@ -54,3 +54,4 @@ set :ssh_options, {
 }
 
 set :bundle_path, -> { shared_path.join('bundle') }
+set :passenger_restart_with_touch, true
