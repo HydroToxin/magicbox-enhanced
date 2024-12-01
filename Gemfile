@@ -6,7 +6,7 @@ ruby '3.2.5'
 gem 'active_model_serializers'
 gem 'apipie-rails', required: false
 gem 'barby'
-gem 'bootsnap', require: false
+gem 'bootsnap', required: false
 
 gem 'breadcrumbs_on_rails'
 gem 'chartkick'
