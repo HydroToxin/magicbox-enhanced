@@ -32,7 +32,6 @@ append :linked_files, "config/database.yml", "config/secrets.yml"
 
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
-set :linked_dirs, fetch(:linked_dirs, []).push('builds')
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -55,13 +54,3 @@ set :ssh_options, {
 }
 
 set :bundle_path, -> { shared_path.join('bundle') }
-
-namespace :deploy do
-  before 'deploy:assets:precompile', :create_builds_dir do
-    on roles(:app) do
-      within release_path do
-        execute :mkdir, '-p', 'builds'
-      end
-    end
-  end
-end
