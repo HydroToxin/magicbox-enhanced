@@ -68,7 +68,7 @@ install_if -> { RUBY_PLATFORM.include?('linux') } do
   gem 'dht11'
   gem 'dht-sensor-ffi'
   gem 'rpi-dht'
-  gem 'rpi_gpio', git: 'git@github.com:ClockVapor/rpi_gpio.git'
+  # gem 'rpi_gpio', git: 'git@github.com:ClockVapor/rpi_gpio.git'
   # gem 'charlcd'
 end
 
