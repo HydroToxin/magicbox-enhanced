@@ -7,7 +7,7 @@ class SamplesController < ApplicationController
   before_action :authenticate_user!
   before_action :date_filter
 
-  add_breadcrumb 'Statistics'
+  #add_breadcrumb 'Statistics'
 
   def index; end
 
@@ -16,7 +16,7 @@ class SamplesController < ApplicationController
 
     Sample.select(:product_reference).all.pluck(:product_reference).uniq.each do |product_reference|
       data = DataType.all.filter_map do |data_type|
-        samples = filtered_samples(data_type.samples).where(product_reference:).order(created_at: :desc)
+        samples = filtered_samples(data_type.samples).where(product_reference: product_reference).order(created_at: :desc)
         next unless samples.first
 
         {

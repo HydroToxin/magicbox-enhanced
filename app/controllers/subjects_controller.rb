@@ -10,7 +10,7 @@ class SubjectsController < ApplicationController
   # GET /subjects
   # GET /subjects.json
   def index
-    add_breadcrumb 'Subjects'
+    #add_breadcrumb 'Subjects'
 
     @subjects = @grow.subjects.all
   end
@@ -76,13 +76,13 @@ class SubjectsController < ApplicationController
   def set_grow
     @grow = Grow.find(params[:grow_id])
 
-    add_breadcrumb "Grow ##{@grow.id}", [:admin, @grow]
+    #add_breadcrumb "Grow ##{@grow.id}", [:admin, @grow]
   end
 
   def set_subject
     @subject = Subject.find(params[:id])
 
-    add_breadcrumb @subject.name, [:admin, @grow, @subject]
+    #add_breadcrumb @subject.name, [:admin, @grow, @subject]
   end
 
   def subject_params

@@ -28,13 +28,13 @@ class DevicesController < ApplicationController
     return unless params[:room_id].present?
 
     @room = Room.find(params[:room_id])
-    add_breadcrumb @room.name, @room
+    #add_breadcrumb @room.name, @room
   end
 
   def set_device
     @device = Device.find(params[:id])
 
-    add_breadcrumb @device.name, [@room, @device]
+    #add_breadcrumb @device.name, [@room, @device]
   end
 
   def device_params

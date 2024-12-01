@@ -6,8 +6,8 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show]
 
   def show
-    add_breadcrumb 'Profile'
-    add_breadcrumb @user.email
+    #add_breadcrumb 'Profile'
+   # add_breadcrumb @user.email
   end
 
   private

@@ -6,7 +6,7 @@ class HarvestsController < ApplicationController
   #before_action :set_harvest, only: [:index]
 
   def index
-    add_breadcrumb 'Harvest'
+    #add_breadcrumb 'Harvest'
     @harvests = Harvest.all
   end
 
@@ -15,13 +15,13 @@ class HarvestsController < ApplicationController
   def set_grow
     @grow = Grow.find(params[:grow_id])
 
-    add_breadcrumb "Grow ##{@grow.id}"
+    #add_breadcrumb "Grow ##{@grow.id}"
   end
 
   def set_harvest
     @harvest = Harvest.find(params[:id])
 
-    add_breadcrumb 'Harvest'
+    #add_breadcrumb 'Harvest'
   end
 
   # Only allow a list of trusted parameters through.

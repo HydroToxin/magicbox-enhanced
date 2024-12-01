@@ -4,11 +4,10 @@ module Admin
   # Admin::DashboardController
   class DashboardController < Admin::AdminController
 
-    add_breadcrumb 'Dashboard'
-
     # rubocop:disable Metrics/MethodLength
     def gpio
-      add_breadcrumb 'GPIO'
+
+      #add_breadcrumb 'GPIO'
 
       @gpio_left = {
         '1': { name: '3.3V', gpio: nil, plug: nil },

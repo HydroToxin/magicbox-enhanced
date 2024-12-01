@@ -18,7 +18,7 @@ class ObservationsController < ApplicationController
 
   # GET /observations/new
   def new
-    add_breadcrumb 'New observation'
+    #add_breadcrumb 'New observation'
 
     @observation = Observation.new
 
@@ -96,7 +96,7 @@ class ObservationsController < ApplicationController
     return if params[:grow_id].nil?
 
     @grow = Grow.find(params[:grow_id])
-    add_breadcrumb "Grow ##{@grow.id}", @grow
+    #add_breadcrumb "Grow ##{@grow.id}", @grow
   end
   # rubocop:disable Metrics/MethodLength
   def observation_params

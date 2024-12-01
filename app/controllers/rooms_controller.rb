@@ -8,7 +8,7 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
-    add_breadcrumb @room.name, @room
+    #add_breadcrumb @room.name, @room
 
     @camera = @room.devices.where(device_type: :camera).first
   end

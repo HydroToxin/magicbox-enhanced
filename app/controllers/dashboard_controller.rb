@@ -4,7 +4,7 @@
 class DashboardController < ApplicationController
   before_action :authenticate_user!
 
-  add_breadcrumb 'Dashboard'
+  #add_breadcrumb 'Dashboard'
 
   def index
     @grows = Grow.where.not(grow_status: %i[done aborted])

@@ -7,7 +7,7 @@ module Admin
     before_action :set_room
 
     def index
-      add_breadcrumb 'Devices'
+      #add_breadcrumb 'Devices'
 
       @devices = Device.all
 
@@ -94,7 +94,7 @@ module Admin
     def set_device
       @device = Device.find(params[:id])
 
-      add_breadcrumb @device.name, [:admin, @room, @device]
+      #add_breadcrumb @device.name, [:admin, @room, @device]
     end
 
     def set_room

@@ -2,7 +2,7 @@
 
 # Calendar Controller
 class CalendarController < ApplicationController
-  add_breadcrumb 'Calendar'
+  #add_breadcrumb 'Calendar'
 
   def index
     @issues_json = Issue.where(issue_status: :open).to_json(methods: %i[start_date end_date text url color])

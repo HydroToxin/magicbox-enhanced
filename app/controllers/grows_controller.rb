@@ -10,7 +10,7 @@ class GrowsController < ApplicationController
   def index
     @grows = Grow.all
 
-    add_breadcrumb 'Grows'
+    #add_breadcrumb 'Grows'
   end
 
   # GET /grows/1
@@ -37,7 +37,7 @@ class GrowsController < ApplicationController
   def set_grow
     @grow = Grow.find(params[:id])
 
-    add_breadcrumb "Grow ##{@grow.id}"
+    #add_breadcrumb "Grow ##{@grow.id}"
   end
 
   def grow_params

@@ -12,7 +12,7 @@ class EventsController < ApplicationController
   def index
     @events = Event.search(params).paginate(page: params[:page], per_page: 100)
 
-    add_breadcrumb 'Events'
+    #add_breadcrumb 'Events'
   end
 
   # GET /events/1
@@ -72,7 +72,7 @@ class EventsController < ApplicationController
   def set_room
     @room = Room.find(params[:room_id])
 
-    add_breadcrumb @room.name, [:admin, @room]
+    #add_breadcrumb @room.name, [:admin, @room]
   end
 
   def set_event

@@ -3,7 +3,7 @@
 module Admin
   # Admin::SettingsController
   class SettingsController < ApplicationController
-    add_breadcrumb 'Settings'
+    #add_breadcrumb 'Settings'
 
     def show
       respond_to(&:html)

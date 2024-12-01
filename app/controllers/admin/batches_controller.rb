@@ -10,7 +10,7 @@ module Admin
 
     # GET /batches/new
     def new
-      add_breadcrumb 'New Batch'
+      #add_breadcrumb 'New Batch'
       @batch = Batch.new
     end
 

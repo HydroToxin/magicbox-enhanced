@@ -5,8 +5,6 @@ module Admin
   class DataTypesController < Admin::AdminController
     before_action :set_data_type, only: %i[show edit update destroy]
 
-    add_breadcrumb 'Data types'
-
     # GET /data_types
     # GET /data_types.json
     def index

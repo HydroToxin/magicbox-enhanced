@@ -4,7 +4,7 @@
 class NotificationsController < ApplicationController
   before_action :authenticate_user!
 
-  add_breadcrumb 'Notifications'
+  #add_breadcrumb 'Notifications'
 
   def index
     @notifications = current_user.notifications.paginate(page: params[:page], per_page: 100)
