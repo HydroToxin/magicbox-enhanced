@@ -3,6 +3,7 @@ lock "~> 3.19.2"
 
 set :application, "magicbox-enhanced"
 set :repo_url, "https://github.com/HydroToxin/magicbox-enhanced.git"
+set :scm, :git
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -41,6 +42,8 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 
 # Default value for keep_releases is 5
 set :keep_releases, 5
+
+set :rvm_ruby_version, '3.2.5@mygemset'
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
