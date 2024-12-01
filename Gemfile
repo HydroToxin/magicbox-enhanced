@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 ruby '3.2.5'
 gem 'active_model_serializers'
-gem 'apipie-rails'
+gem 'apipie-rails', required: false
 gem 'barby'
 gem 'bootsnap', require: false
 
