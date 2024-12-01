@@ -10,6 +10,13 @@ set :repo_url, "https://github.com/HydroToxin/magicbox-enhanced.git"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/var/www/apps/magicbox"
 
+after 'deploy:updated', 'deploy:migrate'
+
+set :default_env, {
+  path: "/home/magicbox/.rvm/rubies/ruby-3.2.5/bin/ruby:$PATH",
+   LD_LIBRARY_PATH: "/home/magicbox/.rvm/rubies/ruby-3.2.5/lib:$LD_LIBRARY_PATH"
+}
+
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
 
@@ -37,3 +44,13 @@ set :keep_releases, 5
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
+
+set :ssh_options, {
+  user: 'magicbox',
+  keys: ['~/.ssh/pi_rsa'],
+  forward_agent: false,
+  auth_methods: %w(publickey),
+  verbose: :debug  # Fügt zusätzliche Debug-Informationen hinzu
+}
+
+set :bundle_path, -> { shared_path.join('bundle') }
