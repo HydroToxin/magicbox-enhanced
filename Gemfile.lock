@@ -1,11 +1,4 @@
 GIT
-  remote: git@github.com:ClockVapor/rpi_gpio.git
-  revision: 3d10cc8462d0035aee246644e400dab5c67f0cf0
-  specs:
-    rpi_gpio (0.5.0)
-      epoll (~> 0.3)
-
-GIT
   remote: https://github.com/mimemagicrb/mimemagic.git
   revision: 01f92d86d15d85cfd0f20dabd025dcbd36a8a60f
   ref: 01f92d86d15d85cfd0f20dabd025dcbd36a8a60f
@@ -391,6 +384,8 @@ GEM
       pkg-config (~> 1.4)
     rpi-dht (0.2.1)
       rpi_gpio
+    rpi_gpio (0.5.0)
+      epoll (~> 0.3)
     rqrcode (2.2.0)
       chunky_png (~> 1.0)
       rqrcode_core (~> 1.0)
@@ -612,7 +607,6 @@ DEPENDENCIES
   redis (>= 4.0.1)
   rmagick
   rpi-dht
-  rpi_gpio!
   rqrcode
   rspec-rails
   rubocop
