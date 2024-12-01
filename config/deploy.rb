@@ -57,14 +57,11 @@ set :ssh_options, {
 set :bundle_path, -> { shared_path.join('bundle') }
 
 namespace :deploy do
-  desc 'Erstelle das Builds-Verzeichnis'
-  task :create_builds_dir do
+  before 'deploy:assets:precompile', :create_builds_dir do
     on roles(:app) do
       within release_path do
         execute :mkdir, '-p', 'builds'
       end
     end
   end
-
-  before 'deploy:assets:precompile', 'deploy:create_builds_dir'
 end
