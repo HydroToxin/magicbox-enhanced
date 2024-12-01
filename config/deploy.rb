@@ -54,3 +54,11 @@ set :ssh_options, {
 }
 
 set :bundle_path, -> { shared_path.join('bundle') }
+
+namespace :deploy do
+  before 'deploy:assets:precompile', 'deploy:builds_dir' do
+    on roles(:app) do
+      execute "mkdir -p #{release_path}/builds"
+    end
+  end
+end
