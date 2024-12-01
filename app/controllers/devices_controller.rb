@@ -38,8 +38,8 @@ class DevicesController < ApplicationController
   end
 
   def device_params
-    params.require(:device).permit(:room_id, :device_type, :device_state, :pin_number, :pin_type, :default_duration,
-                                   :name, :product_reference, :description, :last_start_date, :use_duration, :watts,
-                                   :volts, :amperes, :custom_identifier, :product_type)
+    params.require(:device).permit(:room_id, :device_type, :device_state, :default_duration,
+                                   :name, :product_reference, :description, :last_start_date, :use_duration,
+                                   :custom_identifier, :product_type, :component, :device_script)
   end
 end

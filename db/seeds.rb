@@ -51,42 +51,57 @@ DataType.create(name: 'cpu_voltage')
 DataType.create(name: 'memory_used')
 DataType.create(name: 'memory_free')
 
-DevicesDataType.create(device_id: 1, data_type_id: 1)
-DevicesDataType.create(device_id: 1, data_type_id: 2)
-DevicesDataType.create(device_id: 2, data_type_id: 3)
-DevicesDataType.create(device_id: 3, data_type_id: 4)
+DevicesDataType.create(device_id: 1, data_type_id: 1, unit: '°C')
+DevicesDataType.create(device_id: 1, data_type_id: 2, unit: '%')
+DevicesDataType.create(device_id: 2, data_type_id: 3, unit: '%')
+DevicesDataType.create(device_id: 3, data_type_id: 4, unit: '%')
 
 # create default device in the room
+Component.import_from_json
+
 d = Device.create!(room_id: r.id, device_type: :sensor, device_state: 2, name: 'Temp/hum', product_reference: 'dht11',
-                   description: 'Temperature/humidity sensor (DHT11)')
+                   description: 'Temperature/humidity sensor (DHT11)', component: Component.first)
+
+s = Sample.create(
+  product_reference: 'System',
+  data_type_id: DataType.first.id,
+  value: '22',
+  category_name: 'cpu',
+  html_color: 'red',
+  unit: '°C'
+)
+
 d.data_types << t
 d.data_types << h
+d.samples << s
+d.save!
+
 
 Device.create(device_type: 1, device_state: 2, name: 'Temperature/humidity', product_reference: 'vma311',
-              description: 'Temperature/humidity (NTC/DHT11) sensor for Arduino')
+              description: 'Temperature/humidity (NTC/DHT11) sensor for Arduino', component: Component.first)
 Device.create(device_type: 1, device_state: 2, name: 'Soil moisture', product_reference: 'vma303',
-              description: 'Soil moisture sensor for Arduino')
+              description: 'Soil moisture sensor for Arduino', component: Component.first)
 Device.create(device_type: 1, device_state: 2, name: 'Water level', product_reference: 'vma303',
-              description: 'Water level sensor for Arduino')
+              description: 'Water level sensor for Arduino', component: Component.first)
 Device.create(device_type: 2, device_state: 0, name: 'Cooling fan', product_reference: 'SanACE40',
-              description: 'Fan used to cool the environment when the temperature goes up too much')
+              description: 'Fan used to cool the environment when the temperature goes up too much', component: Component.first)
 Device.create(device_type: 3, device_state: 0, name: 'Water pump', product_reference: 'unknow',
-              description: 'Water pump used to fill the water tank when level goes down')
+              description: 'Water pump used to fill the water tank when level goes down', component: Component.first)
 Device.create(device_type: 4, device_state: 0, name: 'Air pump', product_reference: 'unknow',
-              description: 'Air pump to brew and keep hight level of oxygen in the water tank')
+              description: 'Air pump to brew and keep hight level of oxygen in the water tank', component: Component.first)
 
-Device.create!(room_id: r.id, pin_number: 18, device_type: :light, device_state: 0, name: 'Light',
-               product_reference: 'unknow', description: 'Light giving some sun to the room')
-Device.create!(room_id: r.id, pin_number: 23, device_type: :extractor, device_state: 0, name: 'Extractor',
-               product_reference: 'unknow', description: 'Extractor device pushing used air out the room')
-Device.create!(room_id: r.id, pin_number: 6, device_type: :intractor, device_state: 0, name: 'Intractor',
-               product_reference: 'unknow', description: 'Intractor device sucking new air into the room')
-Device.create!(room_id: r.id, pin_number: 12, device_type: :fan, device_state: 0, name: 'Fan',
-               product_reference: 'unknow', description: 'Fan that moves the air inside the room')
-Device.create!(room_id: r.id, pin_number: 16, device_type: :heater, device_state: 0, name: 'Heater',
-               product_reference: 'unknow', description: 'Heater used to maintain the right temperature')
-Device.create!(room_id: r.id, pin_number: 25, device_type: :water_pump, device_state: 0, name: 'Water',
-               product_reference: 'unknow', description: 'A pump that manages an auto-catering system')
+Device.create!(room_id: r.id, device_type: :light, device_state: 0, name: 'Light',
+               product_reference: 'unknow', description: 'Light giving some sun to the room', component: Component.first)
+Device.create!(room_id: r.id, device_type: :extractor, device_state: 0, name: 'Extractor',
+               product_reference: 'unknow', description: 'Extractor device pushing used air out the room', component: Component.first)
+Device.create!(room_id: r.id, device_type: :intractor, device_state: 0, name: 'Intractor',
+               product_reference: 'unknow', description: 'Intractor device sucking new air into the room', component: Component.first)
+Device.create!(room_id: r.id, device_type: :fan, device_state: 0, name: 'Fan',
+               product_reference: 'unknow', description: 'Fan that moves the air inside the room', component: Component.first)
+Device.create!(room_id: r.id, device_type: :heater, device_state: 0, name: 'Heater',
+               product_reference: 'unknow', description: 'Heater used to maintain the right temperature', component: Component.first)
+Device.create!(room_id: r.id, device_type: :water_pump, device_state: 0, name: 'Water',
+               product_reference: 'unknow', description: 'A pump that manages an auto-catering system', component: Component.first)
 
 water_category = Category.create(name: 'Water', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit')
 nutrients_category = Category.create(name: 'Nutrients',
@@ -174,15 +189,3 @@ Grow.create! description: 'Test', start_date: Time.now, flowering: 1, grow_statu
 s = Subject.create! name: 'Test Subject', grow: Grow.first, room: Room.last
 
 Observation.create! user: User.first, grow: Grow.first, body: 'Observation Test', water: true, nutrients: 10, room: r, subject_ids: [s.id]
-
-s = Sample.create(
-  product_reference: 'System',
-  data_type_id: DataType.first.id,
-  value: '22',
-  category_name: 'cpu',
-  html_color: 'red',
-  unit: '°C'
-)
-
-d.samples << s
-d.save!

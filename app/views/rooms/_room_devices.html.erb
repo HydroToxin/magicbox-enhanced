@@ -14,7 +14,7 @@
         </div>
       </div>
     <% else %>
-      <% devices.order(pin_number: :asc).each do |device| %>
+      <% devices.each do |device| %>
         <div class="card mb-3">
           <div class="card-body">
             <h5 class="card-title">

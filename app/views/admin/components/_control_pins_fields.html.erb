@@ -1,0 +1,216 @@
+<div class="card mb-3 form-descriptions">
+  <div class="card-body">
+    <%= f.hidden_field :_destroy %>
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-4">
+        <%= f.label :name, class: "form-label" %>
+      </div>
+      <div class="col-md-8">
+        <%= f.text_field :name, class: "form-control", required: true %>
+      </div>
+    </div>
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-4">
+        <%= f.label :pin_number, class: "form-label" %>
+      </div>
+      <div class="col-md-8">
+        <%= f.number_field :pin_number, class: "form-control w-25", required: true %>
+      </div>
+    </div>
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-4">
+        <%= f.label :left, class: "form-label" %>
+      </div>
+      <div class="col-md-8">
+        <div class="form-check form-switch">
+          <%= f.check_box :left, class: "form-check-input", role: "switch" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-4">
+        <%= f.label :right, class: "form-label" %>
+      </div>
+      <div class="col-md-8">
+        <div class="form-check form-switch">
+          <%= f.check_box :right, class: "form-check-input", role: "switch" %>
+        </div>
+      </div>
+    </div>
+
+    <div data-controller="description"
+        data-descriptions="<%= ControlPin.pin_function_descriptions.to_json %>">
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-4">
+          <%= f.label :function, class: "form-label" %>
+        </div>
+        <div class="col-md-8">
+          <%= f.select :pin_function,
+              ControlPin.pin_functions.map { |key, value| [value, key] },
+              { include_blank: 'Select Function' },
+              class: "form-select",
+              data: {
+                "description-target": "functionSelect",
+                action: "description#updateDescription"
+              },
+              required: true %>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <strong>Description:</strong>
+        </div>
+        <div class="col-md-8" data-description-target="description" style="font-style: italic;">
+          No description available
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-4">
+        <%= f.label 'Communication Number', class: "form-label" %>
+      </div>
+      <div class="col-md-8">
+        <%= f.number_field :com_number, class: "form-control" %>
+      </div>
+    </div>
+
+    <div data-controller="description"
+     data-descriptions="<%= ControlPin.signal_type_descriptions.to_json %>">
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-4">
+          <%= f.label :signal_type, class: "form-label" %>
+        </div>
+        <div class="col-md-8">
+          <%= f.select :signal_type,
+              ControlPin.signal_types.map { |key, value| [value, key] },
+              { include_blank: 'Select Signal Type' },
+              class: "form-select",
+              data: {
+                "description-target": "functionSelect",
+                action: "description#updateDescription"
+              } %>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <strong>Description:</strong>
+        </div>
+        <div class="col-md-8" data-description-target="description" style="font-style: italic;">
+          No description available
+        </div>
+      </div>
+    </div>
+
+    <div data-controller="description"
+     data-descriptions="<%= ControlPin.signal_mode_descriptions.to_json %>">
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-4">
+          <%= f.label :signal_mode, class: "form-label" %>
+        </div>
+        <div class="col-md-8">
+          <%= f.select :signal_mode,
+              ControlPin.signal_modes.map { |key, value| [value, key] },
+              { include_blank: 'Select Mode' },
+              class: "form-select",
+              data: {
+                "description-target": "functionSelect",
+                action: "description#updateDescription"
+              } %>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <strong>Description:</strong>
+        </div>
+        <div class="col-md-8" data-description-target="description" style="font-style: italic;">
+          No description available
+        </div>
+      </div>
+    </div>
+
+    <div data-controller="description"
+     data-descriptions="<%= ControlPin.pull_resistor_descriptions.to_json %>">
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-4">
+          <%= f.label :pull_resistor, class: "form-label" %>
+        </div>
+        <div class="col-md-8">
+          <%= f.select :pull_resistor,
+              ControlPin.pull_resistors.map { |key, value| [value, key] },
+              { include_blank: 'Select Pull' },
+              class: "form-select",
+              data: {
+                "description-target": "functionSelect",
+                action: "description#updateDescription"
+              } %>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <strong>Description:</strong>
+        </div>
+        <div class="col-md-8" data-description-target="description" style="font-style: italic;">
+          No description available
+        </div>
+      </div>
+    </div>
+
+    <div data-controller="description"
+     data-descriptions="<%= ControlPin.initial_state_descriptions.to_json %>">
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-4">
+          <%= f.label :initial_state, class: "form-label" %>
+        </div>
+        <div class="col-md-8">
+          <%= f.select :initial_state,
+              ControlPin.initial_states.map { |key, value| [value, key] },
+              { include_blank: 'Select Initial State' },
+              class: "form-select",
+              data: {
+                "description-target": "functionSelect",
+                action: "description-#updateDescription"
+              } %>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <strong>Description:</strong>
+        </div>
+        <div class="col-md-8" data-description-target="description" style="font-style: italic;">
+          No description available
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-4">
+        <%= f.label :voltage, class: "form-label" %>
+      </div>
+      <div class="col-md-8">
+        <%= f.text_field :voltage, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-4">
+        <%= f.label :description, class: "form-label" %>
+      </div>
+      <div class="col-md-8">
+        <%= f.text_area :description, class: "form-control", rows: 3 %>
+      </div>
+    </div>
+
+    <div class="text-end">
+      <button type="button"
+              data-action="component-#remove"
+              class="btn btn-sm btn-danger">
+        Remove Pin
+      </button>
+    </div>
+  </div>
+</div>

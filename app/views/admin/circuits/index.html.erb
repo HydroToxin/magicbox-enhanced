@@ -1,0 +1,34 @@
+<h1>
+  Circuits
+  <div class="float-end">
+    <%= link_to new_admin_circuit_path, class: "btn btn-info d-flex align-items-center" do %>
+      <i class="bi-plus my-1 h5" width= "1em" height="1em"></i>
+      New
+    <% end %>
+  </div>
+</h1>
+
+<br>
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Active</th>
+      <th>#</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @circuits.each do |circuit| %>
+      <tr>
+        <td class="align-middle text-start"><%= circuit.name %></td>
+        <td class="align-middle text-start"><%= circuit.active %></td>
+        <td class="text-end">
+        	<%= link_to 'Edit', edit_admin_circuit_path(circuit), class: "btn btn-sm btn-outline-success" %>
+          <%= link_to 'Destroy', admin_circuit_path(circuit), data: { turbo: :true, "turbo-method": "delete" }, class: "btn btn-outline-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,5 +1,5 @@
-<div class="card p-4 mb-3 condition-form-fields">
-  <div class="form-inline pb-2 d-flex" style="position: relative" data-controller="condition-form-fields" data-new-record="<%= f.object.new_record? %>" >
+<div class="card p-4 mb-3 condition-fields">
+  <div class="form-inline pb-2 d-flex" style="position: relative" data-controller="condition-fields" data-new-record="<%= f.object.new_record? %>" >
     <%= f.select :logic,
       options_for_select(
         Condition.logics.keys.map { |e| [Condition.logic_text(e.to_sym), e] },
@@ -19,13 +19,13 @@
       {},
       class: "form-select me-2 w-auto ml-2",
       data: {
-        "condition-form-fields-target": "conditionType",
-        action: "change->condition-form-fields#changeConditionType"
+        "condition-fields-target": "conditionType",
+        action: "change->condition-fields#changeConditionType"
       }
     %>
 
     <%# Date Fields %>
-    <div data-condition-form-fields-target="dateFields" class="condition-form__field--hidden d-flex">
+    <div data-condition-fields-target="dateFields" class="condition__field--hidden d-flex">
       <span class="me-2 mt-2">Between</span>
       <%= f.text_field :start_time, value: ftime(f.object.start_time), class: "form-control me-2 select-time" %>
       <span class="me-2 mt-2">And</span>
@@ -33,7 +33,7 @@
     </div>
 
     <%# Duration Fields %>
-    <div data-condition-form-fields-target="durationFields" class="condition-form__field--hidden d-flex">
+    <div data-condition-fields-target="durationFields" class="condition__field--hidden d-flex">
       <span class="me-2 mt-2">Every</span>
       <%= f.number_field :time_duration_hours, value: f.object.time_duration_hours, placeholder: "Hours", class: "form-control me-2" %>
       <span class="me-2 mt-2">hour(s)&nbspand</span>
@@ -43,25 +43,25 @@
     </div>
 
     <%# Data Type Select %>
-    <div data-condition-form-fields-target="dataTypeFields" class="condition-form__field--hidden d-flex">
+    <div data-condition-fields-target="dataTypeFields" class="condition__field--hidden d-flex">
       <%= f.select :data_type_id, options_from_collection_for_select(DataType.all, "id", "name", f.object.data_type_id), {}, class: "form-select me-2 w-auto" %>
     </div>
 
     <%# Device Select %>
-    <div data-condition-form-fields-target="deviceFields" class="condition-form__field--hidden d-flex">
+    <div data-condition-fields-target="deviceFields" class="condition__field--hidden d-flex">
       <%= f.select :device_id, options_from_collection_for_select(Device.all, "id", "name", f.object.device_id), {}, class: "form-select me-2 w-auto" %>
     </div>
 
     <%# Shared Fields %>
-    <div data-condition-form-fields-target="predicateField" class="condition-form__field--hidden d-flex">
+    <div data-condition-fields-target="predicateField" class="condition__field--hidden d-flex">
       <%= f.select :predicate, options_for_select([[">=", 0], ["<=", 1]], f.object.predicate), {}, class: "form-select me-2 w-auto" %>
     </div>
 
-    <div data-condition-form-fields-target="targetValueField" class="condition-form__field--hidden d-flex">
+    <div data-condition-fields-target="targetValueField" class="condition__field--hidden d-flex">
       <%= f.number_field :target_value, placeholder: "Target value", class: "form-control me-2" %>
     </div>
 
-    <button type="button" data-action="condition-form-fields#remove" class="btn btn-danger">Remove</button>
+    <button type="button" data-action="condition-fields#remove" class="btn btn-danger">Remove</button>
     <%= f.hidden_field :_destroy %>
   </div>
 </div>

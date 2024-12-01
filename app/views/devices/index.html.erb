@@ -32,8 +32,7 @@
 					<% end %>
 				</td>
 				<td><i><%= d.product_reference %></i></td>
-				<td class="text-center"><span class="badge bg-<%= d.pin_color %>"><%= d.pin_type.titleize %></span></td>
-				<td class="text-center"><%= d.pin_number %></td>
+
 				<td><%= link_to d.room.name, admin_room_path(d.room) %></td>
 				<td>
 					<% if d.sensor? %>

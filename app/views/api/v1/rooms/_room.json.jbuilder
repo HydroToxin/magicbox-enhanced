@@ -5,7 +5,7 @@ json.extract! room, :id, :name, :room_type, :length, :width, :height, :created_a
 
 json.devices room.devices do |device|
   json.extract! device, :id, :device_type, :device_state, :name, :product_reference, :description, :created_at,
-                :updated_at, :pin_number, :pin_type, :last_start_date, :default_duration, :room_id, :use_duration, :watts, :volts, :amperes, :custom_identifier
+                :updated_at, :last_start_date, :default_duration, :room_id, :use_duration, :custom_identifier
 end
 
 json.subjects room.active_subjects do |subject|

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_19_175450) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,9 +30,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.string "filename", null: false
     t.string "content_type"
     t.string "service_name", null: false
-    t.string "string", null: false
-    t.text "metadata"
+    t.jsonb "metadata"
     t.bigint "byte_size", null: false
+    t.string "checksum", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
@@ -102,6 +102,57 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "circuits", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "component_connections", force: :cascade do |t|
+    t.bigint "source_component_id", null: false
+    t.bigint "target_component_id", null: false
+    t.text "description"
+    t.bigint "circuit_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["circuit_id"], name: "index_component_connections_on_circuit_id"
+    t.index ["source_component_id"], name: "index_component_connections_on_source_component_id"
+    t.index ["target_component_id"], name: "index_component_connections_on_target_component_id"
+  end
+
+  create_table "component_pin_connections", force: :cascade do |t|
+    t.bigint "source_control_pin_id", null: false
+    t.bigint "target_control_pin_id", null: false
+    t.bigint "component_connection_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["component_connection_id"], name: "index_component_pin_connections_on_component_connection_id"
+    t.index ["source_control_pin_id"], name: "index_component_pin_connections_on_source_control_pin_id"
+    t.index ["target_control_pin_id"], name: "index_component_pin_connections_on_target_control_pin_id"
+  end
+
+  create_table "components", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "component_type", null: false
+    t.string "model"
+    t.string "version"
+    t.boolean "active"
+    t.boolean "microcontroller", default: false
+    t.boolean "multiplexer", default: false
+    t.string "description"
+    t.string "address"
+    t.decimal "voltage", precision: 5, scale: 2
+    t.decimal "standby_ampere"
+    t.decimal "max_ampere"
+    t.decimal "watt"
+    t.decimal "power", precision: 8, scale: 4
+    t.decimal "temperature", precision: 5, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "condition_groups", force: :cascade do |t|
     t.string "name"
     t.boolean "enabled"
@@ -133,37 +184,64 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
     t.index ["device_id"], name: "index_conditions_on_device_id"
   end
 
+  create_table "control_pins", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "pin_number", null: false
+    t.string "pin_color"
+    t.boolean "left"
+    t.boolean "right"
+    t.integer "com_number"
+    t.string "pin_function"
+    t.string "signal_type"
+    t.string "signal_mode"
+    t.string "pull_resistor"
+    t.string "initial_state"
+    t.string "voltage"
+    t.string "description"
+    t.bigint "component_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["component_id"], name: "index_control_pins_on_component_id"
+  end
+
   create_table "data_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "device_scripts", force: :cascade do |t|
+    t.string "name"
+    t.string "script_name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "devices", force: :cascade do |t|
     t.integer "device_type"
     t.integer "device_state"
-    t.integer "pin_type", default: 0
-    t.integer "pin_number", default: 0
     t.integer "default_duration", default: 1
     t.string "name"
     t.string "product_reference"
     t.string "custom_identifier"
-    t.float "watts", default: 0.0
-    t.float "volts", default: 0.0
-    t.float "amperes", default: 0.0
-    t.float "float", default: 0.0
     t.text "description"
     t.datetime "last_start_date", precision: nil
     t.boolean "use_duration", default: false
     t.bigint "room_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.bigint "component_id"
+    t.bigint "device_script_id"
+    t.index ["component_id"], name: "index_devices_on_component_id"
+    t.index ["device_script_id"], name: "index_devices_on_device_script_id"
     t.index ["room_id"], name: "index_devices_on_room_id"
   end
 
   create_table "devices_data_types", force: :cascade do |t|
     t.bigint "device_id"
     t.bigint "data_type_id"
+    t.string "unit"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["data_type_id"], name: "index_devices_data_types_on_data_type_id"
@@ -455,10 +533,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_05_001758) do
   add_foreign_key "alerts", "resources"
   add_foreign_key "batches", "grows"
   add_foreign_key "batches", "harvests"
+  add_foreign_key "component_connections", "circuits"
+  add_foreign_key "component_connections", "components", column: "source_component_id"
+  add_foreign_key "component_connections", "components", column: "target_component_id"
+  add_foreign_key "component_pin_connections", "control_pins", column: "source_control_pin_id"
+  add_foreign_key "component_pin_connections", "control_pins", column: "target_control_pin_id"
   add_foreign_key "condition_groups", "scenarios"
   add_foreign_key "conditions", "condition_groups"
   add_foreign_key "conditions", "data_types"
   add_foreign_key "conditions", "devices"
+  add_foreign_key "control_pins", "components"
+  add_foreign_key "devices", "components"
+  add_foreign_key "devices", "device_scripts"
   add_foreign_key "devices", "rooms"
   add_foreign_key "devices_data_types", "data_types"
   add_foreign_key "devices_data_types", "devices"

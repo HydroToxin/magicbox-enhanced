@@ -7,9 +7,9 @@ class Device < ApplicationRecord
 
   enum device_state: { off: 0, on: 1, idle: 2, starting: 3, stopping: 4 }
 
-  enum pin_type: { digital: 0, analog: 1 }
-
   belongs_to :room
+  belongs_to :component, optional: true
+  belongs_to :device_script, optional: true
 
   has_many :samples, dependent: :delete_all
   has_many :events, as: :eventable
@@ -18,6 +18,17 @@ class Device < ApplicationRecord
   has_many :notifications, as: :notified
 
   validates :name, presence: true
+
+  accepts_nested_attributes_for :devices_data_types,
+    allow_destroy: true,
+    reject_if: :all_blank
+
+
+  def script
+    return if device_script.nil?
+
+    device_script.name.downcase.classify.safe_constantize.call(self)
+  end
 
   def last_sample(data_type)
     samples.where(data_type:).order(created_at: :desc).limit(1).first
@@ -136,93 +147,84 @@ class Device < ApplicationRecord
   # rubocop:enable Metrics/MethodLength
 
   def query_sensor
-    if sensor? && pin_number.positive?
-      case product_reference
-      when 'dht11'
-        query_dht11
-      when 'dht22'
-        query_dht22
-      end
-      return true
-    end
-    false
+
   end
 
   # rubocop:disable Metrics/MethodLength
   def query_dht22
-    require 'dht-sensor-ffi'
+  #   require 'dht-sensor-ffi'
 
-    temperature_type = DataType.find_by(name: 'temperature')
-    humidity_type = DataType.find_by(name: 'humidity')
+  #   temperature_type = DataType.find_by(name: 'temperature')
+  #   humidity_type = DataType.find_by(name: 'humidity')
 
-    # return false if device is not configured for temperature and humidity
-    if data_types.include?(temperature_type) && data_types.include?(humidity_type)
-      MB_LOGGER.info ' -> failed    : Device is not configured for temperature and humidity'
-      return false
-    end
+  #   # return false if device is not configured for temperature and humidity
+  #   if data_types.include?(temperature_type) && data_types.include?(humidity_type)
+  #     MB_LOGGER.info ' -> failed    : Device is not configured for temperature and humidity'
+  #     return false
+  #   end
 
-    result = DhtSensor.read(pin_number, 22)
+  #   result = DhtSensor.read(pin_number, 22)
 
-    temperature = result.temperature.to_f.round(1).to_s
-    humidity = result.humidity.to_f.round.to_i.to_s
+  #   temperature = result.temperature.to_f.round(1).to_s
+  #   humidity = result.humidity.to_f.round.to_i.to_s
 
-    MB_LOGGER.info "# Query sensor: #{product_reference} (GPIO##{pin_number}) "
-    MB_LOGGER.info  " -> Temp    : #{temperature}"
-    MB_LOGGER.info  " -> Humidity: #{humidity}"
+  #   MB_LOGGER.info "# Query sensor:"
+  #   MB_LOGGER.info  " -> Temp    : #{temperature}"
+  #   MB_LOGGER.info  " -> Humidity: #{humidity}"
 
-    create_sample(temperature_type, temperature, 'sensor', 'coral', '°C')
-    create_sample(humidity_type, humidity, 'sensor', 'lightblue', '%')
+  #   create_sample(temperature_type, temperature, 'sensor', 'coral', '°C')
+  #   create_sample(humidity_type, humidity, 'sensor', 'lightblue', '%')
 
-    # ActionCable.server.broadcast "dashboards_channel", temperature: "#{temp_s} °C"
-    # ActionCable.server.broadcast "dashboards_channel", humidity: "#{hum_s} °%"
+  #   # ActionCable.server.broadcast "dashboards_channel", temperature: "#{temp_s} °C"
+  #   # ActionCable.server.broadcast "dashboards_channel", humidity: "#{hum_s} °%"
 
-    true
-  rescue StandardError
-    Rails.logger.error ' -> failed    : MISSING_DATA'
-    false
+  #   true
+  # rescue StandardError
+  #   Rails.logger.error ' -> failed    : MISSING_DATA'
+  #   false
   end
   # rubocop:enable Metrics/MethodLength
 
   # rubocop:disable Metrics/MethodLength
   def query_dht11
-    require 'dht11'
+    # require 'dht11'
 
-    MB_LOGGER.info "# Query sensor: #{product_reference} (GPIO##{pin_number})"
+    # MB_LOGGER.info "# Query sensor:"
 
-    temperature_type = DataType.find_by(name: 'temperature')
-    humidity_type = DataType.find_by(name: 'humidity')
+    # temperature_type = DataType.find_by(name: 'temperature')
+    # humidity_type = DataType.find_by(name: 'humidity')
 
-    # return false if device is not configured for temperature and humidity
-    if data_types.include?(temperature_type) && data_types.include?(humidity_type)
-      MB_LOGGER.info ' -> failed    : Device is not configured for temperature and humidity'
-      return false
-    end
+    # # return false if device is not configured for temperature and humidity
+    # if data_types.include?(temperature_type) && data_types.include?(humidity_type)
+    #   MB_LOGGER.info ' -> failed    : Device is not configured for temperature and humidity'
+    #   return false
+    # end
 
-    sensor = DHT11::Sensor.new(pin_number)
-    reading = sensor.read
+    # sensor = DHT11::Sensor.new(pin_number)
+    # reading = sensor.read
 
-    # return false if sensor raise an error or
-    if reading.error_code == :MISSING_DATA
-      MB_LOGGER.info ' -> failed    : MISSING_DATA'
-      return false
-    end
+    # # return false if sensor raise an error or
+    # if reading.error_code == :MISSING_DATA
+    #   MB_LOGGER.info ' -> failed    : MISSING_DATA'
+    #   return false
+    # end
 
-    temperature = reading.temperature
-    humidity = reading.humidity
+    # temperature = reading.temperature
+    # humidity = reading.humidity
 
-    MB_LOGGER.info " -> Temp    : #{sensor.temp}"
-    MB_LOGGER.info " -> Humidity: #{sensor.humidity}"
+    # MB_LOGGER.info " -> Temp    : #{sensor.temp}"
+    # MB_LOGGER.info " -> Humidity: #{sensor.humidity}"
 
-    # return false if no sensor data available
-    if temperature.nan? && humidity.nan?
-      MB_LOGGER.info ' -> failed    : No sensor data available.'
-      return false
-    end
+    # # return false if no sensor data available
+    # if temperature.nan? && humidity.nan?
+    #   MB_LOGGER.info ' -> failed    : No sensor data available.'
+    #   return false
+    # end
 
-    create_sample(temperature_type, temperature, 'sensor', 'coral', '°C')
-    create_sample(humidity_type, humidity, 'sensor', 'lightblue', '%')
+    # create_sample(temperature_type, temperature, 'sensor', 'coral', '°C')
+    # create_sample(humidity_type, humidity, 'sensor', 'lightblue', '%')
 
-    true
+    # true
   end
   # rubocop:enable Metrics/MethodLength
 

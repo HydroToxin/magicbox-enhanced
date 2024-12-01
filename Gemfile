@@ -54,7 +54,9 @@ gem 'uglifier'
 gem 'whenever', require: false
 gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap4'
-gem "view_component"
+gem 'view_component'
+gem 'ed25519', '>= 1.2', '< 2.0'
+gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 
 # gem "kredis"
 # gem "bcrypt", "~> 3.1.7"
@@ -66,7 +68,7 @@ install_if -> { RUBY_PLATFORM.include?('linux') } do
   gem 'dht11'
   gem 'dht-sensor-ffi'
   gem 'rpi-dht'
-  # gem 'rpi_gpio', git: 'git@github.com:ClockVapor/rpi_gpio.git'
+  gem 'rpi_gpio', git: 'git@github.com:ClockVapor/rpi_gpio.git'
   # gem 'charlcd'
 end
 
@@ -74,7 +76,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'error_highlight', '>= 0.4.0', platforms: [:ruby]
   gem 'license_finder'
-  gem 'rails-erd'
+  #gem 'rails-erd'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
@@ -88,6 +90,11 @@ group :development, :test do
   gem 'pry-rails'
   gem 'faker'
   gem 'rails-controller-testing'
+  gem 'capistrano', '~> 3.16'
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails'
+  gem 'capistrano-passenger'
+  gem 'capistrano-rvm'
 end
 
 group :development do

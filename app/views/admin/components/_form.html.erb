@@ -1,0 +1,249 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-12 col-lg-10">
+      <%= form_with(model: [:admin, @component], data: { turbo: false }, local: true, class: "text-start", id: "admin-components-form") do |form| %>
+        <h1>
+          <%= @component.new_record? ? "New Component" : "Editing Component" %>
+          <div>
+            <%= form.submit "Save", class: "btn btn-primary" %>
+          </div>
+        </h1>
+
+        <hr>
+
+        <% if @component.errors.any? %>
+          <div id="error_explanation" class="alert alert-danger">
+            <h4><%= pluralize(@component.errors.count, "error") %> prohibited this component from being saved:</h4>
+            <ul>
+            <% @component.errors.messages.each do |attribute, messages| %>
+              <li><b><%= attribute.to_s.titleize %></b>: <%= messages.join(", ") %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div data-controller="image-upload" class="position-relative" style="background-color: #ccc;">
+
+          <%= form.file_field :image, class: 'd-none', id: 'file-upload', data: { "image-upload-target": "file" } %>
+
+          <div class="d-flex justify-content-center align-items-center" style="position: relative; height:200px; widht: 100%">
+            <% if @component.image.attached? %>
+              <% @image_attached = 'none' %>
+              <% @image_visible = 'block' %>
+            <% else %>
+              <% @image_attached = 'block' %>
+              <% @image_visible = 'none' %>
+            <% end %>
+
+            <%= image_tag (
+              @component.image.present? ? @component.image : ''),
+              id: 'image-preview',
+              data: { image_upload_target: "preview" },
+              class: 'img-thumbnail',
+              style: "object-fit: cover; cursor: pointer; height: 200px; display: #{@image_visible}"
+            %>
+
+            <i class="bi bi-plus-circle"
+              style="font-size: 3rem; color: white; cursor: pointer; position: absolute; display: <%= @image_attached %>"
+              data-image-upload-target="add"
+              data-action = "click->image-upload#add">
+            </i>
+          </div>
+
+          <label for="file-upload" class="position-absolute" style="width: 30%; height: 30%; top: 0; left: 0; z-index: 1;"></label>
+
+          <i class="bi bi-trash3-fill"
+            style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; color: white; cursor: pointer; z-index: 2;"
+            data-image-upload-target="delete"
+            data-action="click->image-upload#deleteImage"></i>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :active, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <div class="form-check form-switch">
+              <%= form.check_box :active, class: "form-check-input", role: "switch" %>
+            </div>
+          </div>
+        </div>
+
+       <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :name, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.text_field :name, class: "form-control", required: true %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :model, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.text_field :model, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :version, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.text_field :version, class: "form-control" %>
+          </div>
+        </div>
+
+        <div data-controller="description"
+        data-descriptions="<%= Component.component_type_descriptions.to_json %>">
+          <div class="row mb-3 align-items-center">
+            <div class="col-md-4">
+              <%= form.label :type, class: "form-label" %>
+            </div>
+            <div class="col-md-8">
+              <%= form.select :component_type,
+                  Component.component_types.map { |key, value| [value, key] },
+                  { include_blank: 'Select Type' },
+                  class: "form-select",
+                  data: {
+                    "description-target": "functionSelect",
+                    action: "change->description#updateDescription"
+                  },
+                  required: true %>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <strong>Description:</strong>
+            </div>
+            <div class="col-md-8" data-description-target="description" style="font-style: italic;">
+              No description available
+            </div>
+          </div>
+        </div>
+
+         <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :microcontroller, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <div class="form-check form-switch">
+              <%= form.check_box :microcontroller, class: "form-check-input", role: "switch" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :multiplexer, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <div class="form-check form-switch">
+              <%= form.check_box :multiplexer, class: "form-check-input", role: "switch" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :description, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.text_field :description, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :address, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.text_field :address, class: "form-control w-25" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :voltage, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.number_field :voltage, step: 0.01, class: "form-control w-25" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :standby_ampere, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.number_field :standby_ampere, step: 0.01, class: "form-control w-25" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :max_ampere, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.number_field :max_ampere, step: 0.01, class: "form-control w-25" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :watt, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.number_field :watt, step: 0.01, class: "form-control w-25" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :power, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.number_field :power, step: 0.01, class: "form-control w-25" %>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :temperature, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.number_field :temperature, step: 0.01, class: "form-control w-25" %>
+          </div>
+        </div>
+
+        <h3 class="mt-4 mb-3">Control Pins</h3>
+
+        <div data-controller="component">
+          <template data-component-target="template">
+            <div class="component-fields">
+              <%= form.fields_for :control_pins, ControlPin.new, child_index: 'NEW_RECORD' do |fields| %>
+                <%= render "admin/components/control_pins_fields", f: fields %>
+              <% end %>
+            </div>
+          </template>
+
+          <%= form.fields_for :control_pins do |fields| %>
+            <%= render "admin/components/control_pins_fields", f: fields %>
+          <% end %>
+
+          <div data-component-target="target"></div>
+
+          <div class="mt-3 d-inline">
+            <button type="button"
+                    data-action="component#add"
+                    class="btn btn-success">
+              Add Control Pin
+            </button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,130 @@
+<div class="card mb-3" data-controller="component-connection" data-new-record="<%= f.object.new_record? %>">
+  <div class="card-body">
+    <%= f.hidden_field :_destroy %>
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-6 text-center">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <%= f.select :source_component_id,
+                  options_from_collection_for_select(
+                    Component.joins(:control_pins).group('components.id').having('COUNT(control_pins.id) > 1'), "id", "name", f.object.source_component_id
+                  ),
+                  { include_blank: 'Select Component' },
+                  class: "form-select me-2 w-100",
+                  data: {
+                    component_connection_target: "sourceComponent",
+                    action: "change->component-connection#componentChanged"
+                  }
+                %>
+                <%= f.hidden_field :source_component_id, value: f.object.source_component_id, data: { component_connection_target: "sourceComponentHidden" } %>
+              </div>
+            </div>
+            <div class="row", style="height: 200px;">
+              <div class="col m-2 p-4">
+                <% if f.object.source_component.nil? || f.object.source_component.image_url.nil? %>
+                  <% @replacement_visible = 'block' %>
+                  <%= image_tag "", data: { component_connection_target: "sourceImage" }, style: "height: 150px" %>
+                <% else %>
+                  <% @replacement_visible = 'none' %>
+                  <%= image_tag f.object.source_component.image_url, data: { component_connection_target: "sourceImage" }, style: "height: 150px" %>
+                <% end %>
+
+                <i class="bi bi-image"
+                  style="font-size: 4rem; color: grey; position: relative; display: <%= @replacement_visible %>"
+                  data-component-connection-target="sourceReplacement">
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 text-center">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <%= f.select :target_component_id,
+                  options_from_collection_for_select(Component.joins(:control_pins).group('components.id').having('COUNT(control_pins.id) > 1'), "id", "name", f.object.target_component_id),
+                   { include_blank: 'Select Component' },
+                  class: "form-select me-2 w-100",
+                  data: {
+                    component_connection_target: "targetComponent",
+                    action: "change->component-connection#componentChanged"
+                  }
+                %>
+                <%= f.hidden_field :target_component_id, value: f.object.target_component_id, data: { component_connection_target: "targetComponentHidden" } %>
+              </div>
+            </div>
+            <div class="row", style="height: 200px;">
+              <div class="col m-2 p-4">
+                <% if f.object.target_component.nil? || f.object.target_component.image_url.nil? %>
+                  <% @replacement_visible = 'block' %>
+                  <%= image_tag "", data: { component_connection_target: "targetImage" }, style: "height: 150px" %>
+                <% else %>
+                  <% @replacement_visible = 'none' %>
+                  <%= image_tag f.object.target_component.image_url, data: { component_connection_target: "targetImage" }, style: "height: 150px" %>
+                <% end %>
+
+                <i class="bi bi-image"
+                  style="font-size: 4rem; color: grey; position: relative; display: <%= @replacement_visible %>"
+                  data-component-connection-target="targetReplacement">
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col text-center" data-controller="component-pin-connection">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <div>
+                <h5>Pin Connections</h5>
+                <div class="mt-3">
+                  <template data-component-pin-connection-target="template">
+                    <%= f.fields_for :component_pin_connections, ComponentPinConnection.new, child_index: 'NEW_RECORD' do |ff| %>
+                      <%= render "component_pin_connection_fields", :f => ff %>
+                    <% end %>
+                  </template>
+                  <% if f.object.component_pin_connections.present? %>
+                    <%= f.fields_for :component_pin_connections do |ff| %>
+                      <%= render "component_pin_connection_fields", f: ff %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <div data-component-pin-connection-target="target"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-start mt-3">
+              <button type="button"
+                data-action="component-pin-connection#add"
+                class="btn btn-success"
+                <%= f.object.new_record? ? 'disabled' : '' %>
+                data-component-connection-target="addButton">
+                Add Pin Connections
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-end">
+      <button type="button"
+              data-action="component-connection#remove"
+              class="btn btn-sm btn-danger">
+        Remove Component Connection
+      </button>
+    </div>
+  </div>
+</div>

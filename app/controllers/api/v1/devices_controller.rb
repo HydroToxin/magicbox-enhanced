@@ -10,7 +10,7 @@ module Api
         short 'Active devices managed by MagixBox'
         description 'Devices regroups all the active modules that
                      can interact with the MagicBox environment such as sensors, fans, pumps, etc.'
-        meta 'Device' => %w[id device_type device_state pin_number pin_type name product_reference
+        meta 'Device' => %w[id device_type device_state name product_reference
                             description last_start_date created_at updated_at]
         formats ['json']
         deprecated false
@@ -22,7 +22,7 @@ module Api
       param :offset, :number, desc: 'Offset of devices'
       param :sort_direction, %w[asc desc], desc: 'The sort direction key'
       param :sort_column,
-            %w[id device_type device_state name pin_number pin_type product_reference
+            %w[id device_type device_state name product_reference
                description last_start_date created_at updated_at], desc: 'The sort column name'
       def index
         @devices = Device.all
@@ -119,7 +119,7 @@ module Api
       end
 
       def device_params
-        params.require(:device).permit(:device_type, :device_state, :pin_number, :default_duration, :pin_type, :name,
+        params.require(:device).permit(:device_type, :device_state, :default_duration, :name,
                                        :product_reference, :description, :last_start_date)
       end
     end

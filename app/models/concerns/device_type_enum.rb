@@ -20,7 +20,8 @@ module DeviceTypeEnum
       power_strip: 11,
       heater: 12,
       custom2: 99,
-      custom3: 100
+      custom3: 100,
+      type: 101
     }
   end
 end

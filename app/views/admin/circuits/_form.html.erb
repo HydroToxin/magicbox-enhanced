@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-12 col-lg-10">
+      <%= form_with(model: [:admin, @circuit], data: { turbo: false }, local: true, class: "text-start", id: "admin-circuits-form") do |form|%>
+        <h1>
+          <%= @circuit.new_record? ? "New Circuit" : "Editing Circuit" %>
+          <div>
+            <%= form.submit "Save", class: "btn btn-primary" %>
+          </div>
+        </h1>
+
+        <hr>
+
+        <% if @circuit.errors.any? %>
+          <div id="error_explanation" class="alert alert-danger">
+            <h4><%= pluralize(@circuit.errors.count, "error") %> prohibited this circuit from being saved:</h4>
+            <ul>
+            <% @circuit.errors.messages.each do |attribute, messages| %>
+              <li><b><%= attribute.to_s.titleize %></b>: <%= messages.join(", ") %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :active, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <div class="form-check form-switch">
+              <%= form.check_box :active, class: "form-check-input", role: "switch" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <div class="col-md-4">
+            <%= form.label :name, class: "form-label" %>
+          </div>
+          <div class="col-md-8">
+            <%= form.text_field :name, class: "form-control", required: true %>
+          </div>
+        </div>
+
+        <div data-controller="component-connection">
+          <template data-component-connection-target="template">
+            <div class="component-connection-fields">
+              <%= form.fields_for :component_connections, ComponentConnection.new, child_index: 'NEW_RECORD' do |fields| %>
+                <%= render "admin/circuits/component_connection_fields", f: fields  %>
+              <% end %>
+            </div>
+          </template>
+
+          <% if @circuit.component_connections.present? %>
+            <%= form.fields_for :component_connections, @circuit.component_connections.order(id: :asc) do |fields| %>
+              <%= render "admin/circuits/component_connection_fields", f: fields %>
+            <% end %>
+          <% end %>
+
+          <div data-component-connection-target="target"></div>
+
+          <div class="mt-3 d-inline">
+            <button type="button"
+                    data-action="component-connection#add"
+                    class="btn btn-success">
+              Add Component Connection
+            </button>
+          </div>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>

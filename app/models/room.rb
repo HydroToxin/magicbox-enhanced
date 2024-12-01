@@ -58,7 +58,7 @@ class Room < ApplicationRecord
     w = 0
 
     devices.each do |device|
-      w += device.watts if device.watts && device.watts > 0.0
+      #w += device.watts if device.watts && device.watts > 0.0
     end
 
     w.round(2)
@@ -81,7 +81,7 @@ class Room < ApplicationRecord
           next unless running_time.positive?
 
           device = devices.find_by(device_type: operation.device_type)
-          total_kwh += running_time * device.watts / 1000 if device
+          #total_kwh += running_time * device.watts / 1000 if device
         end
       end
     end

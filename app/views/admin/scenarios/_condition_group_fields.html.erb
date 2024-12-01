@@ -13,10 +13,10 @@
         </div>
       </div>
     </div>
-    <div data-controller="condition-form">
+    <div data-controller="condition">
       <h5>Conditions</h5>
       <div class="mt-3">
-        <template data-condition-form-target="template">
+        <template data-condition-target="template">
           <div class="condition-fields">
             <%= f.fields_for :conditions, Condition.new, child_index: 'NEWRECORD', f: f do |ff| %>
               <%= render "condition_fields", :f => ff %>
@@ -29,15 +29,15 @@
             <%= render "condition_fields", f: ff %>
           <% end %>
         </div>
-        <div data-condition-form-target="target"></div>
-        <button type="button" data-action="condition-form#add" class="btn btn-success">Add Condition</button>
+        <div data-condition-target="target"></div>
+        <button type="button" data-action="condition#add" class="btn btn-success">Add Condition</button>
       </div>
     </div>
     <hr>
-    <div data-controller="operation-form">
+    <div data-controller="operation">
       <h5>Operations</h5>
       <div class="mt-3">
-        <template data-operation-form-target="template">
+        <template data-operation-target="template">
           <div class="operation-fields">
             <%= f.fields_for :operations, Operation.new do |ff| %>
               <%= render "operation_fields", :f => ff %>
@@ -49,8 +49,8 @@
           <%= render "operation_fields", f: ff %>
         <% end %>
 
-        <div data-operation-form-target="target"></div>
-        <button type="button" data-action="operation-form#add" class="btn btn-success">Add Operation</button>
+        <div data-operation-target="target"></div>
+        <button type="button" data-action="operation#add" class="btn btn-success">Add Operation</button>
       </div>
     </div>
   </div>

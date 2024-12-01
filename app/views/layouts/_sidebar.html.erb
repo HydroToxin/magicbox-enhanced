@@ -109,6 +109,25 @@
             <% end %>
           </ul>
         </ul>
+        <li class="nav-item">
+          <a href="#circuitsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="submenu dropdown-toggle" data-bs-parent="#accordionSidebar">
+            <i class="bi-tools ms-1 h5 me-2 pe-1"></i>
+            Circuits
+          </a>
+        </li>
+        <ul class="list-unstyled">
+          <ul class="submenu collapse list-unstyled" id="circuitsSubmenu" data-bs-parent="#accordionSidebar">
+            <%= sidebar_item(admin_circuits_path, "Circuits") do %>
+              <i class="bi-exclamation-triangle h4 ms-1 me-2 pe-1"></i>
+            <% end %>
+            <%= sidebar_item(admin_components_path, "Components") do %>
+              <i class="bi-exclamation-triangle h4 ms-1 me-2 pe-1"></i>
+            <% end %>
+            <%= sidebar_item(admin_device_scripts_path, "Device-Scripts") do %>
+              <i class="bi bi-file-earmark-code h4 ms-1 me-2 pe-1"></i>
+            <% end %>
+          </ul>
+        </ul>
       <% end %>
       <% if current_user.admin? %>
         <% if user_signed_in? %>
