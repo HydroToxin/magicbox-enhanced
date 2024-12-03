@@ -13,7 +13,7 @@ set :deploy_to, "/var/www/apps/magicbox"
 after 'deploy:updated', 'deploy:migrate'
 
 set :default_env, {
-  path: "/home/magicbox/.rvm/rubies/ruby-3.2.5/bin/ruby:$PATH",
+  path: "/home/magicbox/.rvm/gems/ruby-3.2.5/wrappers/ruby:$PATH",
    LD_LIBRARY_PATH: "/home/magicbox/.rvm/rubies/ruby-3.2.5/lib:$LD_LIBRARY_PATH"
 }
 
